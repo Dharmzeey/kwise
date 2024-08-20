@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --main-color: #FF5100;
+  --secondary-color: #020E42;
+  --text-black-color: #000000;
+  --text-white-color: #ffffff;
+  --text-blue-color: #2400FF;
+  --text-grey-color: #3A3633;
+  --border-color: 255, 255, 255;
+  --success-color: #00B900;
+  --error-color: #FF0000;
+  --footer-color: #729DED;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,18 +23,28 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+*:focus{
+  @apply outline-2 outline-outline-color outline-offset-2 border-none;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .brand-new {
+    background-color: var(--secondary-color);
+  }
+  .uk-used {
+    background-color: var(--main-color);
+  }
+  .in-stock {
+    background-color: var(--success-color);
+  }
+  .out-of-stock {
+    background-color: var(--error-color);
+  }
+  .my-toast{
+    @apply bg-secondary-color m-auto rounded-b;
+    width: max(55%, 12rem);
   }
 }

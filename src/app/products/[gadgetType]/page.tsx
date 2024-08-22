@@ -1,31 +1,17 @@
-'use client';
-
 import ListItems from "@/components/listItem"
-import { Brand, Product } from "@/utils/productInterface"
+import { fetchProductBrands, fetchProductsByCategory } from "@/services/productApi";
 import Link from "next/link"
-import { useState } from "react"
 
-export default function DevicePage(
+
+export default async function DevicePage(
   { params }: {
     params: {
       gadgetType: string,
     }
   }
 ) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [brands, setBrands] = useState<Brand[]>([]);
-  async function fetchBrands() {
-    const res = await fetch(`http://localhost:8000/v1/products/brands/?q=${params.gadgetType}`);
-    const brands = await res.json()
-    setBrands(brands)
-  }
-  async function fetchProducts()  {
-    const res = await fetch(`http://localhost:8000/v1/products/category/${params.gadgetType}`);
-    const products = await res.json()
-    setProducts(products)
-  }
-  fetchBrands()
-  fetchProducts()
+  const brands = await fetchProductBrands(params.gadgetType);
+  const products = await fetchProductsByCategory(params.gadgetType);
   return (
     <>
       <div className="flex gap-7">

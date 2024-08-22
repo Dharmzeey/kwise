@@ -1,24 +1,31 @@
-'use client';
-
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ProductCategory from "@/components/productCategory";
 import HomeCarousel from "@/components/carouselSlider";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Product } from "@/utils/productInterface";
+import { fetchAllProducts } from "@/services/productApi";
 
 
-export default function Home() {
+export default async function Home() {
+  const products = await fetchAllProducts()
+  // const [products, setProducts] = useState<Product[]>([]);
 
-  const [products, setProducts] = useState<Product[]>([]);
-  
-  async function fetchProduct()  {
-    const res = await fetch('http://localhost:8000/v1/products/');
-    const products = await res.json()
-    setProducts(products)
-  }
-  fetchProduct()
+  // useEffect(() => {
+  //   async function fetchProduct() {
+  //     try {
+  //       const res = await fetch('http://localhost:8000/v1/products/');
+  //       const products = await res.json();
+  //       setProducts(products);
+  //       console.log("done sir");
+  //     } catch (error) {
+  //       console.error("Failed to fetch products:", error);
+  //     }
+  //   }
+
+  //   fetchProduct();
+  // }, []);
   return (
     <main>
       <div className="grid grid-cols-[1fr_auto] border border-black rounded">

@@ -10,6 +10,7 @@ import { fetchProductById } from "@/services/productApi"
 import IncreamentDecreamentCheck from "@/components/interractivity/cartModification"
 import { Metadata } from "next";
 import ProductNotFound from "@/components/productNotFound";
+import ImageComponent from "@/components/interractivity/image";
 
 type Props = {
 	params: {
@@ -17,7 +18,9 @@ type Props = {
 	};
 };
 
-export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
+export const generateMetadata = async (
+	{ params }: Props
+): Promise<Metadata> => {
 	const product = await fetchProductById(params.productId);
 	if (!product) {
 		return {
@@ -42,12 +45,10 @@ export default async function ProductDetail(
 			product != undefined ?
 				<section className="">
 					<div className="w-[20.5rem] h-[14.5rem] relative mb-2">
-						<Image
+						<ImageComponent
 							src={product.image}
 							alt={product.name}
-							fill
-							priority
-							className="rounded object-cover" />
+							/>
 					</div>
 					<div className="flex justify-between">
 						<div className="flex gap-3" >
@@ -65,8 +66,9 @@ export default async function ProductDetail(
 					{/* Add to cart */}
 					{/* client component */}
 					<IncreamentDecreamentCheck product={product} />
-				</section> :
-					<ProductNotFound />
+				</section>
+				:
+				<ProductNotFound />
 		}
 		<ToastContainer
 			limit={1}

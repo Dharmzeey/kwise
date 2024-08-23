@@ -6,6 +6,7 @@ import HomeCarousel from "@/components/carouselSlider";
 import { useState, useEffect } from "react"
 import { Product } from "@/utils/productInterface";
 import { fetchAllProducts } from "@/services/productApi";
+import HandleProductSearch from "@/components/interractivity/productSearch";
 
 
 export default async function Home() {
@@ -28,16 +29,7 @@ export default async function Home() {
   // }, []);
   return (
     <main>
-      <div className="grid grid-cols-[1fr_auto] border border-black rounded">
-        <input type="text" placeholder="Search item..." className="p-2 border-r border-black" />
-        <div className="bg-main-color">
-          <Link href="/" >
-            <div className="p-2">
-              <FontAwesomeIcon icon={faSearch} className="text-xl text-white" />
-            </div>
-          </Link>
-        </div>
-      </div>
+      <HandleProductSearch />
       <section className="mt-6 mb-4 flex justify-center">
         <div className="w-72 h-36">
           <HomeCarousel />

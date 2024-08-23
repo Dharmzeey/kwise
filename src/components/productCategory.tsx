@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { numberWithCommas } from "@/utils/filter";
 import { Product } from "@/utils/productInterface";
+import ImageComponent from "./interractivity/image";
 
 export default function ProductCategory(
   { products, gadgetType }:
@@ -24,16 +24,15 @@ export default function ProductCategory(
             <Link key={product.id} href={`/products/${product.category}/${product.id}`}>
               <div>
                 <div className="w-full h-32 relative">
-                  <Image
+                  <ImageComponent
                     src={product.image}
                     alt={product.name}
-                    fill
-                    className="rounded object-cover"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
-                <div>{product.name}</div>
-                <div className="text-main-color text-sm">₦{numberWithCommas(product.price)}</div>
+                <div className="pt-2 " >
+                  {product.name}
+                </div>
+                <div className=" text-main-color text-sm">₦{numberWithCommas(product.price)}</div>
               </div>
             </Link>
           )

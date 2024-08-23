@@ -8,7 +8,7 @@ export default function Error({error}: {error: Error}){
     return (
         <>
         <div className="flex items-center justify-center h-[v-70]" >
-            <div className="text-2xl text-red-500">An Error Occured</div>
+            <div className="text-xl text-red-500">There was an error Fetching Products</div>
         </div>
         </>
     )

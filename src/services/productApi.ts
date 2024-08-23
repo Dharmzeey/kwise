@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Brand, Product } from '@/utils/productInterface'
-import { PRODUCTS_URL, PRODUCT_BRAND_URL, PRODUCT_BY_CATEGORY_URL, PRODUCT_DETAILS_URL } from '@/utils/urls'
+import { PRODUCTS_URL, PRODUCT_BRAND_URL, PRODUCT_BY_CATEGORY_URL, PRODUCT_DETAILS_URL, PRODUCT_SEARCH_URL } from '@/utils/urls'
 
 
 export async function fetchAllProducts() {
@@ -40,4 +40,5 @@ export async function fetchProductsByCategory(categoryName: string) {
     }
     return products;
 }
+
 

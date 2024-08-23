@@ -9,8 +9,8 @@ const ProductNotFound = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[70vh] p-4">
-      <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">Product Not Found</h1>
+    <div className="flex flex-col items-center justify-center h-[50vh] p-4">
+      <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">Product Not Found</h1>
       <p className="text-lg text-gray-600 mb-6 text-center">
         The product you requested cannot be found
       </p>
@@ -18,7 +18,7 @@ const ProductNotFound = () => {
         onClick={handleBackToShop}
         className="bg-secondary-color text-white px-6 py-3 rounded-md shadow hover:opacity-90 transition-colors duration-300"
       >
-        Back to Shop
+        Back to Home
       </button>
     </div>
   );

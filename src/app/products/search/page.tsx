@@ -27,18 +27,22 @@ export default function ProductSearchPage() {
     const searchParams = useSearchParams()
     const queryParams = searchParams.get('query');
     const [products, setProducts] = useState<Product[]>([]);
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
     useEffect(() => {
+        setProducts([])
+        setLoading(true)
         async function fetchSearchedProduct() {
             try {
                 const products = await searchProduct(queryParams);
                 if (products && products.length > 0) {
                     setProducts(products);
-                    // setLoading(false)
+                    setError(false)
+                    setLoading(false)
                 } else {
                     setError(true)
+                    setLoading(false)
                 }
 
             } catch (err) {
@@ -56,27 +60,30 @@ export default function ProductSearchPage() {
         <>
             <HandleProductSearch />
             <br />
-            {error ?
-                <ProductNotFound />
+            {loading ?
+                <Loading />
                 :
-                products.length >= 1 ?
-                    <div>
-                        <ProductSearch products={
-                            products.filter((product) => product.category == "Phones").slice(0, 10)
-                        } gadgetType="Phones" />
-                        <ProductSearch products={
-                            products.filter((product) => product.category == "Laptops").slice(0, 10)
-                        } gadgetType="Laptops" />
-                        <ProductSearch products={
-                            products.filter((product) => product.category == "Accessories").slice(0, 10)
-                        } gadgetType="Accessories" />
-                        <ProductSearch products={
-                            products.filter((product) => product.category == "Console").slice(0, 10)
-                        } gadgetType="Console" />
-
-                    </div>
+                error ?
+                    <ProductNotFound />
                     :
-                    <Loading />
+                    products.length >= 1 ?
+                        <div>
+                            <ProductSearch products={
+                                products.filter((product) => product.category == "Phones").slice(0, 10)
+                            } gadgetType="Phones" />
+                            <ProductSearch products={
+                                products.filter((product) => product.category == "Laptops").slice(0, 10)
+                            } gadgetType="Laptops" />
+                            <ProductSearch products={
+                                products.filter((product) => product.category == "Accessories").slice(0, 10)
+                            } gadgetType="Accessories" />
+                            <ProductSearch products={
+                                products.filter((product) => product.category == "Console").slice(0, 10)
+                            } gadgetType="Console" />
+
+                        </div>
+                        :
+                        <Loading />
 
             }
 

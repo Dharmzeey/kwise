@@ -52,7 +52,7 @@ export default function CartItem(
             <div>{product.name}</div>
             <b>(x{product.quantity})</b>
           </div>
-          <div>₦ {numberWithCommas(product.amount)}</div>
+          <div>₦ {numberWithCommas(product.price)}</div>
           <div className="flex justify-between">
             <div className="flex items-center shadow rounded">
               <button className="px-2 bg-main-color text-white text-sm rounded-l" onClick={decreament} >&minus;</button>

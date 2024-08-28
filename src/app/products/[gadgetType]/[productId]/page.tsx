@@ -1,7 +1,5 @@
-
-import Image from "next/image"
 import { numberWithCommas } from "@/utils/filter"
-import { Slide, toast, ToastContainer } from "react-toastify"
+import { Slide, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
 import React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -11,6 +9,7 @@ import IncreamentDecreamentCheck from "@/components/interractivity/cartModificat
 import { Metadata } from "next";
 import ProductNotFound from "@/components/productNotFound";
 import ImageComponent from "@/components/interractivity/image";
+import SimilarProducts from "@/components/similarProducts";
 
 type Props = {
 	params: {
@@ -43,6 +42,7 @@ export default async function ProductDetail(
 	return (<>
 		{
 			product != undefined ?
+				<>
 				<section className="">
 					<div className="w-[20.5rem] h-[14.5rem] relative mb-2">
 						<ImageComponent
@@ -67,6 +67,10 @@ export default async function ProductDetail(
 					{/* client component */}
 					<IncreamentDecreamentCheck product={product} />
 				</section>
+
+				 {/* similar produtcts */}
+				<SimilarProducts productId={params.productId} />
+				</>
 				:
 				<ProductNotFound />
 		}

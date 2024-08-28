@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Brand, Product } from '@/utils/productInterface'
-import { PRODUCTS_URL, PRODUCT_BRAND_URL, PRODUCT_BY_CATEGORY_URL, PRODUCT_DETAILS_URL, PRODUCT_SEARCH_URL } from '@/utils/urls'
+import { PRODUCTS_URL, PRODUCT_BRAND_URL, PRODUCT_BY_CATEGORY_URL, PRODUCT_DETAILS_URL, PRODUCT_SEARCH_URL, SIMILAR_PRODUCTS_URL } from '@/utils/urls'
 
 
 export async function fetchAllProducts() {
@@ -42,3 +42,11 @@ export async function fetchProductsByCategory(categoryName: string) {
 }
 
 
+export async function fetchSimilarProducts(productId: string) {
+    const response = await fetch(SIMILAR_PRODUCTS_URL(productId))
+    const products: Product[] = await response.json()
+    if (!response.ok) {
+        throw new Error('Failed to fetch products');
+    }
+    return products;
+}

@@ -1,0 +1,8 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "files.autoSave": "afterDelay",
+    "editor.codeActions.triggerOnFocusChange": true,
+    "files.autoSaveDelay": 100
+}

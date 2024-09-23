@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { numberWithCommas } from "@/utils/filter";
 import { Product } from "@/utils/productInterface";
-import ImageComponent from "./interractivity/image";
+import ImageComponent from "../interractivity/image";
 
 export default function ProductSearchCategory(
 	{ products, gadgetType }:

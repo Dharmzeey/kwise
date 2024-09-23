@@ -1,10 +1,11 @@
 import "server-only";
 
 import { Brand, Product } from '@/utils/productInterface'
-import { PRODUCTS_URL, PRODUCT_BRAND_URL, PRODUCT_BY_CATEGORY_URL, PRODUCT_DETAILS_URL, PRODUCT_SEARCH_URL, SIMILAR_PRODUCTS_URL } from '@/utils/urls'
+import {  PRODUCTS_URL, PRODUCT_BRAND_URL, PRODUCT_BY_CATEGORY_URL, PRODUCT_DETAILS_URL, PRODUCT_SEARCH_URL, RECENTLY_VIEWED_URL, SIMILAR_PRODUCTS_URL  } from "@/utils/urls/productUrls";
 
 
 export async function fetchAllProducts() {
+    console.log(PRODUCTS_URL)
     const response = await fetch(PRODUCTS_URL);
     const products: Product[] = await response.json()
     if (!response.ok) {

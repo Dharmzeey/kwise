@@ -1,17 +1,26 @@
 "use client";
 
 import { createUser } from "@/actions/authActions";
-import { useFormStatus, useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 import InputFIeld from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/button";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const initialState = {
   message: "",
 };
 
-export default function SignupForm() {
+export default function SignupPage() {
   const [state, formAction] = useFormState(createUser, initialState);
+  const router = useRouter();
+  useEffect(() => {
+    if (state.message === "Sign up successful") {
+      // the message will come from authApi through authAction
+      router.push("/email-verification/confirm");
+    }
+  }, [state]);
 
   return (
     <>
@@ -61,9 +70,6 @@ export default function SignupForm() {
             Login
           </Link>
         </p>
-        <Link href="/password/forgot" className="text-blue-700 underline">
-          Forgort Password
-        </Link>
       </div>
     </>
   );

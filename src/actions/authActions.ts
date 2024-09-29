@@ -1,7 +1,12 @@
 "use server";
 
-import { createUserApi, verifyCodeApi } from "@/services/authApis";
+import {
+  createUserApi,
+  loginUserApi,
+  verifyCodeApi,
+} from "@/services/authApis";
 import { z } from "zod";
+
 
 export async function createUser(
   prevState: { message: string },
@@ -38,7 +43,6 @@ export async function createUser(
   }
 
   const data = parse.data;
-
   return createUserApi(data);
 }
 
@@ -60,5 +64,31 @@ export async function verifyCode(
     };
   }
   const data = parse.data;
-  return verifyCodeApi(data)
+  return verifyCodeApi(data);
+}
+
+export async function loginUser(
+  prevState: { message: string },
+  formData: FormData
+) {
+  const schema = z.object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+  });
+
+  const parse = schema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!parse.success) {
+    console.log(parse.error.message);
+    return {
+      message: `Failed to sign up. Please check the input. ${parse.error.message}`,
+    };
+  }
+
+  const data = parse.data;
+
+  return loginUserApi(data);
 }

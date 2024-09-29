@@ -1,4 +1,4 @@
-import { Product } from "@/utils/productInterface";
+import { Product } from "@/types/productInterfaces";
 import { numberWithCommas } from "@/utils/filter";
 import ImageComponent from "../interractivity/image";
 

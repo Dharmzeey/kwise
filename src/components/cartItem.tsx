@@ -3,42 +3,41 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
-import { ProductWIthQuantity } from "@/utils/productInterface";
+import { ProductWIthQuantity } from "@/types/productInterfaces";
 import { numberWithCommas } from "@/utils/filter";
 
-export default function CartItem(
-  { product }: {
-    product: ProductWIthQuantity
-  }
-) {
-
+export default function CartItem({
+  product,
+}: {
+  product: ProductWIthQuantity;
+}) {
   const productCount = product?.stock;
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(1);
 
   const increament = () => {
     if (productCount != undefined && count < productCount) {
-      setCount(count + 1)
+      setCount(count + 1);
     } else {
       toast.info("Maximum available product reached", {
         position: "top-center",
         className: "my-toast",
       });
     }
-  }
+  };
   const decreament = () => {
     if (productCount != undefined && count > 1) {
-      setCount(count - 1)
+      setCount(count - 1);
     } else {
       toast.info("Cannot go below 1 item", {
         position: "top-center",
         className: "my-toast",
       });
     }
-  }
+  };
 
   return (
     <>
-      <div className="grid grid-cols-[auto_1fr] mb-2 shadow" >
+      <div className="grid grid-cols-[auto_1fr] mb-2 shadow">
         <div className="w-[8.5rem] h-[8.5rem] relative">
           <Image
             src={product.image}
@@ -55,21 +54,36 @@ export default function CartItem(
           <div>₦ {numberWithCommas(product.price)}</div>
           <div className="flex justify-between">
             <div className="flex items-center shadow rounded">
-              <button className="px-2 bg-main-color text-white text-sm rounded-l" onClick={decreament} >&minus;</button>
+              <button
+                className="px-2 bg-main-color text-white text-sm rounded-l"
+                onClick={decreament}
+              >
+                &minus;
+              </button>
               <span className="px-3">{count}</span>
-              <button className="px-2 bg-main-color text-white text-sm rounded-r" onClick={increament}  >&#43;</button>
+              <button
+                className="px-2 bg-main-color text-white text-sm rounded-r"
+                onClick={increament}
+              >
+                &#43;
+              </button>
             </div>
             <div className="self-start shadow rounded">
-              <button className="px-2 bg-main-color text-white text-sm text-bold uppercase rounded" >Update</button>
+              <button className="px-2 bg-main-color text-white text-sm text-bold uppercase rounded">
+                Update
+              </button>
             </div>
             <div>
               <button type="button">
-                <FontAwesomeIcon icon={faTrash} className="text-main-color text-[18px]" />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="text-main-color text-[18px]"
+                />
               </button>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

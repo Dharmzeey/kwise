@@ -1,8 +1,8 @@
 "use client";
 
-import { Product } from "@/utils/productInterface";
+import { Product } from "@/types/productInterfaces";
 import { useSearchParams } from "next/navigation";
-import { PRODUCT_SEARCH_URL } from "@/utils/urls/productUrls"; 
+import { PRODUCT_SEARCH_URL } from "@/utils/urls/productUrls";
 import { useEffect, useState } from "react";
 import ProductSearch from "@/components/products/productSearch";
 import HandleProductSearch from "@/components/interractivity/productSearch";

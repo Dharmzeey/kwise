@@ -22,5 +22,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!login|signup|api|_next/static|_next/image|images|favicon.ico).*)"],
+  matcher: ["/((?!login|signup|api|_next/static|_next/image|images|favicon.ico|).*)"],
 };
+
+
+// include the path which should trigger the middleware
+// whitelist
+// orders, pro (this should not show if not logged in)

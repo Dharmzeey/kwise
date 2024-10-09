@@ -1,12 +1,16 @@
 "use server";
 
 import {
+  createNewPasswordApi,
   createUserApi,
+  forgotPasswordApi,
   loginUserApi,
   verifyCodeApi,
+  verifyResetCodeApi,
 } from "@/services/authApis";
+import { ApiResponse } from "@/types/apiResponse";
+import { parse } from "path";
 import { z } from "zod";
-
 
 export async function createUser(
   prevState: { message: string },
@@ -19,10 +23,10 @@ export async function createUser(
         .string()
         .min(10, "Invalid phone number")
         .max(11, "11 digit phone number required"),
-      password: z.string().min(6, "Password must be at least 6 characters"),
+      password: z.string().min(8, "Password must be at least 8 characters"),
       confirm_password: z
         .string()
-        .min(6, "Password must be at least 6 characters"),
+        .min(8, "Password must be at least 8 characters"),
     })
     .refine((data) => data.password === data.confirm_password, {
       message: "Passwords do not match",
@@ -84,11 +88,92 @@ export async function loginUser(
   if (!parse.success) {
     console.log(parse.error.message);
     return {
-      message: `Failed to sign up. Please check the input. ${parse.error.message}`,
+      message: `Failed to login. Please check the input. ${parse.error.message}`,
     };
   }
 
   const data = parse.data;
 
   return loginUserApi(data);
+}
+
+export async function forgotPassword(
+  prevState: ApiResponse,
+  formData: FormData
+) {
+  const schema = z.object({
+    email: z.string().email("Invalid email address"),
+  });
+
+  const parse = schema.safeParse({
+    email: formData.get("email"),
+  });
+
+  if (!parse.success) {
+    return {
+      message: `Forgort password request failed. ${parse.error.message}`,
+    };
+  }
+
+  const data = parse.data;
+  return forgotPasswordApi(data);
+}
+
+export async function verifyResetCode(
+  prevState: ApiResponse,
+  formData: FormData
+) {
+  const schema = z.object({
+    email: z.string().email("Invalid email address"),
+    reset_token: z.string(),
+    email_pin: z.string().length(6, "Invalid pin"),
+  });
+
+  const parse = schema.safeParse({
+    email: formData.get("reset-email"),
+    reset_token: formData.get("reset-token"),
+    email_pin: formData.get("email-pin"),
+  });
+
+  if (!parse.success) {
+    return {
+      message: `Pin verification Invalid. Please check the input. ${parse.error.message}`,
+    };
+  }
+  const data = parse.data;
+  return verifyResetCodeApi(data);
+}
+
+
+export async function createNewPassword(
+  prevState: ApiResponse,
+  formData: FormData
+) {
+  const schema = z.object({
+    email: z.string().email("Invalid email address"),
+    reset_token: z.string(),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirm_password: z
+      .string()
+      .min(8, "Password must be at least 8 characters"),
+  })
+    .refine((data) => data.password === data.confirm_password, {
+      message: "Passwords do not match",
+      path: ["confirm_password"],
+    });
+  
+  const parse = schema.safeParse({
+    email: formData.get("reset-email"),
+    reset_token: formData.get("reset-token"),
+    password: formData.get("password"),
+    confirm_password: formData.get("confirm-password")
+  })
+
+  if (!parse.success) {
+    return {
+      error: `Password reset operation failed ${parse.error.message}`
+    }
+  }
+  const data = parse.data;
+  return createNewPasswordApi(data)
 }

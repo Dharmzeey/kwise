@@ -4,6 +4,8 @@ type InputProp = {
   inputType: string;
   inputId: string;
   inputName: string;
+  inputValue?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function InputFIeld(inputProp: InputProp) {
@@ -18,6 +20,8 @@ function InputFIeld(inputProp: InputProp) {
           name={inputProp.inputName}
           required
           className="px-2 py-2 border border-[#AEB1B9] w-full rounded"
+          value={inputProp.inputValue}
+          onChange={inputProp.onChange}
         />
       </div>
     </>

@@ -1,7 +1,7 @@
 "use client";
 
 import { verifyCode, verifyResetCode } from "@/actions/authActions";
-import { SubmitButton } from "@/components/button";
+import { SubmitButton } from "@/components/submitButton";
 import InputFIeld from "@/components/interractivity/input";
 import { forgotPasswordApi, resendEmailVerificationApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
@@ -99,6 +99,7 @@ export default function ResetPasswordCode() {
                         inputType="text"
                         inputId="email-pin"
                         inputName="email-pin"
+                        required
                     />
                     <div className="text-right">
                         <button

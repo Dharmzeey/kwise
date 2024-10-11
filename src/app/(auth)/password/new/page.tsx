@@ -1,7 +1,7 @@
 'use client';
 
 import { createNewPassword } from "@/actions/authActions";
-import { SubmitButton } from "@/components/button";
+import { SubmitButton } from "@/components/submitButton";
 import InputFIeld from "@/components/interractivity/input";
 import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
@@ -66,6 +66,7 @@ export default function CreateNewPassword() {
                     inputType="password"
                     inputId="password"
                     inputName="password"
+                    required
                 />
 
                 <InputFIeld
@@ -74,6 +75,7 @@ export default function CreateNewPassword() {
                     inputType="password"
                     inputId="confirm-password"
                     inputName="confirm-password"
+                    required
                 />
                 {/* Include hidden inputs for resetEmail and resetToken */}
                 <input type="hidden" name="reset-email" value={resetEmail || ""} />

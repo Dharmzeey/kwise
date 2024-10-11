@@ -1,7 +1,7 @@
 "use client";
 
 import { forgotPassword } from "@/actions/authActions";
-import { SubmitButton } from "@/components/button";
+import { SubmitButton } from "@/components/submitButton";
 import InputFIeld from "@/components/interractivity/input";
 import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ const initialState: ApiResponse = {
 
 export default function ForgotPassword() {
   const [state, formAction] = useFormState(forgotPassword, initialState);
-  const [email, setEmail] = useState(""); 
+  const [email, setEmail] = useState("");
   const router = useRouter()
   useEffect(() => {
     if (state.message === "Password reset PIN sent to email") {
@@ -45,7 +45,8 @@ export default function ForgotPassword() {
           inputType="email"
           inputId="email"
           inputName="email"
-          inputValue={email} 
+          inputValue={email}
+          required
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         />
 

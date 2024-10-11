@@ -8,3 +8,4 @@ export const LOGIN = `${BASE_URL}/authentication/login/`;
 export const FORGOT_PASSWORD = `${BASE_URL}/authentication/password/forgot/`;
 export const RESET_PASSWORD = `${BASE_URL}/authentication/password/reset/`;
 export const CREATE_NEW_PASSWORD = `${BASE_URL}/authentication/password/new/`;
+export const LOGOUT = `${BASE_URL}/authentication/logout/`;

@@ -9,11 +9,10 @@ import {
   verifyResetCodeApi,
 } from "@/services/authApis";
 import { ApiResponse } from "@/types/apiResponse";
-import { parse } from "path";
 import { z } from "zod";
 
 export async function createUser(
-  prevState: { message: string },
+  prevState: ApiResponse,
   formData: FormData
 ) {
   const schema = z
@@ -42,7 +41,7 @@ export async function createUser(
 
   if (!parse.success) {
     return {
-      message: `Failed to sign up. Please check the input. ${parse.error.message}`,
+      error: `Failed to sign up. Please check the input. ${parse.error.message}`,
     };
   }
 
@@ -51,7 +50,7 @@ export async function createUser(
 }
 
 export async function verifyCode(
-  prevState: { message: string },
+  prevState: ApiResponse,
   formData: FormData
 ) {
   const schema = z.object({
@@ -72,7 +71,7 @@ export async function verifyCode(
 }
 
 export async function loginUser(
-  prevState: { message: string },
+  prevState: ApiResponse,
   formData: FormData
 ) {
   const schema = z.object({

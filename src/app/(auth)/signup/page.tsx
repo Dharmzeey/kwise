@@ -4,7 +4,7 @@ import { createUser } from "@/actions/authActions";
 import { useFormState } from "react-dom";
 import InputFIeld from "@/components/interractivity/input";
 import Link from "next/link";
-import { SubmitButton } from "@/components/button";
+import { SubmitButton } from "@/components/submitButton";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -31,6 +31,7 @@ export default function SignupPage() {
           inputType="email"
           inputId="email"
           inputName="email"
+          required
         />
         <InputFIeld
           inputFor="phone-number"
@@ -38,6 +39,7 @@ export default function SignupPage() {
           inputType="text"
           inputId="phone-number"
           inputName="phone-number"
+          required
         />
         <InputFIeld
           inputFor="password"
@@ -45,6 +47,7 @@ export default function SignupPage() {
           inputType="password"
           inputId="password"
           inputName="password"
+          required
         />
         <InputFIeld
           inputFor="confirm-password"
@@ -52,6 +55,7 @@ export default function SignupPage() {
           inputType="password"
           inputId="confirm-password"
           inputName="confirm-password"
+          required
         />
 
         <SubmitButton
@@ -60,7 +64,7 @@ export default function SignupPage() {
         />
         {/* Display feedback message */}
         <p aria-live="polite" className="sr-onl text-red-600" role="status">
-          {state?.message}
+          {state.message} {state.error}
         </p>
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">

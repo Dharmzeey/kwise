@@ -1,11 +1,11 @@
 import { useFormStatus } from "react-dom";
 
-type ButtonProp = {
+type SubmitButtonProp = {
   buttonText: string;
   pendingText: string;
 };
 
-export function SubmitButton(buttonProp: ButtonProp) {
+export function SubmitButton(buttonProp: SubmitButtonProp) {
   const { pending } = useFormStatus();
 
   return (

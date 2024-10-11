@@ -1,10 +1,18 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faBars, faX } from "@fortawesome/free-solid-svg-icons";
+import Drawer from "./drawer";
+import { useState } from "react";
 
 export default function Header() {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen)
+    }
     return (
         <header className="p-4 pb-0">
             <div className="flex justify-between items-center">
@@ -16,13 +24,14 @@ export default function Header() {
                         height={35}
                     />
                 </Link>
-                <div className="flex gap-5">
-                    <Link href="/cart">
+                <div className="relative">
+                    <Link href="/cart" className="mr-12">
                         <FontAwesomeIcon icon={faCartShopping} className="text-xl " />
                     </Link>
-                    <Link href="/">
-                        <FontAwesomeIcon icon={faBars} className="text-xl" />
-                    </Link>
+                        <button onClick={toggleMenu} className="absolute z-50 right-2">
+                            <FontAwesomeIcon icon={menuOpen ? faX : faBars} className="text-xl" />
+                        </button>
+                    { menuOpen && <Drawer />}
 
                 </div>
             </div>

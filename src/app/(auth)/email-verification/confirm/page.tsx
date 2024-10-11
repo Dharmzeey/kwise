@@ -1,7 +1,7 @@
 "use client";
 
 import { verifyCode } from "@/actions/authActions";
-import { SubmitButton } from "@/components/button";
+import { SubmitButton } from "@/components/submitButton";
 import InputFIeld from "@/components/interractivity/input";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
@@ -69,14 +69,14 @@ export default function EmailVerification() {
             inputType="text"
             inputId="email-pin"
             inputName="email-pin"
+            required
           />
           <div className="text-right">
             <button
               disabled={resetEmailCount > 0} // Disable button when countdown is active
               type="button"
-              className={`text-blue-700 underline ${
-                resetEmailCount > 0 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`text-blue-700 underline ${resetEmailCount > 0 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               onClick={handleResendEmailVerification}
             >
               Resend code
@@ -93,6 +93,7 @@ export default function EmailVerification() {
             inputType="text"
             inputId="email-pin"
             inputName="email-pin"
+            required
           />
           <div className="text-right">
             <button
@@ -111,7 +112,7 @@ export default function EmailVerification() {
         <SubmitButton pendingText="Verifying..." buttonText="verify code" />
         {/* Display feedback message */}
         <p aria-live="polite" className="sr-onl text-red-600" role="status">
-          {state?.message}
+          {state?.message} {state.error}
         </p>
       </form>
       <ToastContainer

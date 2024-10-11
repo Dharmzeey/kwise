@@ -1,11 +1,11 @@
 "use client";
 
 import { loginUser } from "@/actions/authActions";
-import { useFormStatus, useFormState } from "react-dom";
+import { useFormState } from "react-dom";
 import InputFIeld from "@/components/interractivity/input";
 import Link from "next/link";
-import { SubmitButton } from "@/components/button";
-import { useRouter } from "next/navigation";
+import { SubmitButton } from "@/components/submitButton";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 const initialState = {
@@ -14,11 +14,17 @@ const initialState = {
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryParams = searchParams.get("callbackUrl");
   const [state, formAction] = useFormState(loginUser, initialState);
   useEffect(() => {
     if (state.message === "Login successful") {
       // the message will come from authApi through authAction
-      router.push("/");
+      if (searchParams && queryParams) {
+        router.push(queryParams)
+      } else {
+        router.push("/");
+      }
     }
   }, [state]);
 
@@ -31,6 +37,7 @@ export default function LoginPage() {
           inputType="email"
           inputId="email"
           inputName="email"
+          required
         />
         <InputFIeld
           inputFor="password"
@@ -38,6 +45,7 @@ export default function LoginPage() {
           inputType="password"
           inputId="password"
           inputName="password"
+          required
         />
 
         <SubmitButton pendingText="Logging in..." buttonText="LOGIN" />

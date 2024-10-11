@@ -1,5 +1,5 @@
 type ApiResponse<T = any> = {
-    // success: boolean;
+    status?: number;
     message?: string;
     token?: string;
     error?: string;

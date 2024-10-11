@@ -4,7 +4,8 @@ type InputProp = {
   inputType: string;
   inputId: string;
   inputName: string;
-  inputValue?: string
+  inputValue?: string;
+  required?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -18,7 +19,8 @@ function InputFIeld(inputProp: InputProp) {
           type={inputProp.inputType}
           id={inputProp.inputId}
           name={inputProp.inputName}
-          required
+          // will be required by default, it will be turned off when the component is invoked
+          required={inputProp.required}
           className="px-2 py-2 border border-[#AEB1B9] w-full rounded"
           value={inputProp.inputValue}
           onChange={inputProp.onChange}

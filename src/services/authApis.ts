@@ -1,6 +1,5 @@
 "use server";
 
-import { ACCESS_TOKEN_NAME, MAX_AGE } from "@/utils/constants";
 import {
     CONFIRM_EMAIL_VERIFICATION,
     CREATE_NEW_PASSWORD,
@@ -10,60 +9,13 @@ import {
     SEND_EMAIL_VERIFICATION,
     SIGNUP,
 } from "@/utils/urls/authUrls";
-import { cookies } from "next/headers";
 import { handleErrorsResponse } from "./responseHandler";
-import { ApiResponse } from "@/types/apiResponse";
+import { ApiResponse, ForgotPasswordData } from "@/types/apiResponse";
+import { fetchAccessTokenCookie, handleAccessToken, handleRefreshToken, removeAllTokens } from "@/utils/cookieUtils";
+import { CreateUserData, PinVerificationData, LoginUserData, ResetPasswordPinData, CreateNewPasswordData } from "@/types/authInterfaces";
 
-type CreateUserData = {
-    email: string;
-    phone_number: string;
-    password: string;
-    confirm_password: string;
-};
 
-type LoginUserData = {
-    email: string;
-    password: string;
-};
-
-type PinVerificationData = {
-    email_pin: string,
-};
-
-type ForgotPasswordData = {
-    email: string;
-};
-
-type ResetPasswordPinData = {
-    email: string,
-    reset_token: string,
-    email_pin: string;
-}
-
-type CreateNewPasswordData = {
-    email: string;
-    reset_token: string,
-    password: string,
-    confirm_password: string
-}
-
-function handleAccessToken(token: string) {
-    cookies().set({
-        name: ACCESS_TOKEN_NAME,
-        value: token,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: MAX_AGE,
-        path: "/",
-    });
-}
-
-function fetchCookie() {
-    const cookieStore = cookies();
-    return cookieStore.get(ACCESS_TOKEN_NAME);
-}
-
-export async function createUserApi(data: CreateUserData) {
+export async function createUserApi(data: CreateUserData): Promise<ApiResponse> {
     try {
         const response = await fetch(SIGNUP, {
             method: "POST",
@@ -76,32 +28,26 @@ export async function createUserApi(data: CreateUserData) {
         switch (response.status) {
             case 409:
                 return {
-                    message: "User with this email or Phone Number already exists.",
+                    error: "User with this email or Phone Number already exists.",
                 };
             case 201:
-                const token = responseBody.access_token;
-                handleAccessToken(token);
-                // serialize(COOKIE_NAME, token, {
-                //   httpOnly: true,
-                //   secure: process.env.NODE_ENV === "production",
-                //   sameSite: "strict",
-                //   maxAge: MAX_AGE,
-                //   path: "/",
-                // });
-                // permanentRedirect('/email-verification/confirm');
+                const access_token = responseBody.access_token;
+                const refresh_token = responseBody.refresh_token;
+                handleAccessToken(access_token);
+                handleRefreshToken(refresh_token);
                 return { message: "Sign up successful" };
             default:
-                return { message: "Failed to sign up." };
+                return { error: "Failed to sign up." };
         }
     } catch (error) {
-        return { message: `An error occurred during signup. ${error}` };
+        return { error: `An error occurred during signup. ${error}` };
     }
 }
 
 // code verification on signup
-export async function verifyCodeApi(data: PinVerificationData) {
+export async function verifyCodeApi(data: PinVerificationData): Promise<ApiResponse> {
     try {
-        const token = fetchCookie();
+        const token = fetchAccessTokenCookie();
         const response = await fetch(CONFIRM_EMAIL_VERIFICATION, {
             method: "POST",
             headers: {
@@ -114,21 +60,21 @@ export async function verifyCodeApi(data: PinVerificationData) {
         switch (response.status) {
             case 401:
                 return {
-                    message:
+                    error:
                         "Unauthorized access request token again, this is for developer to re-fresh refresh token or ensure token is sent",
                 };
             case 410:
-                return { message: "Verification Pin Expired" };
+                return { error: "Verification Pin Expired" };
             case 403:
-                return { message: "Invalid PIN" };
+                return { error: "Invalid PIN" };
             case 404:
-                return { message: "PIN has not been sent" };
+                return { error: "PIN has not been sent" };
             case 400:
-                return { message: "Invalid PIN input" };
+                return { error: "Invalid PIN input" };
             case 200:
                 return { message: "Email verified successfully" };
             default:
-                return { message: "Email verification failed" };
+                return { error: "Email verification failed" };
         }
     } catch (error) {
         return { message: "An error occurred during pin verification." };
@@ -137,7 +83,7 @@ export async function verifyCodeApi(data: PinVerificationData) {
 
 export async function resendEmailVerificationApi() {
     try {
-        const token = fetchCookie();
+        const token = fetchAccessTokenCookie();
         const response = await fetch(SEND_EMAIL_VERIFICATION, {
             method: "POST",
             headers: {
@@ -149,17 +95,17 @@ export async function resendEmailVerificationApi() {
             case 201:
                 return { message: "Email has already been verified" };
             case 409:
-                return { message: "Email Verification already sent" };
+                return { error: "Email Verification already sent" };
             case 200:
                 return { message: "verification PIN sent to email." };
             case 401:
-                return { message: "You need to login first" };
+                return { error: "You need to login first" };
             default:
                 console.log(response.status);
                 return { message: "Email request failed" };
         }
     } catch (error) {
-        return { message: "An error occurred during PIN request." };
+        return { error: "An error occurred during PIN request." };
     }
 }
 
@@ -176,17 +122,20 @@ export async function loginUserApi(data: LoginUserData) {
         switch (response.status) {
             case 401:
                 return {
-                    message: "Invalid Login Credentials.",
+                    error: "Invalid Login Credentials.",
                 };
             case 404:
                 return {
-                    message: "User does not exists",
+                    error: "User does not exists",
                 };
             case 200:
-                handleAccessToken(responseBody.access_token);
+                const access_token = responseBody.access_token;
+                const refresh_token = responseBody.refresh_token;
+                handleAccessToken(access_token);
+                handleRefreshToken(refresh_token);
                 return { message: "Login successful" };
             default:
-                return { message: "Failed to Log user in." };
+                return { error: "Failed to Log user in." };
         }
     } catch (error) {
         console.log(error);
@@ -208,14 +157,14 @@ export async function forgotPasswordApi(data: ForgotPasswordData): Promise<ApiRe
             case 200:
                 return { message: "Password reset PIN sent to email", token: responseBody.reset_token };
             case 409:
-                return { message: "password reset PIN already sent" };
+                return { error: "password reset PIN already sent" };
             case 404:
-                return { message: "User information not found" };
+                return { error: "User information not found" };
             case 400:
                 return handleErrorsResponse(responseBody) // this will help concatenate the errors into str 
             default:
                 console.log(response.status);
-                return { message: "Email request failed" };
+                return { error: "Email request failed" };
         }
     } catch (error) {
         return { error: "An error occurred during PIN request." };
@@ -236,18 +185,18 @@ export async function verifyResetCodeApi(data: ResetPasswordPinData): Promise<Ap
         const responseBody = await response.json();
         switch (response.status) {
             case 401:
-                return { message: "Password reset PIN expired" };
+                return { error: "Password reset PIN expired" };
             case 403:
-                return { message: responseBody.error };
+                return { error: responseBody.error };
             case 404:
-                return { message: "password reset PIN has not been sent" };
+                return { error: "password reset PIN has not been sent" };
             case 400:
                 console.log(handleErrorsResponse(responseBody))
                 return handleErrorsResponse(responseBody) // this will help concatenate the errors into str 
             case 200:
                 return { message: "Password reset PIN verified successfully", token: responseBody.reset_token };
             default:
-                return { message: "Email verification failed" };
+                return { error: "Email verification failed" };
         }
     } catch (error) {
         return { error: "An error occurred during pin verification." };
@@ -280,4 +229,9 @@ export async function createNewPasswordApi(data: CreateNewPasswordData): Promise
     } catch (error) {
         return { error: "An error occurred during password reset" };
     }
+}
+
+
+export async function logout() {
+    removeAllTokens()
 }

@@ -10,10 +10,10 @@ type UserProfileData = {
 
 type UserAddressData = {
     state: string;
-    state_name: string;
+    state_name?: string;
     city_town: string;
     lga: string;
-    lga_name: string;
+    lga_name?: string;
     prominent_motor_park?: string;
     landmark_signatory_place?: string;
     address: string;

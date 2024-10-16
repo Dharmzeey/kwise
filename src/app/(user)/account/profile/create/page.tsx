@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import InputFIeld from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import { SubmitButton } from "@/components/submitButton";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ export default function CreateUserProfile() {
             // this means token is absent
             router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         } else if (state.status === 403) {
-            verifyUser()            
+            verifyUser()
         }
     }, [state]);
 
@@ -36,7 +36,7 @@ export default function CreateUserProfile() {
         <>
             <h1 className="text-[372F2F] font-bold" >Basic Information</h1>
             <form action={formAction}>
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="first-name"
                     inputText="First Name"
                     inputType="text"
@@ -45,7 +45,7 @@ export default function CreateUserProfile() {
                     required
                 />
 
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="last-name"
                     inputText="Last Name"
                     inputType="text"
@@ -54,7 +54,7 @@ export default function CreateUserProfile() {
                     required
                 />
 
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="other-name"
                     inputText="Other Name"
                     inputType="text"
@@ -62,14 +62,14 @@ export default function CreateUserProfile() {
                     inputName="other-name"
                 />
 
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="alternative-email"
                     inputText="Alternative Email"
                     inputType="email"
                     inputId="alternative-email"
                     inputName="alternative-email"
                 />
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="alternative-phone-number"
                     inputText="Alternative Phone Number"
                     inputType="text"
@@ -77,7 +77,7 @@ export default function CreateUserProfile() {
                     inputName="alternative-phone-number"
                 />
 
-                <SubmitButton pendingText="Creating in..." buttonText="CREATE PROFILE" />
+                <SubmitButton pendingText="Creating..." buttonText="CREATE PROFILE" />
                 {/* Display feedback message */}
                 <p
                     aria-live="polite"

@@ -21,6 +21,7 @@ const config: Config = {
         'error-color': '#FF0000',
         'footer-color': '#81ADFE',
         'border-color': '#729DED',
+        'input-border-color': '#AEB1B9',
         'outline-color': '#020e4286'
       }
     },

@@ -2,7 +2,7 @@
 
 import { verifyCode, verifyResetCode } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
-import InputFIeld from "@/components/interractivity/input";
+import EditableInputFIeld from "@/components/interractivity/input";
 import { forgotPasswordApi, resendEmailVerificationApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -93,7 +93,7 @@ export default function ResetPasswordCode() {
             <form action={formAction}>
                 {/* Email PIN input */}
                 <div>
-                    <InputFIeld
+                    <EditableInputFIeld
                         inputFor="email-pin"
                         inputText="Code Sent to Email"
                         inputType="text"

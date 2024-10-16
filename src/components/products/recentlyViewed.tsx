@@ -16,7 +16,6 @@ export default function RecentlyViewed({ productId }: Props) {
             const viewedProducts = localStorage.getItem("recentlyViewed");
             if (viewedProducts) {
                 const listViewedProducts: string[] = JSON.parse(viewedProducts);
-                console.log(listViewedProducts);
                 const response = await fetch(RECENTLY_VIEWED_URL(listViewedProducts));
                 const products: Product[] = await response.json();
                 if (!response.ok) {

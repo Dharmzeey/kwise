@@ -2,7 +2,7 @@
 
 import { loginUser } from "@/actions/authActions";
 import { useFormState } from "react-dom";
-import InputFIeld from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -31,7 +31,7 @@ export default function LoginPage() {
   return (
     <>
       <form action={formAction}>
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="email"
           inputText="Email"
           inputType="email"
@@ -39,7 +39,7 @@ export default function LoginPage() {
           inputName="email"
           required
         />
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="password"
           inputText="Password"
           inputType="password"
@@ -55,7 +55,7 @@ export default function LoginPage() {
           className="sr-o text-red-600 text-center"
           role="status"
         >
-          {state.message}
+          {state.message} {state.error}
         </p>
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">

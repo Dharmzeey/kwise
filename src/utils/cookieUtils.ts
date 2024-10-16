@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, MAX_AGE, REFRESH_TOKEN_NAME } from "./constants";
+import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE } from "./constants";
 
 
 function handleAccessToken(token: string) {
@@ -11,9 +11,10 @@ function handleAccessToken(token: string) {
         httpOnly: true,
         // secure: process.env.NODE_ENV === "production",
         secure: true,
-        maxAge: MAX_AGE,
+        maxAge: ACCESS_TOKEN_MAX_AGE,
         path: "/",
     });
+    console.log("comple")
 }
 
 function handleRefreshToken(token: string) {
@@ -22,7 +23,7 @@ function handleRefreshToken(token: string) {
         value: token,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: MAX_AGE,
+        maxAge: REFRESH_TOKEN_MAX_AGE,
         path: "/",
     });
     saveAthenticatedUser("U_I_U") // User is AUthenticated, I will change later
@@ -35,7 +36,7 @@ function saveAthenticatedUser(token: string) {
         value: token,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: MAX_AGE,
+        maxAge: ACCESS_TOKEN_MAX_AGE,
         path: "/",
     });
 }
@@ -57,4 +58,4 @@ function removeAllTokens() {
     cookieStore.delete(REFRESH_TOKEN_NAME)
     cookieStore.delete(AUTHENTICATED_USER)
 }
-export {handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens}
+export { handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens }

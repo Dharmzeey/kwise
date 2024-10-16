@@ -2,7 +2,7 @@
 
 import { createNewPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
-import InputFIeld from "@/components/interractivity/input";
+import EditableInputFIeld from "@/components/interractivity/input";
 import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -60,7 +60,7 @@ export default function CreateNewPassword() {
     return (
         <>
             <form action={formAction}>
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="password"
                     inputText="New Password"
                     inputType="password"
@@ -69,7 +69,7 @@ export default function CreateNewPassword() {
                     required
                 />
 
-                <InputFIeld
+                <EditableInputFIeld
                     inputFor="confirm-password"
                     inputText="Confirm Password"
                     inputType="password"

@@ -2,7 +2,7 @@
 
 import { verifyCode } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
-import InputFIeld from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -63,7 +63,7 @@ export default function EmailVerification() {
       <form action={formAction}>
         {/* email */}
         <div>
-          <InputFIeld
+          <EditableInputFIeld
             inputFor="email-pin"
             inputText="Code Sent to Email"
             inputType="text"

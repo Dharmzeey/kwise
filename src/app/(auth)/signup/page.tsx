@@ -2,7 +2,7 @@
 
 import { createUser } from "@/actions/authActions";
 import { useFormState } from "react-dom";
-import InputFIeld from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
 import { useEffect } from "react";
@@ -25,7 +25,7 @@ export default function SignupPage() {
   return (
     <>
       <form action={formAction}>
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="email"
           inputText="Email"
           inputType="email"
@@ -33,7 +33,7 @@ export default function SignupPage() {
           inputName="email"
           required
         />
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="phone-number"
           inputText="Phone Number"
           inputType="text"
@@ -41,7 +41,7 @@ export default function SignupPage() {
           inputName="phone-number"
           required
         />
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="password"
           inputText="Password"
           inputType="password"
@@ -49,7 +49,7 @@ export default function SignupPage() {
           inputName="password"
           required
         />
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="confirm-password"
           inputText="Confirm Password"
           inputType="password"

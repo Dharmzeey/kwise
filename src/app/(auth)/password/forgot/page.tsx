@@ -2,7 +2,7 @@
 
 import { forgotPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
-import InputFIeld from "@/components/interractivity/input";
+import EditableInputFIeld from "@/components/interractivity/input";
 import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -39,7 +39,7 @@ export default function ForgotPassword() {
   return (
     <>
       <form action={formAction}>
-        <InputFIeld
+        <EditableInputFIeld
           inputFor="email"
           inputText="Email"
           inputType="email"

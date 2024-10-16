@@ -109,7 +109,7 @@ export async function resendEmailVerificationApi() {
     }
 }
 
-export async function loginUserApi(data: LoginUserData) {
+export async function loginUserApi(data: LoginUserData): Promise<ApiResponse> {
     try {
         const response = await fetch(LOGIN, {
             method: "POST",

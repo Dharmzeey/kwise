@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionButton } from "@/components/actionButton";
+import { ActionButton } from "@/components/actionComponents";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { verifyUserInfoApi } from "@/services/userApis";
 import { usePathname, useRouter } from "next/navigation";

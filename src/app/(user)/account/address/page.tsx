@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionButton } from "@/components/actionButton";
+import { ActionButton } from "@/components/actionComponents";
 import { ViewingInputField } from "@/components/interractivity/input";
 import { retrieveUserAddressApi, retrieveUserInfoApi } from "@/services/userApis";
 import { UserAddressData, UserProfileData } from "@/types/userInterfaces";
@@ -23,7 +23,7 @@ export default function UserAddress() {
         }
         fetchUserAddress()
     }, [])
-    
+
     const handleEditAddressClick = async () => {
         router.push('/account/address/edit');
     }
@@ -32,9 +32,9 @@ export default function UserAddress() {
         <>
             {userAddress != null && (<>
                 <h1 className="font-bold mb-2 text-secondary-gray-color">Address Information</h1>
-                <ViewingInputField heading="State" text={userAddress.state_name} />
+                <ViewingInputField heading="State" text={userAddress.state_name!} />
                 <ViewingInputField heading="City / Town" text={userAddress.city_town} />
-                <ViewingInputField heading="Local Government Area" text={userAddress.lga_name} />
+                <ViewingInputField heading="Local Government Area" text={userAddress.lga_name!} />
                 <ViewingInputField heading="Prominent Motor Park" text={userAddress.prominent_motor_park || ''} />
                 <ViewingInputField heading="Landmark / Signatory place (for non park delivery)" text={userAddress.landmark_signatory_place || ''} />
                 <ViewingInputField heading="Address" text={userAddress.address} />

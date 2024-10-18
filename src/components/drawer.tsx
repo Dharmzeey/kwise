@@ -35,7 +35,7 @@ export default function Drawer() {
                             <>
                                 <ul className="mt-10 leading-5 mb-20">
                                     <DrawerItem key="profile" icon={faUser} href="/account" text="Profile" />
-                                    <DrawerItem key="orders" icon={faBagShopping} href="/" text="Orders" />
+                                    <DrawerItem key="orders" icon={faBagShopping} href="/account/orders" text="Orders" />
                                     <DrawerItem key="wishlist" icon={faHeart} href="/" text="Wishlist" />
                                 </ul>
                                 <div className="text-center ">

@@ -1,8 +1,8 @@
 "use client";
 
-import { verifyCode, verifyResetCode } from "@/actions/authActions";
+import { verifyResetCode } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
-import EditableInputFIeld from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import { forgotPasswordApi, resendEmailVerificationApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

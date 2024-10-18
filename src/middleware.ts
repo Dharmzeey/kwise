@@ -3,7 +3,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ACCESS_TOKEN_NAME, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME } from './utils/constants';
 import { REFRESH_TOKEN_URL, VERIFY_TOKEN_URL } from './utils/urls/authUrls';
-import { handleAccessToken } from './utils/cookieUtils';
 
 async function refreshTokenFn(refreshToken: string, baseUrl: string, pathName: string) {
   const response = await fetch(REFRESH_TOKEN_URL, {
@@ -34,6 +33,10 @@ export async function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get(REFRESH_TOKEN_NAME)?.value;
   const currentPath = request.nextUrl.pathname
 
+  if (currentPath === "/") {
+    return
+  }
+
   if (!accessToken || !refreshToken) {
     // Redirect to login if tokens are missing
     return NextResponse.redirect(new URL(`/login?callbackUrl=${encodeURIComponent(currentPath!)}`, request.url));
@@ -63,8 +66,8 @@ export async function middleware(request: NextRequest) {
     // Update the access token in the cookie
   }
   // Create a new response with the updated headers
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('Authorization', `Bearer ${accessToken}`);
+  // const requestHeaders = new Headers(request.headers);
+  // requestHeaders.set('Authorization', `Bearer ${accessToken}`);
   // const response = NextResponse.next({
   //   request: {
   //     headers: requestHeaders,
@@ -74,7 +77,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|login|_next/static|_next/image|images|favicon.ico|.*\\.png$).*)'],
+  matcher: ['/((?!api|login|signup|password|products|_next/static|_next/image|images|favicon.ico|.*\\.png$).*)'],
 }
 // export const config = {
 //   matcher: ["/((?!login|signup|api|_next/static|_next/image|images|favicon.ico|).*)"],

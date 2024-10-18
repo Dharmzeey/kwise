@@ -2,7 +2,7 @@
 
 import { forgotPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
-import EditableInputFIeld from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

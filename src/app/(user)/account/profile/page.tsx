@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionButton } from "@/components/actionButton";
+import { ActionButton } from "@/components/actionComponents";
 import { ViewingInputField } from "@/components/interractivity/input";
 import { retrieveUserInfoApi } from "@/services/userApis";
 import { UserProfileData } from "@/types/userInterfaces";

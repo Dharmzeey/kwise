@@ -19,5 +19,27 @@ type UserAddressData = {
     address: string;
 }
 
-export type { UserProfileData, UserAddressData}
+type PendingOrderData = {
+    id: string
+    product_image: string;
+    product_name: string;
+    order_no: string;
+    quantity: string;
+    shipped: boolean;
+    address: string;
+    phone_number: string;
+    estimated_delivery_date: string;
+}
+
+type CompletedOrderData = {
+    id: string
+    product_image: string;
+    product_name: string;
+    order_no: string;
+    quantity: string;
+    delivery_date: string;
+}
+
+
+export type { UserProfileData, UserAddressData, PendingOrderData, CompletedOrderData }
 

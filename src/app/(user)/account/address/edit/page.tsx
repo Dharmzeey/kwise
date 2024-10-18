@@ -66,9 +66,8 @@ export default function EditAddress() {
     return (
         <>
             {userAddressInfo != null && (<>
-                <h1 className="text-[372F2F] font-bold" >Edit Address Information</h1>
+                <h1 className="text-[372F2F] font-bold mb-2" >Edit Address Information</h1>
                 <form action={formAction}>
-                    <h1>{userAddressInfo.lga}</h1>
                     <EditableSelectField label="State" name="state" id="state" data={states} defaultValue={userAddressInfo.state} handleStateChange={fetchLgas} />
                     <EditableInputFIeld
                         inputFor="city-town"

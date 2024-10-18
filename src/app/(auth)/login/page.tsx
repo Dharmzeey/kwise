@@ -15,7 +15,7 @@ const initialState = {
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryParams = searchParams.get("callbackUrl");
+  const queryParams = searchParams!.get("callbackUrl");
   const [state, formAction] = useFormState(loginUser, initialState);
   useEffect(() => {
     if (state.message === "Login successful") {

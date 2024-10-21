@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE } from "./constants";
+import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, SESSION_ID } from "./constants";
 
 
 function handleAccessToken(token: string) {
@@ -58,4 +58,15 @@ function removeAllTokens() {
     cookieStore.delete(REFRESH_TOKEN_NAME)
     cookieStore.delete(AUTHENTICATED_USER)
 }
-export { handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens }
+
+function setSessionId(token: string) {
+    cookies().set({
+        name: SESSION_ID,
+        value: token,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: ACCESS_TOKEN_MAX_AGE,
+        path: "/",
+    });
+}
+export { handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens, setSessionId }

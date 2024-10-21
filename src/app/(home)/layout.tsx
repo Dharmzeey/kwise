@@ -29,7 +29,7 @@ export default function HomeLayout({
     <html lang="en">
       <body className={`${istokWeb.className} container text-xs md:text-sm`}>
         <Header />
-        <div className="p-4">{children}</div>
+        <div className="p-4 min-h-[70svh]">{children}</div>
         <Footer />
       </body>
     </html>

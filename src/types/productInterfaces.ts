@@ -11,10 +11,6 @@ interface Product {
   utilizationStatus: string;
 }
 
-interface ProductWIthQuantity extends Product {
-  quantity: number
-}
-
 interface Category {
   id: number;
   category: string;
@@ -33,4 +29,4 @@ interface CartItemInterface {
 }
 
 
-export type { Brand, Product, Category, CartItemInterface, ProductWIthQuantity };
+export type { Brand, Product, Category, CartItemInterface };

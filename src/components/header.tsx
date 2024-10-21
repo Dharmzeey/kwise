@@ -26,6 +26,7 @@ export default function Header() {
                 </Link>
                 <div className="relative">
                     <Link href="/cart" className="mr-12">
+                        <div className="w-4 h-4 absolute bottom-4 left-3 text-center px-1 border border-gray-200 bg-main-color text-white rounded-full">2</div>
                         <FontAwesomeIcon icon={faCartShopping} className="text-xl " />
                     </Link>
                         <button onClick={toggleMenu} className="absolute z-50 right-2">

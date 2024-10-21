@@ -23,7 +23,7 @@ async function searchProduct(queryParam: string | null) {
 
 export default function ProductSearchPage() {
   const searchParams = useSearchParams();
-  const queryParams = searchParams.get("query");
+  const queryParams = searchParams!.get("query");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

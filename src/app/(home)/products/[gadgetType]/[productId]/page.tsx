@@ -78,7 +78,7 @@ export default async function ProductDetail({ params }: Props) {
             <p>{product.description}</p>
             {/* Add to cart */}
             {/* client component */}
-            <IncreamentDecreamentCheck product={product} />
+              <IncreamentDecreamentCheck product={product} />
           </section>
 
           {/* similar produtcts */}

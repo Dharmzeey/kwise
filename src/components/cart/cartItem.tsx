@@ -7,6 +7,13 @@ import { numberWithCommas } from "@/utils/filter";
 import { CartData } from "@/types/cartInterfaces";
 import { modifyCartApi } from "@/services/cartApis";
 
+/**
+ * 
+ * This very component is rendered on the cart page prior to checkout
+ *  
+ */
+
+
 export default function CartItem({
 	cartItem,
 	updteGrandTotal,

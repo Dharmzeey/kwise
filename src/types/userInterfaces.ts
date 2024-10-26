@@ -19,6 +19,16 @@ type UserAddressData = {
     address: string;
 }
 
+type UserDeliveryData = {
+    use_default?: boolean;
+    name?: string,
+    phone_number?: string,
+    state?: string,
+    city_town?: string,
+    lga?: string,
+    address?: string,
+}
+
 type PendingOrderData = {
     id: string
     product_image: string;
@@ -41,5 +51,5 @@ type CompletedOrderData = {
 }
 
 
-export type { UserProfileData, UserAddressData, PendingOrderData, CompletedOrderData }
+export type { UserProfileData, UserAddressData, UserDeliveryData, PendingOrderData, CompletedOrderData }
 

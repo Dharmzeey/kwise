@@ -4,6 +4,12 @@ import { Product } from "@/types/productInterfaces";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+/**
+ * 
+ * This very component is rendered on the product details page
+ *  
+ */
+
 const IncreamentDecreamentCheck = ({ product }: { product: Product }) => {
 	const productCount = product.stock;
 	const [count, setCount] = useState(1);

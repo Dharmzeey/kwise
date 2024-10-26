@@ -5,7 +5,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { fetchProductById } from "@/services/productApi";
-import IncreamentDecreamentCheck from "@/components/interractivity/cartModification";
+import IncreamentDecreamentCheck from "@/components/cart/cartModification";
 import { Metadata } from "next";
 import ProductNotFound from "@/components/products/productNotFound";
 import ImageComponent from "@/components/interractivity/image";

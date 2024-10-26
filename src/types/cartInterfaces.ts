@@ -23,7 +23,7 @@ type CheckoutDetails = {
     place: string,
     address: string,
     phone_number: string,
-    alterative_phone_number: string,
+    alternative_phone_number: string,
 }
     
 export type { CartData, CheckoutItemsData, CheckoutDetails }

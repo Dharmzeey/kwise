@@ -76,7 +76,7 @@ export default function CartPage() {
                                             )
                                         }
                                         <div className="flex flex-col justify-center items-center gap-1 mb-2">
-                                            <ActionLink buttonBgColor="bg-main-color" linkText="PROCEED TO CHECKOUT" linkUrl="/checkout" />
+                                            <ActionLink buttonBgColor="bg-main-color" linkText="PROCEED TO CHECKOUT" linkUrl="/cart/checkout" />
                                         </div>
                                     </>
                                     :

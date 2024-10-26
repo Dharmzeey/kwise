@@ -1,9 +1,11 @@
 "use server";
 
 import { ApiResponse } from "@/types/apiResponse";
+import { UserDeliveryData } from "@/types/userInterfaces";
 import { fetchAccessTokenCookie } from "@/utils/cookieUtils";
-import { ADD_TO_CART_URL, CHECKOUT_DETAILS_URL, CHECKOUT_URL, FETCH_CART_URL } from "@/utils/urls/cartUrls";
+import { ADD_TO_CART_URL, CHECKOUT_DETAILS_URL, CHECKOUT_URL, FETCH_CART_URL, ORDER_ADDRESS_SUMMARY_URL } from "@/utils/urls/cartUrls";
 import { cookies } from "next/headers";
+import { handleErrorsResponse } from "./responseHandler";
 
 type CartData = {
     product_id: string
@@ -11,9 +13,7 @@ type CartData = {
 }
 
 const token = fetchAccessTokenCookie();
-// var csrftoken = getCookie('csrftoken');
-const cookieStore = cookies()
-const sessionid = cookieStore.getAll()
+console.log(token)
 export async function addToCartApi(data: CartData): Promise<ApiResponse> {
     try {
         const response = await fetch(ADD_TO_CART_URL, {
@@ -176,6 +176,37 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
         }
     } catch (error) {
         return { error: "Error occured while trying to checkout" }
+    }
+}
+
+
+export async function orderAddressSummaryApi(data: UserDeliveryData): Promise<ApiResponse> {
+    try {
+        const response = await fetch(ORDER_ADDRESS_SUMMARY_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token?.value || ""}`
+            },
+            body: JSON.stringify(data)
+        });
+        const responseBody = await response.json();
+        switch (response.status) {
+            case 401: {
+                return { status: 401 }
+            }
+            case 404:
+                return { error: "You are yet to fill your user or address information" }
+            case 200:
+                return { data: responseBody.data, status: 200 }
+            case 400:
+                return handleErrorsResponse(responseBody)
+            default:
+                return { error: "User address update was not successful, reload and try again" }
+        }
+
+    } catch (error) {
+        return { error: "Error occured while processing summary" }
     }
 }
 

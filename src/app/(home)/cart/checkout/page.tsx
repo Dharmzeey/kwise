@@ -1,15 +1,14 @@
 'use client';
 
-import { ActionLink } from "@/components/actionComponents";
 import { checkoutDetailsApi, checkoutItemsApi } from "@/services/cartApis";
-import { CheckoutDetails, CheckoutItemsData  } from "@/types/cartInterfaces";
+import { CheckoutDetails, CheckoutItemsData } from "@/types/cartInterfaces";
 import { numberWithCommas } from "@/utils/filter";
 import { useEffect, useState } from "react"
-import Loading from "../loading";
+import Loading from "../../loading";
 import CheckoutItem from "@/components/cart/checkoutItem";
-import { UserAddressData } from "@/types/userInterfaces";
-import { retrieveUserAddressApi } from "@/services/userApis";
 import { useRouter } from "next/navigation";
+import NewDeliveryInfo from "@/components/cart/newDeliveryInfo";
+import DefaultDeliveryInfo from "@/components/cart/defaultDeliveryInfo";
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -81,33 +80,25 @@ export default function CheckoutPage() {
                                         {/* Delivery Information */}
                                         <h1 className="font-bold my-2 text-secondary-gray-color">Delivery Information</h1>
                                         <section>
-                                            <label htmlFor="default-delivery" className="flex gap-1 font-bold">
-                                                <input type="radio" name="delivery" value="default-delivery" id="default-delivery" />
-                                                <span>Use default delivery address</span>
-                                            </label>
-                                            <div className="leading-6">
+                                            <div>
+                                                <label htmlFor="default-delivery" className="flex gap-1 font-bold">
+                                                    <input type="radio" name="delivery" value="default-delivery" id="default-delivery" />
+                                                    <span>Use default delivery address</span>
+                                                </label>
                                                 {
-                                                    checkoutDetails != null && (
-                                                        <>
-                                                            <div>Name: {checkoutDetails.name} </div>
-                                                            <div>Place: {checkoutDetails.place} </div>
-                                                            <div className="text-justify">Address: {checkoutDetails.address}</div>
-                                                            <div>Phone Number: {checkoutDetails.phone_number}</div>
-                                                            <div>Alternative Phone Number: {checkoutDetails.alterative_phone_number}</div>
-                                                        </>
-                                                    )
+                                                    checkoutDetails != null && <DefaultDeliveryInfo checkoutDetails={checkoutDetails} />
                                                 }
                                             </div>
-                                            <label htmlFor="new-delivery" className="flex gap-1 font-bold mt-1">
-                                                <input type="radio" name="delivery" value="new-delivery" id="new-delivery" />
-                                                <span>Use another delivery address</span>
-                                            </label>
-                                            
+                                            <div>
+                                                <label htmlFor="new-delivery" className="flex gap-1 font-bold mt-1">
+                                                    <input type="radio" name="delivery" value="new-delivery" id="new-delivery" />
+                                                    <span>Use another delivery address</span>
+                                                </label>
+                                                <div>
+                                                    <NewDeliveryInfo />
+                                                </div>
+                                            </div>
                                         </section>
-
-                                        <div className="flex flex-col justify-center items-center gap-1 mb-2">
-                                            <ActionLink buttonBgColor="bg-main-color" linkText="PROCEED TO PAYMENT" linkUrl="/checkout" />
-                                        </div>
                                     </>
                                     :
                                     <>

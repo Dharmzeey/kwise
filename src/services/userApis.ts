@@ -4,7 +4,7 @@ import { ApiResponse } from "@/types/apiResponse";
 import { fetchAccessTokenCookie } from "@/utils/cookieUtils";
 import { ADD_USER_ADDRESS, ADD_USER_INFO, DELETE_USER_INFO, GET_COMPLETED_ORDERS, GET_PENDING_ORDERS, RETRIEVE_USER_ADDRESS, RETRIEVE_USER_INFO, UPDATE_USER_ADDRESS, UPDATE_USER_INFO, VERIFY_USER_INFO } from "@/utils/urls/userUrls";
 import { handleErrorsResponse } from "./responseHandler";
-import { UserAddressData, UserProfileData } from "@/types/userInterfaces";
+import { UserAddressData, UserDeliveryData, UserProfileData } from "@/types/userInterfaces";
 
 const token = fetchAccessTokenCookie();
 
@@ -292,9 +292,9 @@ export async function pendingOrdersApi(): Promise<ApiResponse> {
         const responseBody = await response.json();
         switch (response.status) {
             case 200:
-                return {data: responseBody, status:200}        
+                return { data: responseBody, status: 200 }
             default:
-                return {error: "Error, pending orders cannot be fetched"}
+                return { error: "Error, pending orders cannot be fetched" }
         }
     } catch (error) {
         return { error: "Error occured while fetching user pending orders" }

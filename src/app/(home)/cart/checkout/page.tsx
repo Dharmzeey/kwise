@@ -21,14 +21,13 @@ export default function CheckoutPage() {
     useEffect(() => {
         async function fetchCheckout() {
             const response = await checkoutItemsApi();
-            console.log(response)
             if (response.status === 200) {
                 setGrandTotalPrice(response.data.grand_total)
                 setCheckoutData(response.data.item_list)
                 setIsLoading(false)
             }
-
         }
+        setIsLoading(false)
         fetchCheckout()
     }, [])
 
@@ -66,7 +65,7 @@ export default function CheckoutPage() {
                                 <></> // added this so as not to show 0
                             }
                             {
-                                checkoutData != undefined && checkoutData.length > 0 ?
+                                checkoutData !== undefined && checkoutData.length > 0 ?
                                     <>
                                         <div className="leading-6">
                                             {

@@ -30,11 +30,9 @@ export default function CartItem({
 	const increament = async () => {
 		// UI check
 		if (productCount != undefined && count < productCount) {
-			console.log(cartItem.product.id)
 			// network request
 			const response = await modifyCartApi({ product_id: cartItem.product.id, action: "increament" })
 			if (response.status === 202) {
-				console.log(response.data)
 				updteGrandTotal()
 				setCount(count + 1);
 				alert("cart modified successfully")

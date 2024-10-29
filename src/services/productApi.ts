@@ -10,7 +10,6 @@ import {
 } from "@/utils/urls/productUrls";
 
 export async function fetchAllProducts() {
-  console.log(PRODUCTS_URL);
   const response = await fetch(PRODUCTS_URL);
   const products: Product[] = await response.json();
   if (!response.ok) {

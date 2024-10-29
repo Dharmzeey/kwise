@@ -11,9 +11,8 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "cookie": "^0.6.0",
+    "@paystack/inline-js": "^2.22.1",
     "next": "^14.2.13",
-    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-responsive-carousel": "^3.2.23",
@@ -24,6 +23,7 @@
   "devDependencies": {
     "@types/cookie": "^0.5.1",
     "@types/node": "^20",
+    "@types/paystack__inline-js": "^1.0.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

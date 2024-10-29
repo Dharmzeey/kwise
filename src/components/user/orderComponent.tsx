@@ -88,7 +88,7 @@ function EmptyOrder() {
         <>
             <div className="text-center py-10">
                 <h2 className="text-2xl font-semibold mb-4">Your Order History is Empty</h2>
-                <p className="text-gray-600 mb-6">It looks like you haven't placed any orders yet.</p>
+                <p className="text-gray-600 mb-6">It looks like you haven&rsquo;t placed any orders yet.</p>
                 <div className="flex flex-col justify-center items-center gap-1">
                     <ActionLink buttonBgColor="bg-main-color" linkUrl="/" linkText="Start Shopping Now" />
                 </div>

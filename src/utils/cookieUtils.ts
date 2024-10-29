@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, SESSION_ID } from "./constants";
+import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, SESSION_ID, SESSION_TOKEN_MAX_AGE } from "./constants";
 
 
 function handleAccessToken(token: string) {
@@ -14,7 +14,6 @@ function handleAccessToken(token: string) {
         maxAge: ACCESS_TOKEN_MAX_AGE,
         path: "/",
     });
-    console.log("comple")
 }
 
 function handleRefreshToken(token: string) {
@@ -59,14 +58,22 @@ function removeAllTokens() {
     cookieStore.delete(AUTHENTICATED_USER)
 }
 
-function setSessionId(token: string) {
+function setSessionId(session_token: string) {
+    if (!session_token) return // if that BE does not send cookie, just move
+    const extracted_token = session_token.split("=")[1].split(";")[0] // this line extract just the token from the returned {sessionid=in4jrn9rhtk9wgim3up77l4lrm7m5uyq; expires=Mon, 11 Nov 2024 20:03:37 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax}
     cookies().set({
         name: SESSION_ID,
-        value: token,
+        value: extracted_token,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: ACCESS_TOKEN_MAX_AGE,
+        maxAge: SESSION_TOKEN_MAX_AGE,
         path: "/",
     });
 }
-export { handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens, setSessionId }
+
+function getSessionId() {
+    const cookieStore = cookies();
+    return cookieStore.get(SESSION_ID)?.value || null;
+}
+
+export { handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens, setSessionId, getSessionId }

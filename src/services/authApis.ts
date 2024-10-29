@@ -101,7 +101,6 @@ export async function resendEmailVerificationApi() {
             case 401:
                 return { error: "You need to login first" };
             default:
-                console.log(response.status);
                 return { message: "Email request failed" };
         }
     } catch (error) {
@@ -138,7 +137,6 @@ export async function loginUserApi(data: LoginUserData): Promise<ApiResponse> {
                 return { error: "Failed to Log user in." };
         }
     } catch (error) {
-        console.log(error);
         return { message: "An error occurred during login in." };
     }
 }
@@ -163,7 +161,6 @@ export async function forgotPasswordApi(data: ForgotPasswordData): Promise<ApiRe
             case 400:
                 return handleErrorsResponse(responseBody) // this will help concatenate the errors into str 
             default:
-                console.log(response.status);
                 return { error: "Email request failed" };
         }
     } catch (error) {
@@ -191,7 +188,6 @@ export async function verifyResetCodeApi(data: ResetPasswordPinData): Promise<Ap
             case 404:
                 return { error: "password reset PIN has not been sent" };
             case 400:
-                console.log(handleErrorsResponse(responseBody))
                 return handleErrorsResponse(responseBody) // this will help concatenate the errors into str 
             case 200:
                 return { message: "Password reset PIN verified successfully", token: responseBody.reset_token };

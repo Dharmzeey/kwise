@@ -60,7 +60,7 @@ export default function LoginPage() {
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">
         <div className="flex gap-3">
-          <p>Don't have an account? </p>
+          <p>Don&rsquo;t have an account? </p>
           <Link href="/signup" className="text-blue-700 underline">
             Sign up
           </Link>

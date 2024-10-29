@@ -85,7 +85,6 @@ export async function loginUser(
   });
 
   if (!parse.success) {
-    console.log(parse.error.message);
     return {
       message: `Failed to login. Please check the input. ${parse.error.message}`,
     };

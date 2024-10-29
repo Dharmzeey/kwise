@@ -29,7 +29,6 @@ export async function authFetch(url: string, options: RequestInit = {}): Promise
     const refreshToken = cookieStore.get(REFRESH_TOKEN_NAME)?.value;
 
     if (!accessToken || !refreshToken) {
-        console.log('dddd')
         throw new Error('No authentication tokens found');
     }
 
@@ -45,7 +44,6 @@ export async function authFetch(url: string, options: RequestInit = {}): Promise
     if (tokenResponse.status === 401) {
         try {
             accessToken = await refreshTokenFn(refreshToken);
-            console.log(cookieStore.delete(ACCESS_TOKEN_NAME))
             handleAccessToken(accessToken)
         } catch (error) {
             console.error('Token refresh failed: \n', error);
@@ -55,8 +53,7 @@ export async function authFetch(url: string, options: RequestInit = {}): Promise
 
     // Set up headers for the main request
     const headers = new Headers(options.headers || {});
-    headers.set('Authorization', `Bearer ${accessToken}`);
-    console.log(accessToken)
+    headers.set('Authorization', `Bearer ${accessToken}`)
 
     // Make the main request
     const response = await fetch(url, { ...options, headers });

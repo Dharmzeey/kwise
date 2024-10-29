@@ -17,13 +17,12 @@ export default function CartPage() {
     useEffect(() => {
         async function fetchCart() {
             const response = await getCartApi();
-            console.log(response.data)
             if (response.status === 200) {
                 setGrandTotalPrice(response.data.grand_total_price)
                 setData(response.data.data)
                 setIsLoading(false)
             }
-
+            setIsLoading(false)
         }
         fetchCart()
     }, [])

@@ -150,8 +150,11 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
             case 404:
                 return { error: "You have not filled you Basic / Address information", status: 404 }
             case 401:
-                return {status: 401}
+                return { status: 401 }
+            case 403:
+                return { error: "User email not verified", status: 403}
             default:
+                console.log(responseBody)
                 return { error: "Could not get checkout detail, reload and try again" }
         }
     } catch (error) {

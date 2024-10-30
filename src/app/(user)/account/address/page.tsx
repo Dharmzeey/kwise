@@ -19,7 +19,9 @@ export default function UserAddress() {
                 alert("You have not filled you address information")
                 router.push('/account/address/create')
             }
-            setUserAddress(response.data)
+            else {
+                setUserAddress(response.data)
+            }
         }
         fetchUserAddress()
     }, [])

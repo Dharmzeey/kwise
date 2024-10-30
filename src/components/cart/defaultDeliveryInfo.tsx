@@ -30,7 +30,7 @@ export default function DefaultDeliveryInfo(
                 <div>Alternative Phone Number: {prop.checkoutDetails.alternative_phone_number}</div>
                 <div className="flex flex-col justify-center items-center gap-1 mb-2">
                     {/* <ActionLink buttonBgColor="bg-main-color" linkText="PROCEED TO SUMMARY" linkUrl="/checkout" /> */}
-                    <ActionButton buttonBgColor="bg-main-color" buttonText="PROCEED TO SUMMARY" onClickFn={toPayment} />
+                    <ActionButton buttonBgColor="bg-main-color" buttonText="PROCEED TO PAYMENT" onClickFn={toPayment} />
                 </div>
             </div>
         </>

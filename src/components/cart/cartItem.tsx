@@ -13,7 +13,6 @@ import { modifyCartApi } from "@/services/cartApis";
  *  
  */
 
-
 export default function CartItem({
 	cartItem,
 	updteGrandTotal,
@@ -36,8 +35,9 @@ export default function CartItem({
 				updteGrandTotal()
 				setCount(count + 1);
 				alert("cart modified successfully")
+			} else {
+				alert("Product not in cart")
 			}
-			alert("Product not in cart")
 		} else {
 			toast.info("Maximum available product reached", {
 				position: "top-center",
@@ -56,8 +56,9 @@ export default function CartItem({
 				updteGrandTotal()
 				setCount(count - 1);
 				alert("cart modified successfully")
+			} else {
+				alert("Product not in cart")
 			}
-			alert("Product not in cart")
 		} else {
 			toast.info("Cannot go below 1 item", {
 				position: "top-center",
@@ -76,8 +77,9 @@ export default function CartItem({
 				updteGrandTotal()
 				setCount(count - 1);
 				alert("cart modified successfully")
+			} else {
+				alert("Product not in cart")
 			}
-			alert("Product not in cart")
 		} else {
 			toast.info("Cannot go below 1 item", {
 				position: "top-center",
@@ -93,8 +95,9 @@ export default function CartItem({
 			removeCartItem(cartItem.product.id);
 			updteGrandTotal()
 			alert("cart item removed successfully")
+		} else {
+			alert("Product not in cart")
 		}
-		alert("Product not in cart")
 	}
 
 

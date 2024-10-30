@@ -99,7 +99,7 @@ export default function NewDeliveryInfo() {
                 {formState.message} {formState.error}
 
                 <div className="flex flex-col justify-center items-center gap-1 mb-2">
-                    <SubmitButton pendingText="Processing..." buttonText="PROCEED TO SUMMARY" />
+                    <SubmitButton pendingText="Processing..." buttonText="PROCEED TO PAYMENT" />
                 </div>
             </form>
         </>

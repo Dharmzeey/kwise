@@ -9,6 +9,7 @@ import CheckoutItem from "@/components/cart/checkoutItem";
 import { useRouter } from "next/navigation";
 import NewDeliveryInfo from "@/components/cart/newDeliveryInfo";
 import DefaultDeliveryInfo from "@/components/cart/defaultDeliveryInfo";
+import { resendEmailVerificationApi } from "@/services/authApis";
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -17,6 +18,11 @@ export default function CheckoutPage() {
     const [checkoutDetails, setCheckoutDetails] = useState<CheckoutDetails>();
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
+    async function verifyUser() {
+        // this will send a code to the user and then they must verify
+        await resendEmailVerificationApi()
+        router.push("/email-verification/confirm")
+    }
 
     useEffect(() => {
         async function fetchCheckout() {
@@ -38,6 +44,8 @@ export default function CheckoutPage() {
                 alert("You have not filled you Basic / Address information")
                 router.push('/account')
                 setIsLoading(false)
+            } else if (response.status === 403) {
+                verifyUser()
             }
             setCheckoutDetails(response.data)
             setIsLoading(false)

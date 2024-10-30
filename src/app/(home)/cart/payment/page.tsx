@@ -23,9 +23,7 @@ export default function Payment() {
     useEffect(() => {
         if (accessCode !== undefined) {
             const popup = new PaystackPop()
-            const asss = popup.resumeTransaction(accessCode as unknown as { accessCode: string });
-            console.log(popup.status)
-            console.log(asss.getStatus)
+            popup.resumeTransaction(accessCode as unknown as { accessCode: string });
             setProcessing(false)
         }
     }, [accessCode])
@@ -42,18 +40,10 @@ export default function Payment() {
                         <>
                             <h1>Processing...</h1>
                         </>
-                    // :
-                    // accessCode !== undefined && popup !== undefined ?
-                    //     <>
-                    //         {
-                    //             // popup.resumeTransaction({ accessCode: accessCode })
-                    //         }
-                    //     </>
-
-                    :
-                    <>
-                        <b>An error occured</b>
-                    </>
+                        :
+                        <>
+                            <b>An error occured</b>
+                        </>
             }
         </>
     )

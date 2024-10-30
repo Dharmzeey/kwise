@@ -4,10 +4,10 @@ import { ApiResponse } from "@/types/apiResponse";
 import { fetchAccessTokenCookie, getSessionId } from "@/utils/cookieUtils";
 import { INITIATE_PATMENT_URL } from "@/utils/urls/paymentUrls";
 
-const token = fetchAccessTokenCookie();
 
 export async function initiatePaymentApi(): Promise<ApiResponse> {
     try {
+        const token = fetchAccessTokenCookie();
         const response = await fetch(INITIATE_PATMENT_URL, {
             method: "POST",
             headers: {

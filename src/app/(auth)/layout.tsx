@@ -27,7 +27,7 @@ export default function AuthLayout({
         <main className="flex justify-center mt-20">
           <div className="w-full max-w-md px-4">
             <div className="flex justify-center mb-4">
-              <Image src="/logo.jpg" alt="logo" width={75} height={35} />
+              <Image src="/logo.jpg" alt="logo" width={75} height={35} priority />
             </div>
             <div className="px-4">{children}</div>
           </div>

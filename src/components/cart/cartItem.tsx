@@ -6,6 +6,7 @@ import Image from "next/image";
 import { numberWithCommas } from "@/utils/filter";
 import { CartData } from "@/types/cartInterfaces";
 import { modifyCartApi } from "@/services/cartApis";
+import ImageComponent from "../interractivity/image";
 
 /**
  * 
@@ -105,12 +106,7 @@ export default function CartItem({
 		<>
 			<div className="grid grid-cols-[auto_1fr] mb-3 shadow">
 				<div className="w-[8.5rem] h-[8.5rem] relative">
-					<Image
-						src={cartItem.product.image}
-						alt={cartItem.product.name}
-						fill
-						className="rounded object-cover"
-					/>
+					<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
 				</div>
 				<div className="ml-2 pt-1 pr-1 flex flex-col gap-2">
 					<div className="flex justify-between">

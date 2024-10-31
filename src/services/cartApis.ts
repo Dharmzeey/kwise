@@ -4,7 +4,6 @@ import { ApiResponse } from "@/types/apiResponse";
 import { UserDeliveryData } from "@/types/userInterfaces";
 import { fetchAccessTokenCookie, getSessionId, setSessionId } from "@/utils/cookieUtils";
 import { ADD_TO_CART_URL, CHECKOUT_DETAILS_URL, CHECKOUT_URL, FETCH_CART_URL, ORDER_ADDRESS_SUMMARY_URL } from "@/utils/urls/cartUrls";
-import { cookies } from "next/headers";
 import { handleErrorsResponse } from "./responseHandler";
 
 type CartData = {
@@ -144,6 +143,7 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
             }
         })
         const responseBody = await response.json();
+        console.log(responseBody)
         switch (response.status) {
             case 200:
                 return { data: responseBody.data, status: 200 }

@@ -22,6 +22,8 @@ export async function initiatePaymentApi(): Promise<ApiResponse> {
                 return { data: responseBody.access_code, status: 200 }
             case 400:
                 return { error: "Payment could not be initialized", status: 400 }
+            case 404:
+                return { error: "No cart item", status: 404 }
             case 500:
                 return { error: "payment initialization timed out", status: 500 }
             default:

@@ -18,6 +18,8 @@ export default function CheckoutPage() {
     const [checkoutDetails, setCheckoutDetails] = useState<CheckoutDetails>();
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
+    const [selectedDelivery, setSelectedDelivery] = useState(""); // Track selected delivery
+
     async function verifyUser() {
         // this will send a code to the user and then they must verify
         await resendEmailVerificationApi()
@@ -46,12 +48,17 @@ export default function CheckoutPage() {
                 setIsLoading(false)
             } else if (response.status === 403) {
                 verifyUser()
+                setIsLoading(false)
             }
             setCheckoutDetails(response.data)
             setIsLoading(false)
         }
         fetchCheckoutDetails()
     }, [])
+
+    const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedDelivery(event.target.value); // Update selected delivery option
+    };
 
     return (
         <>
@@ -86,24 +93,35 @@ export default function CheckoutPage() {
                                         </div>
                                         {/* Delivery Information */}
                                         <h1 className="font-bold my-2 text-secondary-gray-color">Delivery Information</h1>
-                                        <section>
+                                        <section className="flex flex-col gap-3">
                                             <div>
                                                 <label htmlFor="default-delivery" className="flex gap-1 font-bold">
-                                                    <input type="radio" name="delivery" value="default-delivery" id="default-delivery" />
+                                                    <input
+                                                        type="radio"
+                                                        name="delivery"
+                                                        value="default-delivery"
+                                                        id="default-delivery"
+                                                        onChange={handleDeliveryChange}
+                                                    />
                                                     <span>Use default delivery address</span>
                                                 </label>
-                                                {
-                                                    checkoutDetails != null && <DefaultDeliveryInfo checkoutDetails={checkoutDetails} />
-                                                }
+                                                {selectedDelivery === "default-delivery" && checkoutDetails && (
+                                                    <DefaultDeliveryInfo checkoutDetails={checkoutDetails} />
+                                                )}
                                             </div>
+
                                             <div>
                                                 <label htmlFor="new-delivery" className="flex gap-1 font-bold mt-1">
-                                                    <input type="radio" name="delivery" value="new-delivery" id="new-delivery" />
+                                                    <input
+                                                        type="radio"
+                                                        name="delivery"
+                                                        value="new-delivery"
+                                                        id="new-delivery"
+                                                        onChange={handleDeliveryChange}
+                                                    />
                                                     <span>Use another delivery address</span>
                                                 </label>
-                                                <div>
-                                                    <NewDeliveryInfo />
-                                                </div>
+                                                {selectedDelivery === "new-delivery" && <NewDeliveryInfo />}
                                             </div>
                                         </section>
                                     </>

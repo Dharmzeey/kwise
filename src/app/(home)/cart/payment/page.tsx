@@ -1,9 +1,11 @@
 'use client';
 import { initiatePaymentApi } from "@/services/paymentApis";
 import PaystackPop from '@paystack/inline-js';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 export default function Payment() {
+    const router = useRouter()
     const [accessCode, setAccessCode] = useState<string | undefined>(undefined);
     const [initializing, setInitializating] = useState<boolean>(true);
     const [processing, setProcessing] = useState<boolean>(false);
@@ -12,8 +14,9 @@ export default function Payment() {
             const response = await initiatePaymentApi()
             if (response.status === 200) {
                 setAccessCode(response.data)
-                setInitializating(false)
-                setProcessing(true)
+            } else if (response.status === 404) {
+                alert('No items in cart to be paid for, keep shopping')
+                router.push('/')
             }
             setInitializating(false)
             setProcessing(true)

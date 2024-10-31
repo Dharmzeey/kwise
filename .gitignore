@@ -38,3 +38,4 @@ next-env.d.ts
 # mine
 .hintrc
 todo.md
+ngrok.exe

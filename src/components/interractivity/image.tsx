@@ -11,18 +11,20 @@ type ImageProp = {
 }
 
 const ImageComponent = (imageProp: ImageProp) => {
-    const [isImageLoading, setImageLoading] = useState(true)
+    // const [isImageLoading, setImageLoading] = useState(true)
 
     return (
         <Image
             alt={imageProp.alt}
             src={imageProp.src}
+            priority
             // height={imageProp.height}
             // width={imageProp.width}
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-            onLoad={() => setImageLoading(false)}
-            className={`${isImageLoading ? 'blur' : 'remove-blur'} rounded object-cover`}
+            // onLoad={() => setImageLoading(false)}
+            // className={`${isImageLoading ? 'blur' : 'remove-blur'} rounded object-cover`}
+            className={`rounded object-cover`}
         />
     )
 }

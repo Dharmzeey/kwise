@@ -1,12 +1,14 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import Image from "next/image";
 import { numberWithCommas } from "@/utils/filter";
 import { CartData } from "@/types/cartInterfaces";
 import { modifyCartApi } from "@/services/cartApis";
 import ImageComponent from "../interractivity/image";
+import { useCartContext } from "@/contexts/cartContext";
+import Link from "next/link";
+
 
 /**
  * 
@@ -25,6 +27,7 @@ export default function CartItem({
 }) {
 	const productCount = cartItem.product.stock;
 	const [count, setCount] = useState(cartItem.quantity);
+	const { updateCartCount } = useCartContext();
 
 
 	const increament = async () => {
@@ -45,6 +48,7 @@ export default function CartItem({
 				className: "my-toast",
 			});
 		}
+		updateCartCount()
 	};
 
 
@@ -66,6 +70,7 @@ export default function CartItem({
 				className: "my-toast",
 			});
 		}
+		updateCartCount()
 	};
 
 
@@ -87,6 +92,7 @@ export default function CartItem({
 				className: "my-toast",
 			});
 		}
+		await updateCartCount()
 	};
 
 
@@ -99,14 +105,19 @@ export default function CartItem({
 		} else {
 			alert("Product not in cart")
 		}
+		await updateCartCount()
 	}
 
 
 	return (
 		<>
-			<div className="grid grid-cols-[auto_1fr] mb-3 shadow">
+			<div className="grid grid-cols-[auto_1fr] mb-3 shadow pr-1">
 				<div className="w-[8.5rem] h-[8.5rem] relative">
-					<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
+					<Link
+						href={`/products/${cartItem.product.category}/${cartItem.product.id}`}
+					>
+						<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
+					</Link>
 				</div>
 				<div className="ml-2 pt-1 pr-1 flex flex-col gap-2">
 					<div className="flex justify-between">
@@ -115,7 +126,7 @@ export default function CartItem({
 					</div>
 					<div>₦ {numberWithCommas(cartItem.product.price)}</div>
 					<div className="flex justify-between">
-						<div className="flex items-center shadow rounded">
+						<div className="flex items-center border-y border-gray-50 rounded">
 							<button
 								className="px-2 bg-main-color text-white text-sm rounded-l"
 								onClick={decreament}

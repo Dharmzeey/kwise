@@ -6,6 +6,8 @@ import { Istok_Web } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Providers } from "@/contexts/providers";
+
 
 const istokWeb = Istok_Web({
   weight: ["400", "700"],
@@ -27,11 +29,13 @@ export default function HomeLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${istokWeb.className} container text-xs md:text-sm`}>
-        <Header />
-        <div className="p-4 min-h-[70svh]">{children}</div>
-        <Footer />
-      </body>
+      <Providers>
+        <body className={`${istokWeb.className} container text-xs md:text-sm`}>
+          <Header />
+          <div className="p-4 min-h-[70svh]">{children}</div>
+          <Footer />
+        </body>
+      </Providers>
     </html>
   );
 }

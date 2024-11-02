@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_NAME, AUTHENTICATED_USER, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, SESSION_ID, SESSION_TOKEN_MAX_AGE } from "./constants";
+import { ACCESS_TOKEN_NAME, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, SESSION_ID, SESSION_TOKEN_MAX_AGE } from "./constants";
 
 
 function handleAccessToken(token: string) {
@@ -25,20 +25,8 @@ function handleRefreshToken(token: string) {
         maxAge: REFRESH_TOKEN_MAX_AGE,
         path: "/",
     });
-    saveAthenticatedUser("U_I_U") // User is AUthenticated, I will change later
 }
 
-
-function saveAthenticatedUser(token: string) {
-    cookies().set({
-        name: AUTHENTICATED_USER,
-        value: token,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: ACCESS_TOKEN_MAX_AGE,
-        path: "/",
-    });
-}
 
 function fetchAccessTokenCookie() {
     const cookieStore = cookies();
@@ -47,7 +35,7 @@ function fetchAccessTokenCookie() {
 
 function fetchAuthenticatedUser() {
     const cookieStore = cookies();
-    return cookieStore.get(AUTHENTICATED_USER)?.value || null;
+    return cookieStore.get(ACCESS_TOKEN_NAME)?.value || null;
 }
 
 
@@ -55,7 +43,6 @@ function removeAllTokens() {
     const cookieStore = cookies();
     cookieStore.delete(ACCESS_TOKEN_NAME)
     cookieStore.delete(REFRESH_TOKEN_NAME)
-    cookieStore.delete(AUTHENTICATED_USER)
 }
 
 function setSessionId(session_token: string) {

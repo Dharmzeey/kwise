@@ -37,8 +37,6 @@ export const generateMetadata = async ({
 
 export default async function ProductDetail({ params }: Props) {
   const product = await fetchProductById(params.productId);
-  if (product != undefined) {
-  }
   return (
     <>
       {product != undefined ? (

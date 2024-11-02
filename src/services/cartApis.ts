@@ -3,25 +3,25 @@
 import { ApiResponse } from "@/types/apiResponse";
 import { UserDeliveryData } from "@/types/userInterfaces";
 import { fetchAccessTokenCookie, getSessionId, setSessionId } from "@/utils/cookieUtils";
-import { ADD_TO_CART_URL, CHECKOUT_DETAILS_URL, CHECKOUT_URL, FETCH_CART_URL, ORDER_ADDRESS_SUMMARY_URL } from "@/utils/urls/cartUrls";
+import { ADD_TO_CART_URL, CHECKOUT_DETAILS_URL, CHECKOUT_URL, FETCH_CART_URL, GET_CART_ITEM_QUANTITY_URL, ORDER_ADDRESS_SUMMARY_URL } from "@/utils/urls/cartUrls";
 import { handleErrorsResponse } from "./responseHandler";
 
 type CartData = {
     product_id: string
-    action: "increament" | "decreament" | "update" | "remove" | "clear" | "add";
+    action: "increament" | "decreament" | "update" | "remove" | "clear";
+    quantity?: number;
 }
 
 const token = fetchAccessTokenCookie();
+
 export async function addToCartApi(data: CartData): Promise<ApiResponse> {
     try {
         const response = await fetch(ADD_TO_CART_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // Authorization: `Bearer ${token?.value || ""}`,
                 Cookie: `sessionid=${getSessionId()}`,
             },
-            credentials: "include",
             body: JSON.stringify(data),
         })
         const sessionId = response.headers.get('set-cookie');
@@ -152,7 +152,7 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
             case 401:
                 return { status: 401 }
             case 403:
-                return { error: "User email not verified", status: 403}
+                return { error: "User email not verified", status: 403 }
             default:
                 console.log(responseBody)
                 return { error: "Could not get checkout detail, reload and try again" }

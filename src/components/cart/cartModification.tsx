@@ -1,5 +1,6 @@
 "use client";
-import { addToCartApi, modifyCartApi } from "@/services/cartApis";
+import { useCartContext } from "@/contexts/cartContext";
+import { addToCartApi} from "@/services/cartApis";
 import { Product } from "@/types/productInterfaces";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -13,17 +14,13 @@ import { toast } from "react-toastify";
 const IncreamentDecreamentCheck = ({ product }: { product: Product }) => {
 	const productCount = product.stock;
 	const [count, setCount] = useState(1);
+	const { updateCartCount } = useCartContext();
+
 
 	const increament = async () => {
 		// UI check
 		if (productCount != undefined && count < productCount) {
-			// network request
-			const response = await modifyCartApi({ product_id: product.id, action: "increament" })
-			if (response.status === 202) {
-				setCount(count + 1);
-				alert("cart modified successfully")
-			}
-			alert("Product not in cart")
+			setCount(count + 1);
 		} else {
 			toast.info("Maximum available product reached", {
 				position: "top-center",
@@ -31,16 +28,12 @@ const IncreamentDecreamentCheck = ({ product }: { product: Product }) => {
 			});
 		}
 	};
+
+
 	const decreament = async () => {
 		// UI check
 		if (productCount != undefined && count > 1) {
-			// network request
-			const response = await modifyCartApi({ product_id: product.id, action: "decreament" })
-			if (response.status === 202) {
-				setCount(count - 1);
-				alert("cart modified successfully")
-			}
-			alert("Product not in cart")
+			setCount(count - 1);	
 		} else {
 			toast.info("Cannot go below 1 item", {
 				position: "top-center",
@@ -48,12 +41,18 @@ const IncreamentDecreamentCheck = ({ product }: { product: Product }) => {
 			});
 		}
 	};
+
+
 	const add = async () => {
-		const response = await addToCartApi({ product_id: product.id, action: "add" })
+		const response = await addToCartApi({ product_id: product.id, action: "update", quantity: count })
+		console.log(response)
 		if (response.status === 202) {
 			alert("item added successfully")
 		}
+		updateCartCount()
+		setCount(1)
 	}
+
 
 	return (
 		<>

@@ -14,7 +14,7 @@ export default function Drawer() {
     const router = useRouter()
     function handleLogout() {
         logout()
-        router.push("/") // normal js reload
+        router.push("/")
     }
     async function getUser() {
         const authenticatedUser = await fetchAuthenticatedUser()
@@ -27,13 +27,12 @@ export default function Drawer() {
     return (
         <>
             <div className="relative">
-                <div className="absolute w-[min(60vw,20rem)] bg-white max-h-[50rem] z-10 -right-4 -top-6 p-3 shadow-sm shadow-gray-200">
+                <div className="absolute w-[min(60vw,20rem)] bg-white max-h-[50rem] z-10 -right-4 -top-12 p-3  shadow-sm shadow-gray-200">
                     {
-                        // this that was passed will return the string of the user authenticated
-                        // drawerProp.getAuthUser ?
+                        // this that was passed will return the access token presence
                         user ?
                             <>
-                                <ul className="mt-10 leading-5 mb-20">
+                                <ul className="mt-16 leading-5 mb-20">
                                     <DrawerItem key="profile" icon={faUser} href="/account" text="Profile" />
                                     <DrawerItem key="orders" icon={faBagShopping} href="/account/orders" text="Orders" />
                                     <DrawerItem key="wishlist" icon={faHeart} href="/" text="Wishlist" />
@@ -55,7 +54,6 @@ export default function Drawer() {
                                     </div>
                                 </>
                                 :
-
                                 <>
                                     <div className="text-center py-20 flex flex-col gap-4">
                                         <Link href="/login" className="font-bold">

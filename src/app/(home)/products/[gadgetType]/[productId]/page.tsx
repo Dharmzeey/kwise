@@ -89,7 +89,7 @@ export default async function ProductDetail({ params }: Props) {
         <ProductNotFound />
       )}
       <ToastContainer
-        limit={1}
+        limit={5}
         autoClose={2000}
         transition={Slide}
         closeOnClick

@@ -24,7 +24,7 @@ export default function EmailVerification() {
     if (state.message === "Email verified successfully") {
       router.push("/");
     }
-  }, [state]);
+  }, [state, router]);
 
   // Countdown logic
   useEffect(() => {
@@ -116,7 +116,7 @@ export default function EmailVerification() {
         </p>
       </form>
       <ToastContainer
-        limit={1}
+        limit={5}
         autoClose={2000}
         transition={Slide}
         closeOnClick

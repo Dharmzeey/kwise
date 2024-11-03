@@ -143,7 +143,6 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
             }
         })
         const responseBody = await response.json();
-        console.log(responseBody)
         switch (response.status) {
             case 200:
                 return { data: responseBody.data, status: 200 }
@@ -154,7 +153,6 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
             case 403:
                 return { error: "User email not verified", status: 403 }
             default:
-                console.log(responseBody)
                 return { error: "Could not get checkout detail, reload and try again" }
         }
     } catch (error) {

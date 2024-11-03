@@ -20,12 +20,6 @@ export default function CheckoutPage() {
 
     const [selectedDelivery, setSelectedDelivery] = useState(""); // Track selected delivery
 
-    async function verifyUser() {
-        // this will send a code to the user and then they must verify
-        await resendEmailVerificationApi()
-        router.push("/email-verification/confirm")
-    }
-
     useEffect(() => {
         async function fetchCheckout() {
             const response = await checkoutItemsApi();
@@ -40,6 +34,12 @@ export default function CheckoutPage() {
     }, [])
 
     useEffect(() => {
+        async function verifyUser() {
+            // this will send a code to the user and then they must verify
+            await resendEmailVerificationApi()
+            router.push("/email-verification/confirm")
+        }
+
         async function fetchCheckoutDetails() {
             const response = await checkoutDetailsApi();
             if (response.status === 404) {
@@ -54,7 +54,7 @@ export default function CheckoutPage() {
             setIsLoading(false)
         }
         fetchCheckoutDetails()
-    }, [])
+    }, [router])
 
     const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedDelivery(event.target.value); // Update selected delivery option

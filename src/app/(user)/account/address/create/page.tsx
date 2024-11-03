@@ -19,12 +19,14 @@ export default function CreateUserAddress() {
     const [formState, formAction] = useFormState(createUserAddress, initialState);
     const [states, setStates] = useState<PlaceData[]>();
     const [lgas, setLgas] = useState<PlaceData[]>();
-    async function verifyUser() {
-        // this will send a code to the user and then they must verify
-        await resendEmailVerificationApi()
-        router.push("/email-verification/confirm")
-    }
+
     useEffect(() => {
+        async function verifyUser() {
+            // this will send a code to the user and then they must verify
+            await resendEmailVerificationApi()
+            router.push("/email-verification/confirm")
+        }
+
         if (formState.status === 201) {
             router.push("/account");
         } else if (formState.status === 401) {
@@ -33,8 +35,8 @@ export default function CreateUserAddress() {
         } else if (formState.status === 403) {
             verifyUser()
         }
-    }, [formState]);
-    
+    }, [formState, pathName, router]);
+
     useEffect(() => {
         async function fetchStates() {
             const response = await fetchStatesApi()

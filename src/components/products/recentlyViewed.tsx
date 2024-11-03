@@ -40,7 +40,7 @@ export default function RecentlyViewed({ productId }: Props) {
             localStorage.setItem("recentlyViewed", JSON.stringify(viewedProducts));
         }
         addToRecentlyViewed(productId);
-    }, []);
+    }, [productId]);
 
     return (
         <>

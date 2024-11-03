@@ -21,7 +21,7 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const router = useRouter()
   useEffect(() => {
-    if (state.message === "Password reset PIN sent to email") {
+    if (state.status === 200) {
       // Store both email and token in localStorage
       if (state.token) {
         localStorage.setItem('resetEmail', email);
@@ -35,7 +35,7 @@ export default function ForgotPassword() {
         router.push("/password/reset");
       }
     }
-  }, [state]);
+  }, [state, router, email]);
   return (
     <>
       <form action={formAction}>
@@ -61,7 +61,7 @@ export default function ForgotPassword() {
         </p>
       </form>
       <ToastContainer
-        limit={1}
+        limit={5}
         autoClose={2000}
         transition={Slide}
         closeOnClick

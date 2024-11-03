@@ -29,7 +29,7 @@ export default function EditProfile() {
         if (state.message === "Profile Updated successfully") {
             router.push("/account/profile");
         }
-    }, [state]);
+    }, [state, router]);
 
     return (
         <>

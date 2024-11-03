@@ -1,53 +1,51 @@
-'use client';
+"use client";
 import { initiatePaymentApi } from "@/services/paymentApis";
-import PaystackPop from '@paystack/inline-js';
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export default function Payment() {
-    const router = useRouter()
+    const router = useRouter();
     const [accessCode, setAccessCode] = useState<string | undefined>(undefined);
-    const [initializing, setInitializating] = useState<boolean>(true);
+    const [initializing, setInitializing] = useState<boolean>(true);
     const [processing, setProcessing] = useState<boolean>(false);
+
     useEffect(() => {
         async function initiatePayment() {
-            const response = await initiatePaymentApi()
+            const response = await initiatePaymentApi();
             if (response.status === 200) {
-                setAccessCode(response.data)
+                setAccessCode(response.data);
             } else if (response.status === 404) {
-                alert('No items in cart to be paid for, keep shopping')
-                router.push('/')
+                alert("No items in cart to be paid for, keep shopping");
+                router.push("/");
             }
-            setInitializating(false)
-            setProcessing(true)
+            setInitializing(false);
+            setProcessing(true);
         }
-        initiatePayment()
-    }, [])
+        initiatePayment();
+    }, [router]);
+
     useEffect(() => {
-        if (accessCode !== undefined) {
-            const popup = new PaystackPop()
-            popup.resumeTransaction(accessCode as unknown as { accessCode: string });
-            setProcessing(false)
+        async function loadPaystackAndProcess() {
+            if (accessCode !== undefined) {
+                // Dynamically import PaystackPop only on the client side
+                const PaystackPop = (await import("@paystack/inline-js")).default;
+                const popup = new PaystackPop();
+                popup.resumeTransaction(accessCode as unknown as { accessCode: string });
+                setProcessing(false);
+            }
         }
-    }, [accessCode])
+        loadPaystackAndProcess();
+    }, [accessCode]);
+
     return (
         <>
-            {
-                initializing
-                    ?
-                    <>
-                        <h1>Initializing...</h1>
-                    </>
-                    :
-                    processing ?
-                        <>
-                            <h1>Processing...</h1>
-                        </>
-                        :
-                        <>
-                            <b>An error occured</b>
-                        </>
-            }
+            {initializing ? (
+                <h1>Initializing...</h1>
+            ) : processing ? (
+                <h1>Processing...</h1>
+            ) : (
+                <b>An error occurred</b>
+            )}
         </>
-    )
+    );
 }

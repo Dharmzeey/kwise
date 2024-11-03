@@ -40,7 +40,7 @@ export default function CreateNewPassword() {
 
 
     useEffect(() => {
-        if (state.message === "Password changed successfully") {
+        if (state.status === 200) {
             // removes both email and token in localStorage
             localStorage.removeItem('resetEmail');
             localStorage.removeItem('resetToken');
@@ -56,7 +56,7 @@ export default function CreateNewPassword() {
             // I need to wait a second or 2 here so as to show the prompt
             router.push("/password/forgot")
         }
-    }, [state]);
+    }, [state, router]);
     return (
         <>
             <form action={formAction}>
@@ -92,7 +92,7 @@ export default function CreateNewPassword() {
                 </p>
             </form>
             <ToastContainer
-                limit={1}
+                limit={5}
                 autoClose={2000}
                 transition={Slide}
                 closeOnClick

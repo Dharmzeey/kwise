@@ -2,8 +2,8 @@
 
 import { ActionButton } from "@/components/actionComponents";
 import { ViewingInputField } from "@/components/interractivity/input";
-import { retrieveUserAddressApi, retrieveUserInfoApi } from "@/services/userApis";
-import { UserAddressData, UserProfileData } from "@/types/userInterfaces";
+import { retrieveUserAddressApi } from "@/services/userApis";
+import { UserAddressData } from "@/types/userInterfaces";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -24,7 +24,7 @@ export default function UserAddress() {
             }
         }
         fetchUserAddress()
-    }, [])
+    }, [router])
 
     const handleEditAddressClick = async () => {
         router.push('/account/address/edit');

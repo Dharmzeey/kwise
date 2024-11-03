@@ -47,7 +47,7 @@ export default function EditAddress() {
         if (state.status === 200) {
             router.push("/account/address");
         }
-    }, [state]);
+    }, [state, router]);
     const fetchLgas = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
         if (selectedValue) {

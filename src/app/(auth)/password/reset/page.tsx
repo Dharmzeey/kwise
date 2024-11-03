@@ -3,7 +3,7 @@
 import { verifyResetCode } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
-import { forgotPasswordApi, resendEmailVerificationApi } from "@/services/authApis";
+import { forgotPasswordApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
@@ -130,7 +130,7 @@ export default function ResetPasswordCode() {
             </form>
 
             <ToastContainer
-                limit={1}
+                limit={5}
                 autoClose={2000}
                 transition={Slide}
                 closeOnClick

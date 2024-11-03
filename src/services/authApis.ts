@@ -132,7 +132,7 @@ export async function loginUserApi(data: LoginUserData): Promise<ApiResponse> {
                 const refresh_token = responseBody.refresh_token;
                 handleAccessToken(access_token);
                 handleRefreshToken(refresh_token);
-                return { message: "Login successful" };
+                return { message: "Login successful",status: 200 };
             default:
                 return { error: "Failed to Log user in." };
         }
@@ -153,7 +153,7 @@ export async function forgotPasswordApi(data: ForgotPasswordData): Promise<ApiRe
         const responseBody = await response.json();
         switch (response.status) {
             case 200:
-                return { message: "Password reset PIN sent to email", token: responseBody.reset_token };
+                return { message: "Password reset PIN sent to email", token: responseBody.reset_token, status: 200 };
             case 409:
                 return { error: "password reset PIN already sent" };
             case 404:
@@ -214,7 +214,7 @@ export async function createNewPasswordApi(data: CreateNewPasswordData): Promise
             case 403:
                 return { error: `${responseBody.error}` }
             case 200:
-                return { message: "Password changed successfully" }
+                return { message: "Password changed successfully", status:200 }
             case 404:
                 return { error: "User information is not found" }
             case 400:

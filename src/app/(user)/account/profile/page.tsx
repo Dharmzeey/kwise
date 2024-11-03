@@ -22,7 +22,7 @@ export default function UserProfile() {
             setUserDetails(response.data)
         }
         fetchUserInfo()
-    }, [])
+    }, [router])
     const handleEditProfileClick = async () => {
         router.push('/account/profile/edit');
     }

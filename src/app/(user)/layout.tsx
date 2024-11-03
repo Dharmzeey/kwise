@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Istok_Web } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/header";
+import { Providers } from "@/contexts/providers";
 
 const istokWeb = Istok_Web({
   weight: ["400", "700"],
@@ -26,11 +27,13 @@ export default function UserLayout({
 }>) {
   return (
     <html lang="en">
+      <Providers>
       <body className={`${istokWeb.className} container text-xs md:text-sm`}>
         <Header />
         <hr />
         <div className="p-4">{children}</div>
-      </body>
+        </body>
+      </Providers>
     </html>
   );
 }

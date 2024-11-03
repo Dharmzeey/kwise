@@ -2,7 +2,6 @@ import { fetchStatesApi, fetchLgasApi } from "@/services/baseAPis";
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { EditableInputFIeld, EditableSelectField, EditableTextAreaFIeld } from "../interractivity/input";
-import { ActionButton, ActionLink } from "../actionComponents";
 import { SubmitButton } from "../submitButton";
 import { useNewDeliveryInfo } from "@/actions/cartActions";
 import { useRouter } from "next/navigation";
@@ -25,7 +24,7 @@ export default function NewDeliveryInfo() {
             }
         }
         fetchStates()
-    }, [])
+    }, [router])
 
     const fetchLgas = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
@@ -45,7 +44,7 @@ export default function NewDeliveryInfo() {
         if (formState.status === 200) {
             router.push("/cart/payment");
         }
-    }, [formState]);
+    }, [formState, router]);
 
     return (
         <>

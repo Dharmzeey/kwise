@@ -1,6 +1,7 @@
 import { CompletedOrderData, PendingOrderData } from "@/types/userInterfaces";
 import Image from "next/image";
 import { ActionLink } from "../actionComponents";
+import ImageComponent from "../interractivity/image";
 
 type PendingOrder = {
     order: PendingOrderData
@@ -16,7 +17,7 @@ function PendingOrderCard(prop: PendingOrder) {
             <div className="shadow shadow-gray-300 pb-2 pr-2 rounded mb-3">
                 <div className="grid grid-cols-[1fr_4fr] gap-2 mb-1">
                     <div className="relative">
-                        <Image src={prop.order.product_image} alt={prop.order.product_name} fill className="object-cover rounded" />
+                        <ImageComponent src={prop.order.product_image} alt={prop.order.product_name} />
                     </div>
                     <div className="flex flex-col pt-1 gap-1">
                         <h2>{prop.order.product_name}</h2>
@@ -56,7 +57,7 @@ function CompletedOrderCard(prop: CompletedOrder) {
             <div className="shadow shadow-gray-300 pb-2 pr-2 rounded mb-3">
                 <div className="grid grid-cols-[1fr_4fr] gap-2 mb-1">
                     <div className="relative">
-                        <Image src={prop.order.product_image} alt={prop.order.product_name} fill className="object-cover rounded" />
+                        <ImageComponent src={prop.order.product_image} alt={prop.order.product_name} />
                     </div>
                     <div className="flex flex-col pt-1 gap-1">
                         <h2>{prop.order.product_name}</h2>

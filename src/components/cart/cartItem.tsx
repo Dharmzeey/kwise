@@ -112,11 +112,13 @@ export default function CartItem({
 	return (
 		<>
 			<div className="grid grid-cols-[auto_1fr] mb-3 shadow pr-1">
-				<div className="w-[8.5rem] h-[8.5rem] relative">
+				<div className="w-[8.5rem] h-[7.5rem] relative">
 					<Link
 						href={`/products/${cartItem.product.category}/${cartItem.product.id}`}
 					>
-						<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
+						<div className="relative h-full">
+							<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
+						</div>
 					</Link>
 				</div>
 				<div className="ml-2 pt-1 pr-1 flex flex-col gap-2">

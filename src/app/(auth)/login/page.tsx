@@ -18,15 +18,15 @@ export default function LoginPage() {
   const queryParams = searchParams!.get("callbackUrl");
   const [state, formAction] = useFormState(loginUser, initialState);
   useEffect(() => {
-    if (state.message === "Login successful") {
-      // the message will come from authApi through authAction
+    if (state.status === 200) {
+      // the status will come from authApi through authAction
       if (searchParams && queryParams) {
         router.push(queryParams)
       } else {
         router.push("/");
       }
     }
-  }, [state]);
+  }, [state, queryParams, router, searchParams]);
 
   return (
     <>

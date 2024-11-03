@@ -16,12 +16,14 @@ export default function CreateUserProfile() {
     const pathName = usePathname();
     const router = useRouter();
     const [state, formAction] = useFormState(createUserInfo, initialState);
-    async function verifyUser() {
-        // this will send a code to the user and then they must verify
-        await resendEmailVerificationApi()
-        router.push("email-verification/confirm")
-    }
+
     useEffect(() => {
+        async function verifyUser() {
+            // this will send a code to the user and then they must verify
+            await resendEmailVerificationApi()
+            router.push("email-verification/confirm")
+        }
+
         if (state.message === "Profile created successfully") {
             router.push("/account");
         } else if (state.status === 401) {
@@ -30,7 +32,7 @@ export default function CreateUserProfile() {
         } else if (state.status === 403) {
             verifyUser()
         }
-    }, [state]);
+    }, [state, pathName, router]);
 
     return (
         <>

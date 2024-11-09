@@ -14,14 +14,15 @@ import RecentlyViewed from "@/components/products/recentlyViewed";
 
 type Props = {
   params: {
-    productId: string;
+    productInfo: string;
   };
 };
+
 
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
-  const product = await fetchProductById(params.productId);
+  const product = await fetchProductById(params.productInfo.slice(-36));// .slice() is to extract the uuid
   if (!product) {
     return {
       title: `Product Not Found | Kwise World`,
@@ -36,7 +37,8 @@ export const generateMetadata = async ({
 };
 
 export default async function ProductDetail({ params }: Props) {
-  const product = await fetchProductById(params.productId);
+  const productId = params.productInfo.slice(-36) // .slice() is to extract the uuid
+  const product = await fetchProductById(productId);
   return (
     <>
       {product != undefined ? (
@@ -48,20 +50,18 @@ export default async function ProductDetail({ params }: Props) {
             <div className="flex justify-between">
               <div className="flex gap-3">
                 <div
-                  className={`${
-                    product.utilizationStatus == "Brand New"
+                  className={`${product.utilizationStatus == "Brand New"
                       ? "brand-new"
                       : "uk-used"
-                  } text-white px-2 p-1 rounded-sm`}
+                    } text-white px-2 p-1 rounded-sm`}
                 >
                   {product.utilizationStatus}
                 </div>
                 <div
-                  className={`${
-                    product.availabilityStatus == "In Stock"
+                  className={`${product.availabilityStatus == "In Stock"
                       ? "in-stock"
                       : "out-of-stock"
-                  } text-white px-2 p-1 rounded-sm`}
+                    } text-white px-2 p-1 rounded-sm`}
                 >
                   {product.availabilityStatus}
                 </div>
@@ -76,14 +76,14 @@ export default async function ProductDetail({ params }: Props) {
             <p>{product.description}</p>
             {/* Add to cart */}
             {/* client component */}
-              <IncreamentDecreamentCheck product={product} />
+            <IncreamentDecreamentCheck product={product} />
           </section>
 
           {/* similar produtcts */}
-          <SimilarProducts productId={params.productId} />
+          <SimilarProducts productId={productId} />
 
           {/* Recently viewed */}
-          <RecentlyViewed productId={params.productId} />
+          <RecentlyViewed productId={productId} />
         </>
       ) : (
         <ProductNotFound />

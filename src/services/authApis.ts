@@ -61,7 +61,7 @@ export async function verifyCodeApi(data: PinVerificationData): Promise<ApiRespo
             case 401:
                 return {
                     error:
-                        "Unauthorized access request token again, this is for developer to re-fresh refresh token or ensure token is sent",
+                        "Unauthorized access request token again, this is for developer to re-fresh refresh token or ensure token is sent", status: 401
                 };
             case 410:
                 return { error: "Verification Pin Expired" };
@@ -72,7 +72,7 @@ export async function verifyCodeApi(data: PinVerificationData): Promise<ApiRespo
             case 400:
                 return { error: "Invalid PIN input" };
             case 200:
-                return { message: "Email verified successfully" };
+                return { message: "Email verified successfully", status: 200 };
             default:
                 return { error: "Email verification failed" };
         }
@@ -81,7 +81,7 @@ export async function verifyCodeApi(data: PinVerificationData): Promise<ApiRespo
     }
 }
 
-export async function resendEmailVerificationApi() {
+export async function resendEmailVerificationApi(): Promise<ApiResponse> {
     try {
         const token = fetchAccessTokenCookie();
         const response = await fetch(SEND_EMAIL_VERIFICATION, {
@@ -99,7 +99,7 @@ export async function resendEmailVerificationApi() {
             case 200:
                 return { message: "verification PIN sent to email." };
             case 401:
-                return { error: "You need to login first" };
+                return { error: "You need to login first", status: 401 };
             default:
                 return { message: "Email request failed" };
         }

@@ -2,6 +2,7 @@ import { Product } from "@/types/productInterfaces";
 import Link from "next/link";
 import ImageComponent from "../interractivity/image";
 import { numberWithCommas } from "@/utils/filter";
+import slugify from "slugify";
 
 interface ProductCardProps {
   product: Product;
@@ -9,7 +10,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => (
   <div className="mx-1">
-    <Link key={product.id} href={`/products/${product.category}/${product.id}`}>
+    <Link key={product.id} href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}>
       <div className="h-[55%] relative w-24">
         <ImageComponent src={product.image} alt={product.name} />
       </div>

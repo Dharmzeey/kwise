@@ -4,13 +4,14 @@ import { ActionButton } from "@/components/actionComponents";
 import { ViewingInputField } from "@/components/interractivity/input";
 import { retrieveUserAddressApi } from "@/services/userApis";
 import { UserAddressData } from "@/types/userInterfaces";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 // This just displays the profile, it is server rendered
 export default function UserAddress() {
     const router = useRouter()
+    const pathName = usePathname();
     const [userAddress, setUserAddress] = useState<UserAddressData | null>(null);
     useEffect(() => {
         async function fetchUserAddress() {
@@ -18,6 +19,8 @@ export default function UserAddress() {
             if (response.status === 404) {
                 alert("You have not filled you address information")
                 router.push('/account/address/create')
+            } else if (response.status === 401) {
+                router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
             }
             else {
                 setUserAddress(response.data)

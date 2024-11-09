@@ -29,7 +29,7 @@ export default function Header() {
                 <div className="relative">
                     <Link href="/cart" className="mr-12">
                         {
-                            cartCount > 0 && <div className="w-5 h-5 pt-[2px] absolute bottom-4 left-3 border border-gray-200 bg-main-color text-white rounded-full">
+                            cartCount > 0 && <div className="w-5 h-5  md:h-6 md:w-6 pt-[2px] absolute bottom-4 left-3 border border-gray-200 bg-main-color text-white rounded-full">
                                 <div className="flex justify-center items-center">
                                     <span>{cartCount}</span>
                                 </div>

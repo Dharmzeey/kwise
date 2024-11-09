@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000/v1";
+import { BASE_URL } from "../constants";
 
 // users
 export const VERIFY_USER_INFO = `${BASE_URL}/users/verify/`;

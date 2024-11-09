@@ -2,6 +2,7 @@ import Link from "next/link";
 import { numberWithCommas } from "@/utils/filter";
 import { Product } from "@/types/productInterfaces";
 import ImageComponent from "../interractivity/image";
+import slugify from "slugify";
 
 export default function ProductCategory({
   products,
@@ -25,9 +26,9 @@ export default function ProductCategory({
           </div>
           <div className="border-2 rounded p-5 grid grid-cols-2 gap-3">
             {products.map((product) => (
-              <Link
+              <Link prefetch={true}
                 key={product.id}
-                href={`/products/${product.category}/${product.id}`}
+                href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
               >
                 <div>
                   <div className="w-full h-32 relative">

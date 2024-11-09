@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000/v1";
+import { BASE_URL } from "../constants";
 
 // users
 export const FETCH_STATES = `${BASE_URL}/base/states/`;

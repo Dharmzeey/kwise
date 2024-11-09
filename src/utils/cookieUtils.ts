@@ -9,8 +9,7 @@ function handleAccessToken(token: string) {
         name: ACCESS_TOKEN_NAME,
         value: token,
         httpOnly: true,
-        // secure: process.env.NODE_ENV === "production",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: ACCESS_TOKEN_MAX_AGE,
         path: "/",
     });

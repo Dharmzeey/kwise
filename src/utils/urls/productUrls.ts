@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000/v1";
+import { BASE_URL } from "../constants";
 
 // products
 export const PRODUCT_CATEGORIES_URL = `${BASE_URL}/products/categories/`;

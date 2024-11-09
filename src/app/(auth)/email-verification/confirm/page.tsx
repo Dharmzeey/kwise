@@ -4,7 +4,7 @@ import { verifyCode } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { resendEmailVerificationApi } from "@/services/authApis";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
@@ -16,13 +16,17 @@ const initialState = {
 };
 
 export default function EmailVerification() {
+  const pathName = usePathname();
   const [state, formAction] = useFormState(verifyCode, initialState);
   const router = useRouter();
   const [resetEmailCount, setResetEmailCount] = useState(0);
+  console.log(pathName!)
 
   useEffect(() => {
-    if (state.message === "Email verified successfully") {
+    if (state.status === 200) {
       router.push("/");
+    } else if (state.status === 401) {
+      router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
     }
   }, [state, router]);
 

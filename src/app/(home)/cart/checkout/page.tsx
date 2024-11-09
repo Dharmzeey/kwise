@@ -6,13 +6,14 @@ import { numberWithCommas } from "@/utils/filter";
 import { useEffect, useState } from "react"
 import Loading from "../../loading";
 import CheckoutItem from "@/components/cart/checkoutItem";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import NewDeliveryInfo from "@/components/cart/newDeliveryInfo";
 import DefaultDeliveryInfo from "@/components/cart/defaultDeliveryInfo";
 import { resendEmailVerificationApi } from "@/services/authApis";
 
 export default function CheckoutPage() {
     const router = useRouter();
+    const pathName = usePathname();
     const [grandTotalPrice, setGrandTotalPrice] = useState<number>();
     const [checkoutData, setCheckoutData] = useState<CheckoutItemsData[]>();
     const [checkoutDetails, setCheckoutDetails] = useState<CheckoutDetails>();
@@ -49,6 +50,8 @@ export default function CheckoutPage() {
             } else if (response.status === 403) {
                 verifyUser()
                 setIsLoading(false)
+            } else if (response.status === 401) {
+                router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
             }
             setCheckoutDetails(response.data)
             setIsLoading(false)

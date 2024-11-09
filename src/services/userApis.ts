@@ -118,7 +118,7 @@ export async function updateUserInfoApi(data: UserProfileData): Promise<ApiRespo
                 return { error: "You are yet to fill their personal information" }
             case 200:
                 // this below also returns the user data
-                return { message: "Profile Updated successfully", data: responseBody.data }
+                return { message: "Profile Updated successfully", data: responseBody.data, status: 200 }
             case 400:
                 return handleErrorsResponse(responseBody)
             default:
@@ -302,6 +302,9 @@ export async function pendingOrdersApi(): Promise<ApiResponse> {
         switch (response.status) {
             case 200:
                 return { data: responseBody, status: 200 }
+            case 401: {
+                return { status: 401 }
+            }
             default:
                 return { error: "Error, pending orders cannot be fetched" }
         }
@@ -325,7 +328,9 @@ export async function completedOrdersApi(): Promise<ApiResponse> {
         switch (response.status) {
             case 200:
                 return { data: responseBody, status: 200 }
-
+            case 401: {
+                return { status: 401 }
+            }
             default:
                 return { error: "Error, completed orders cannot be fetched" }
         }

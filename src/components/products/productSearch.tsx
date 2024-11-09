@@ -2,6 +2,7 @@ import Link from "next/link";
 import { numberWithCommas } from "@/utils/filter";
 import { Product } from "@/types/productInterfaces";
 import ImageComponent from "../interractivity/image";
+import slugify from "slugify";
 
 export default function ProductSearchCategory({
   products,
@@ -21,7 +22,7 @@ export default function ProductSearchCategory({
             {products.map((product) => (
               <Link
                 key={product.id}
-                href={`/products/${product.category}/${product.id}`}
+                href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
               >
                 <div>
                   <div className="w-full h-32 relative">

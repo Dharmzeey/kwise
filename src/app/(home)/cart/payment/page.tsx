@@ -1,10 +1,11 @@
 "use client";
 import { initiatePaymentApi } from "@/services/paymentApis";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Payment() {
     const router = useRouter();
+    const pathName = usePathname();
     const [accessCode, setAccessCode] = useState<string | undefined>(undefined);
     const [initializing, setInitializing] = useState<boolean>(true);
     const [processing, setProcessing] = useState<boolean>(false);
@@ -17,6 +18,8 @@ export default function Payment() {
             } else if (response.status === 404) {
                 alert("No items in cart to be paid for, keep shopping");
                 router.push("/");
+            } else if (response.status === 401) {
+                router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
             }
             setInitializing(false);
             setProcessing(true);
@@ -32,10 +35,11 @@ export default function Payment() {
                 const popup = new PaystackPop();
                 popup.resumeTransaction(accessCode as unknown as { accessCode: string });
                 setProcessing(false);
+                // router.push('/account/orders/pending')
             }
         }
         loadPaystackAndProcess();
-    }, [accessCode]);
+    }, [accessCode, router]);
 
     return (
         <>

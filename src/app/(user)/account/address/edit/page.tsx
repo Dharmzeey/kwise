@@ -6,7 +6,7 @@ import { SubmitButton } from "@/components/submitButton";
 import { fetchLgasApi, fetchStatesApi } from "@/services/baseAPis";
 import { retrieveUserAddressApi } from "@/services/userApis";
 import { UserAddressData } from "@/types/userInterfaces";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
@@ -16,6 +16,7 @@ const initialState = {
 
 
 export default function EditAddress() {
+    const pathName = usePathname();
     const router = useRouter()
     const [userAddressInfo, setUserAddressInfo] = useState<UserAddressData | null>(null);
     const [state, formAction] = useFormState(updateUserAddress, initialState);
@@ -46,6 +47,8 @@ export default function EditAddress() {
     useEffect(() => {
         if (state.status === 200) {
             router.push("/account/address");
+        } else if (state.status === 401) {
+            router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         }
     }, [state, router]);
     const fetchLgas = async (event: React.ChangeEvent<HTMLSelectElement>) => {

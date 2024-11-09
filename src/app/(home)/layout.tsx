@@ -30,7 +30,7 @@ export default function HomeLayout({
   return (
     <html lang="en">
       <Providers>
-        <body className={`${istokWeb.className} container text-xs md:text-sm`}>
+        <body className={`${istokWeb.className} container m-auto text-xs md:text-sm`}>
           <Header />
           <div className="p-4 min-h-[70svh]">{children}</div>
           <Footer />

@@ -6,6 +6,7 @@ import {
 } from "@/services/productApi";
 import { Metadata } from "next";
 import Link from "next/link";
+import slugify from "slugify";
 
 type Props = {
   params: {
@@ -49,7 +50,7 @@ export default async function DevicePage({ params }: Props) {
             {products.map((product) => (
               <Link
                 key={product.id}
-                href={`/products/${product.category}/${product.id}`}
+                href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
               >
                 <ListItems key={product.id} device={product} />
               </Link>

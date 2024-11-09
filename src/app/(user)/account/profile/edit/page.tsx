@@ -5,7 +5,8 @@ import { EditableInputFIeld, ViewingInputField } from "@/components/interractivi
 import { SubmitButton } from "@/components/submitButton";
 import { retrieveUserInfoApi } from "@/services/userApis";
 import { UserProfileData } from "@/types/userInterfaces";
-import { useRouter } from "next/navigation";
+import { stat } from "fs";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
@@ -15,6 +16,7 @@ const initialState = {
 
 
 export default function EditProfile() {
+    const pathName = usePathname();
     const router = useRouter()
     const [userDetails, setUserDetails] = useState<UserProfileData | null>(null);
     const [state, formAction] = useFormState(updateUserInfo, initialState);
@@ -26,8 +28,10 @@ export default function EditProfile() {
         fetchUserInfo()
     }, [])
     useEffect(() => {
-        if (state.message === "Profile Updated successfully") {
+        if (state.status === 200) {
             router.push("/account/profile");
+        } else if (state.status === 401) {
+            router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         }
     }, [state, router]);
 

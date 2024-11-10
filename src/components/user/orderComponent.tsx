@@ -1,7 +1,7 @@
 import { CompletedOrderData, PendingOrderData } from "@/types/userInterfaces";
-import Image from "next/image";
 import { ActionLink } from "../actionComponents";
 import ImageComponent from "../interractivity/image";
+import { numberWithCommas } from "@/utils/filter";
 
 type PendingOrder = {
     order: PendingOrderData
@@ -16,11 +16,14 @@ function PendingOrderCard(prop: PendingOrder) {
         <>
             <div className="shadow shadow-gray-300 pb-2 pr-2 rounded mb-3">
                 <div className="grid grid-cols-[1fr_4fr] gap-2 mb-1">
-                    <div className="relative">
+                    <div className="relative row-span-2">
                         <ImageComponent src={prop.order.product_image} alt={prop.order.product_name} />
                     </div>
-                    <div className="flex flex-col pt-1 gap-1">
-                        <h2>{prop.order.product_name}</h2>
+                    <div className="flex flex-col pt-1 gap-1 px-2">
+                        <div className="flex justify-between">
+                            <h2>{prop.order.product_name}</h2>
+                            <div>₦{numberWithCommas(prop.order.price)}</div>
+                        </div>
                         <div className="flex justify-between">
                             <div>Order no: {prop.order.order_no} </div>
                             <div>(x{prop.order.quantity})</div>
@@ -36,15 +39,16 @@ function PendingOrderCard(prop: PendingOrder) {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="px-2 pt-1 leading-5">
-                    <h2>Delivery Information</h2>
-                    <div>
-                        <p className="text-justify">Address: {prop.order.address}</p>
-                        <div>Phone No: {prop.order.phone_number}</div>
-                        <div>Estimated delivery date: {prop.order.estimated_delivery_date}</div>
+                    <div className="px-2 pt-1 leading-5 col-span-2 md:col-span-1">
+                        <h2>Delivery Information</h2>
+                        <div>
+                            <p className="text-justify">Address: {prop.order.address}</p>
+                            <div>Phone No: {prop.order.phone_number}</div>
+                            <div>Estimated delivery date: {prop.order.estimated_delivery_date}</div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </>
     )
@@ -56,11 +60,14 @@ function CompletedOrderCard(prop: CompletedOrder) {
         <>
             <div className="shadow shadow-gray-300 pb-2 pr-2 rounded mb-3">
                 <div className="grid grid-cols-[1fr_4fr] gap-2 mb-1">
-                    <div className="relative">
+                    <div className="relative row-span-2">
                         <ImageComponent src={prop.order.product_image} alt={prop.order.product_name} />
                     </div>
-                    <div className="flex flex-col pt-1 gap-1">
-                        <h2>{prop.order.product_name}</h2>
+                    <div className="flex flex-col pt-1 px-2 gap-1">
+                        <div className="flex justify-between">
+                            <h2>{prop.order.product_name}</h2>
+                            <div>₦{numberWithCommas(prop.order.price)}</div>
+                        </div>
                         <div className="flex justify-between">
                             <div>Order no: {prop.order.order_no} </div>
                             <div>(x{prop.order.quantity})</div>
@@ -73,10 +80,11 @@ function CompletedOrderCard(prop: CompletedOrder) {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="px-2 pt-1 leading-5">
-                    <div>
-                        <div>Delivery date: {prop.order.delivery_date}</div>
+                    <div className="px-2 pt-1 leading-5 col-span-2 md:col-span-1">
+                        <div>
+                            <div>Delivery date: {prop.order.delivery_date}</div>
+                            <p className="text-justify">Address: {prop.order.address}</p>
+                        </div>
                     </div>
                 </div>
             </div>

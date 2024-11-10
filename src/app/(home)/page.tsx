@@ -1,15 +1,13 @@
 import ProductCategory from "@/components/products/productCategory";
 import HomeCarousel from "@/components/carouselSlider";
 import { fetchAllProducts } from "@/services/productApi";
-import HandleProductSearch from "@/components/interractivity/productSearch";
 
 export default async function Home() {
   const products = await fetchAllProducts();
   return (
     <main>
-      <HandleProductSearch />
       <section className="mt-6 mb-4 flex justify-center">
-        <div className="w-72 h-36">
+        <div className="w-2/3 h-[30svw] md:w-1/2 md:h-[20svw]">
           <HomeCarousel />
         </div>
       </section>

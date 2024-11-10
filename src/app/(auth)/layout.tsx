@@ -23,7 +23,7 @@ export default function AuthLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${istokWeb.className} container text-xs md:text-sm`}>
+            <body className={`${istokWeb.className} container text-xs md:text-sm m-auto`}>
                 <main className="flex justify-center mt-20">
                     <div className="w-full max-w-md px-4">
                         <div className="flex justify-center mb-4">

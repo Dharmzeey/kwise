@@ -55,24 +55,24 @@ const IncreamentDecreamentCheck = ({ product }: { product: Product }) => {
 
 	return (
 		<>
-			<div className="flex justify-between items-center mt-3">
-				<div className="flex items-center shadow ">
+			<div className="flex justify-between items-center mt-3 lg:flex-col gap-3 lg:w-full">
+				<div className="flex items-center shadow md:w-full md:justify-between rounded">
 					<button
-						className="px-2 bg-main-color text-white text-2xl rounded-l"
+						className="p-2 bg-main-color text-white text-2xl rounded-l"
 						onClick={decreament}
 					>
 						&minus;
 					</button>
 					<span className="px-6 py-2 ">{count}</span>
 					<button
-						className="px-2 bg-main-color text-white text-2xl rounded-r"
+						className="p-2 bg-main-color text-white text-2xl rounded-r"
 						onClick={increament}
 					>
 						&#43;
 					</button>
 				</div>
-				<div className="self-start shadow rounded">
-					<button className="px-3 py-2 bg-main-color text-white text-sm text-bold uppercase rounded" onClick={add}>
+				<div className="self-start shadow rounded md:self-auto w-full">
+					<button className="p-[14px] bg-main-color text-white text-sm text-bold uppercase rounded w-full" onClick={add}>
 						Add to cart
 					</button>
 				</div>

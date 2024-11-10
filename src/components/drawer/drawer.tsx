@@ -1,5 +1,5 @@
 'use client'
-import { faBagShopping, faHeart, faUser, faX } from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import DrawerItem from "./drawerItems";
 import Link from "next/link";
 import { logout } from "@/services/authApis";

@@ -1,3 +1,12 @@
+interface Deal{
+  id: string;
+  title: string;
+  details: string;
+  image: string;
+  link_to: string;
+}
+
+
 interface Product {
   id: string;
   name: string;
@@ -29,4 +38,4 @@ interface CartItemInterface {
 }
 
 
-export type { Brand, Product, Category, CartItemInterface };
+export type { Deal, Brand, Product, Category, CartItemInterface };

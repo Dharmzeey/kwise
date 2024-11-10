@@ -46,7 +46,7 @@ export default async function DevicePage({ params }: Props) {
               ))}
             </div>
           </div>
-          <div className="mt-3 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {products.map((product) => (
               <Link
                 key={product.id}

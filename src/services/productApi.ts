@@ -1,13 +1,24 @@
 import "server-only";
 
-import { Brand, Product } from "@/types/productInterfaces";
+import { Brand, Deal, Product } from "@/types/productInterfaces";
 import {
+  DEALS_URL,
   PRODUCTS_URL,
   PRODUCT_BRAND_URL,
   PRODUCT_BY_CATEGORY_URL,
   PRODUCT_DETAILS_URL,
   SIMILAR_PRODUCTS_URL,
 } from "@/utils/urls/productUrls";
+
+export async function fetchDeals() {
+  const response = await fetch(DEALS_URL);
+  const deals: Deal[] = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch products");
+  }
+  return deals;
+}
+
 
 export async function fetchAllProducts() {
   const response = await fetch(PRODUCTS_URL);

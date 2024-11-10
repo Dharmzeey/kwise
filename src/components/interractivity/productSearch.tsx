@@ -21,32 +21,39 @@ export default function HandleProductSearch() {
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            event.preventDefault(); 
+            event.preventDefault();
             handleSearchSubmit();
         }
     };
 
+    const searchBarStyle = {
+        width: 'min(60%, 40rem)',
+
+    }
+
     return (
         <>
-            <form onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-[1fr_auto] border border-black rounded">
-                    <input
-                        type="text"
-                        placeholder="Search item..."
-                        className="p-2 border-r border-black"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <button 
-                        type="button" 
-                        className="bg-main-color p-2 cursor-pointer" 
-                        onClick={handleSearchSubmit}
-                    >
-                        <FontAwesomeIcon icon={faSearch} className="text-xl text-white" />
-                    </button>
-                </div>
-            </form>
+            <div style={searchBarStyle}>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <div className="grid grid-cols-[1fr_auto] border border-black rounded">
+                        <input
+                            type="text"
+                            placeholder="Search item..."
+                            className="p-2 border-r border-black"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <button
+                            type="button"
+                            className="bg-main-color p-1 px-2 cursor-pointer"
+                            onClick={handleSearchSubmit}
+                        >
+                            <FontAwesomeIcon icon={faSearch} className="text-xl text-white" />
+                        </button>
+                    </div>
+                </form>
+            </div>
         </>
     );
 }

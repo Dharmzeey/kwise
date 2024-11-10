@@ -1,9 +1,15 @@
 import { BASE_URL } from "../constants";
 
-// products
+
 export const PRODUCT_CATEGORIES_URL = `${BASE_URL}/products/categories/`;
 export const PRODUCT_BRAND_URL = (categoryName: string) =>
   `${BASE_URL}/products/brands/?q=${categoryName}`;
+
+// Deals
+export const DEALS_URL = `${BASE_URL}/products/deals`;
+
+// products
+
 
 export const PRODUCTS_URL = `${BASE_URL}/products/`;
 export const PRODUCT_SEARCH_URL = (queryParam: string) =>

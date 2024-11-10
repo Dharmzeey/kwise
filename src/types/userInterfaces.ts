@@ -34,6 +34,7 @@ type PendingOrderData = {
     product_image: string;
     product_name: string;
     order_no: string;
+    price: number;
     quantity: string;
     shipped: boolean;
     address: string;
@@ -46,8 +47,10 @@ type CompletedOrderData = {
     product_image: string;
     product_name: string;
     order_no: string;
+    price: number;
     quantity: string;
     delivery_date: string;
+    address: string;
 }
 
 

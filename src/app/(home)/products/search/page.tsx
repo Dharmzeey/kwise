@@ -54,7 +54,6 @@ export default function ProductSearchPage() {
 
   return (
     <>
-      <HandleProductSearch />
       <br />
       {loading ? (
         <Loading />

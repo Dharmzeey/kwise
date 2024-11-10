@@ -5,9 +5,11 @@ import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faBars, faX } from "@fortawesome/free-solid-svg-icons";
-import Drawer from "./drawer";
+import Drawer from "./drawer/drawer";
 import { useState } from "react";
 import { useCartContext } from "@/contexts/cartContext";
+import HandleProductSearch from "./interractivity/productSearch";
+import DrawerMediumLargeScreen from "./drawer/drawerMdLg";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -16,9 +18,9 @@ export default function Header() {
         setMenuOpen(!menuOpen)
     }
     return (
-        <header className="p-4 pb-0">
+        <header className="container m-auto p-4 pb-0">
             <div className="flex justify-between items-center">
-                <Link href="/" aria-label="kwise home" >
+                <Link href="/" aria-label="kwise home" className="-mt-2">
                     <Image
                         src="/logo.jpg"
                         alt="kwise"
@@ -26,7 +28,32 @@ export default function Header() {
                         height={35}
                     />
                 </Link>
-                <div className="relative">
+                <HandleProductSearch />
+
+                <div className="hidden gap-3 md:flex lg:gap-20">
+                    {/* This below will be hidden in small screen */}
+                    <DrawerMediumLargeScreen/>
+                    <div className="relative">
+                        <Link href="/cart" className="">
+                            {
+                                cartCount > 0 && <div className="w-5 h-5  md:h-6 md:w-6 pt-[2px] absolute bottom-4 left-3 border border-gray-200 bg-main-color text-white rounded-full">
+                                    <div className="flex justify-center items-center">
+                                        <span>{cartCount}</span>
+                                    </div>
+                                </div>
+                            }
+                            <div className="flex gap-2">
+                                <FontAwesomeIcon icon={faCartShopping} className="text-xl" />
+                                <span>Your cart</span>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+
+
+                <div className="relative md:hidden">
+                    {/* This below will be hidden in medium screen */}
                     <Link href="/cart" className="mr-12">
                         {
                             cartCount > 0 && <div className="w-5 h-5  md:h-6 md:w-6 pt-[2px] absolute bottom-4 left-3 border border-gray-200 bg-main-color text-white rounded-full">

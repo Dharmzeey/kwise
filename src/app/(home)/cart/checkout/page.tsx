@@ -57,7 +57,7 @@ export default function CheckoutPage() {
             setIsLoading(false)
         }
         fetchCheckoutDetails()
-    }, [router])
+    }, [router, pathName])
 
     const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedDelivery(event.target.value); // Update selected delivery option

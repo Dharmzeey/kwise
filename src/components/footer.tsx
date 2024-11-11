@@ -24,9 +24,9 @@ export default function Footer() {
               <span className="font-bold">0806 741 4548</span>
             </div>
             <div className="flex gap-3">
-              <SocialIcon url="https://x.com/Dharmzeey" bgColor="black" style={{ width: '2rem', height: '2rem'}} />
-              <SocialIcon url="https://www.instagram.com/dharmzeey/" bgColor="black" style={{ width: '2rem', height: '2rem' }} />
-              <SocialIcon url="hhttps://web.facebook.com/profile.php?id=100008304151354" bgColor="black" style={{ width: '2rem', height: '2rem' }} />
+              <SocialIcon url="https://x.com/worldkwise" bgColor="black" style={{ width: '2rem', height: '2rem'}} />
+              <SocialIcon url="https://www.instagram.com/kwiseworld" bgColor="black" style={{ width: '2rem', height: '2rem' }} />
+              <SocialIcon url="https://web.facebook.com/Kwiseworld" bgColor="black" style={{ width: '2rem', height: '2rem' }} />
             </div>
           </div>
         </div>

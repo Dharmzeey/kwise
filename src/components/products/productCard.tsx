@@ -11,7 +11,7 @@ interface ProductCardProps {
 const PRODUCT_NAME_LENGTH = 60;
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => (
   <div className="mx-1">
-    <Link key={product.id} href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}>
+    <Link prefetch={true} key={product.id} href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}>
       <div className="h-[65%] md:h-[75%] relative w-[20svw] lg:w-[15svw]">
         <ImageComponent src={product.image} alt={product.name} />
       </div>

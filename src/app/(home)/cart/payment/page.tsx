@@ -25,7 +25,7 @@ export default function Payment() {
             setProcessing(true);
         }
         initiatePayment();
-    }, [router]);
+    }, [router, pathName]);
 
     useEffect(() => {
         async function loadPaystackAndProcess() {

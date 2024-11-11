@@ -33,7 +33,7 @@ export default function EditProfile() {
         } else if (state.status === 401) {
             router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         }
-    }, [state, router]);
+    }, [state, router, pathName]);
 
     return (
         <>

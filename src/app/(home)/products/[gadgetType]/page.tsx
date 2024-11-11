@@ -48,7 +48,7 @@ export default async function DevicePage({ params }: Props) {
           </div>
           <div className="mt-3 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {products.map((product) => (
-              <Link
+              <Link prefetch={true}
                 key={product.id}
                 href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
               >

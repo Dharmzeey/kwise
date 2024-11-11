@@ -18,14 +18,14 @@ export default function ProductSearchCategory({
           <div className="flex justify-between mb-2">
             <div>{gadgetType}</div>
           </div>
-          <div className="border-2 rounded p-5 grid grid-cols-2 gap-3">
+          <div className="border-2 rounded p-5 grid grid-cols-2 md:grid-cols-4 gap-3">
             {products.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
               >
                 <div>
-                  <div className="w-full h-32 relative">
+                  <div className="w-full h-32 md:h-[11svw] relative">
                     <ImageComponent src={product.image} alt={product.name} />
                   </div>
                   <div className="pt-2 ">{product.name}</div>

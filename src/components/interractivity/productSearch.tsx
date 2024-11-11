@@ -27,7 +27,7 @@ export default function HandleProductSearch() {
     };
 
     const searchBarStyle = {
-        width: 'min(60%, 40rem)',
+        width: 'min(70%, 40rem)',
 
     }
 

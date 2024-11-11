@@ -27,7 +27,7 @@ export default function UserAddress() {
             }
         }
         fetchUserAddress()
-    }, [router])
+    }, [router, pathName])
 
     const handleEditAddressClick = async () => {
         router.push('/account/address/edit');

@@ -1,6 +1,5 @@
 
-
-export default async function () {
+export default function DealsPage() {
     
     return (
         <>

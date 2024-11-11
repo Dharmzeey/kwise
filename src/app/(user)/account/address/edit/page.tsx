@@ -50,7 +50,7 @@ export default function EditAddress() {
         } else if (state.status === 401) {
             router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         }
-    }, [state, router]);
+    }, [state, router, pathName]);
     const fetchLgas = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
         if (selectedValue) {

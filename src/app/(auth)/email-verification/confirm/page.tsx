@@ -20,7 +20,6 @@ export default function EmailVerification() {
   const [state, formAction] = useFormState(verifyCode, initialState);
   const router = useRouter();
   const [resetEmailCount, setResetEmailCount] = useState(0);
-  console.log(pathName!)
 
   useEffect(() => {
     if (state.status === 200) {

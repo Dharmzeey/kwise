@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import url('./module.css'); */
 
 :root {
   --main-color: #FF5100;
@@ -28,6 +29,7 @@
 }
 
 @layer utilities {
+  @import url('./module.css');
   .text-balance {
     text-wrap: balance;
   }
@@ -55,14 +57,5 @@
   .my-toast{
     @apply bg-secondary-color m-auto rounded-b;
     width: max(55%, 12rem);
-  }
-  .blur {
-    filter: blur(5px);
-    transition: filter 0.3s ease-in;
-  }
-   
-  .remove-blur {
-    filter: blur(0px);
-    transition: filter 0.3s ease-in;
   }
 }

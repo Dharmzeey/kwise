@@ -33,7 +33,9 @@ export default function Payment() {
                 // Dynamically import PaystackPop only on the client side
                 const PaystackPop = (await import("@paystack/inline-js")).default;
                 const popup = new PaystackPop();
-                popup.resumeTransaction(accessCode as unknown as { accessCode: string });
+                const sttattt = popup.resumeTransaction(accessCode as unknown as { accessCode: string });
+                console.log(sttattt)
+                console.log(sttattt.getStatus)
                 setProcessing(false);
                 // router.push('/account/orders/pending')
             }

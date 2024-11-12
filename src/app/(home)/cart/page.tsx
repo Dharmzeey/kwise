@@ -2,6 +2,7 @@
 
 import { ActionLink } from "@/components/actionComponents";
 import CartItem from "@/components/cart/cartItem";
+import { EmptyCart } from "@/components/cart/emptyCart";
 import Loading from "@/components/loading";
 import { getCartApi } from "@/services/cartApis";
 import { CartData } from "@/types/cartInterfaces";
@@ -79,9 +80,7 @@ export default function CartPage() {
                                         </div>
                                     </>
                                     :
-                                    <>
-                                        <h1>No cart Information</h1>
-                                    </>
+                                    <EmptyCart />
                             }
                         </>
                     )

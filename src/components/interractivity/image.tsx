@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import styles from './image.module.css';
 
 type ImageProp = {
     alt: string;
@@ -16,7 +15,8 @@ const ImageComponent = (imageProp: ImageProp) => {
 
     return (
         <>
-            <div className={`${styles.imageWrapper} ${isLoading ? styles.loading : ''}`}>
+            <div className={`imageWrapper ${isLoading ? 'loading' : ''}`}>
+                {/* The imageWrapper and loading is imported in the globals.css */}
             <Image
                 alt={imageProp.alt}
                 src={imageProp.src}

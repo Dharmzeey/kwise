@@ -4,6 +4,7 @@ import { Brand, Product } from "@/types/productInterfaces";
 import {
   PRODUCTS_URL,
   PRODUCT_BRAND_URL,
+  PRODUCT_BY_BRAND_URL,
   PRODUCT_BY_CATEGORY_URL,
   PRODUCT_DETAILS_URL,
   SIMILAR_PRODUCTS_URL,
@@ -38,6 +39,15 @@ export async function fetchProductBrands(categoryName: string) {
 
 export async function fetchProductsByCategory(categoryName: string) {
   const response = await fetch(PRODUCT_BY_CATEGORY_URL(categoryName));
+  const products: Product[] = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch products");
+  }
+  return products;
+}
+
+export async function fetchProductsByBrand(categoryName: string, brandName: string) {
+  const response = await fetch(PRODUCT_BY_BRAND_URL(categoryName ,brandName));
   const products: Product[] = await response.json();
   if (!response.ok) {
     throw new Error("Failed to fetch products");

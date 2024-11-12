@@ -6,18 +6,24 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import Drawer from "./drawer/drawer";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useCartContext } from "@/contexts/cartContext";
 import HandleProductSearch from "./interractivity/productSearch";
 import DrawerMediumLargeScreen from "./drawer/drawerMdLg";
+import { usePathname } from "next/navigation";
 
 
 export default function Header() {
+    const pathName = usePathname()
     const [menuOpen, setMenuOpen] = useState(false);
     const { cartCount } = useCartContext();
     const toggleMenu = () => {
         setMenuOpen(!menuOpen)
     }
+    useEffect(() => {
+        // closes the drawer when the route changes
+        setMenuOpen(false)
+    }, [pathName])
     return (
         <header className="container m-auto p-4 pb-0">
             <div className="flex justify-between items-center">

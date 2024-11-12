@@ -29,7 +29,7 @@ export default function UserLayout({
   return (
     <html lang="en">
       <Providers>
-        <body className={`${istokWeb.className} text-xs md:text-sm`}>
+        <body className={`${istokWeb.className} text-xs md:text-sm bg-white`}>
           <Header />
           <div className="container m-auto py-4 px-2 lg:px-28 min-h-[70svh]">{children}</div>
           <Footer />

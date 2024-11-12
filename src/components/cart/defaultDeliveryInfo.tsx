@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckoutDetails } from "@/types/cartInterfaces";
-import { ActionButton, ActionLink } from "../actionComponents";
+import { ActionButton } from "../actionComponents";
 import { orderAddressSummaryApi } from "@/services/cartApis";
 import { useRouter } from "next/navigation";
 

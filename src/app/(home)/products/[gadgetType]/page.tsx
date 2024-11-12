@@ -2,6 +2,7 @@ import ListItems from "@/components/products/listItem";
 import ProductNotFound from "@/components/products/productNotFound";
 import {
   fetchProductBrands,
+  fetchProductsByBrand,
   fetchProductsByCategory,
 } from "@/services/productApi";
 import { Metadata } from "next";
@@ -12,6 +13,9 @@ type Props = {
   params: {
     gadgetType: string;
   };
+  searchParams: {
+    brandName: string;
+  }
 };
 
 export const generateMetadata = async ({
@@ -30,9 +34,14 @@ export const generateMetadata = async ({
   };
 };
 
-export default async function DevicePage({ params }: Props) {
+export default async function DevicePage({ params, searchParams: queryParams }: Props) {
   const brands = await fetchProductBrands(params.gadgetType);
-  const products = await fetchProductsByCategory(params.gadgetType);
+  let products;
+  if (queryParams?.brandName) {
+    products = await fetchProductsByBrand(params.gadgetType, queryParams.brandName);
+  } else {
+    products = await fetchProductsByCategory(params.gadgetType);
+  }
   return (
     <>
       {brands.length >= 1 && products.length > 1 ? (
@@ -40,9 +49,13 @@ export default async function DevicePage({ params }: Props) {
           <div className="flex gap-7">
             <h1>{params.gadgetType}</h1>
             <div className="flex gap-4 opacity-70">
-              <h2>All</h2>
+              <Link href={`/products/${params.gadgetType}`}>
+                <h2>All</h2>
+              </Link>
               {brands.map((brand) => (
-                <h2 key={brand.id}> {brand.name}</h2>
+                <Link key={brand.id} href={`/products/${params.gadgetType}/?brandName=${brand.name}`}>
+                  <h2> {brand.name}</h2>
+                </Link>
               ))}
             </div>
           </div>
@@ -51,6 +64,7 @@ export default async function DevicePage({ params }: Props) {
               <Link prefetch={true}
                 key={product.id}
                 href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
+                className="hover:scale-[1.01] transition"
               >
                 <ListItems key={product.id} device={product} />
               </Link>

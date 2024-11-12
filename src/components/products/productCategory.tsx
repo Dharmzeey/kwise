@@ -29,6 +29,7 @@ export default function ProductCategory({
               <Link prefetch={true}
                 key={product.id}
                 href={`/products/${product.category}/${slugify(product.name)}-${product.id}`}
+                className="hover:scale-[1.01] transition"
               >
                 <div>
                   <div className="w-full h-32 md:h-[11svw] relative">

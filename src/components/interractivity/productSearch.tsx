@@ -27,8 +27,7 @@ export default function HandleProductSearch() {
     };
 
     const searchBarStyle = {
-        width: 'min(70%, 40rem)',
-
+        width: 'min(60%, 40rem)',
     }
 
     return (
@@ -39,14 +38,14 @@ export default function HandleProductSearch() {
                         <input
                             type="text"
                             placeholder="Search item..."
-                            className="p-2 border-r border-black"
+                            className="p-2  w-[min(90%,36rem)]"
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onKeyDown={handleKeyDown}
                         />
                         <button
                             type="button"
-                            className="bg-main-color p-1 px-2 cursor-pointer"
+                            className="bg-main-color p-1 px-2 cursor-pointer border-l  border-black"
                             onClick={handleSearchSubmit}
                         >
                             <FontAwesomeIcon icon={faSearch} className="text-xl text-white" />

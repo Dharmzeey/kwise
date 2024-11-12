@@ -10,6 +10,7 @@ import { DEALS_URL } from "@/utils/urls/productUrls";
 
 export default function HomeCarousel() {
 	const [deals, setDeals] = useState<Deal[] | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	useEffect(() => {
 		async function fetchDeals() {
 			const response = await fetch(DEALS_URL);
@@ -18,6 +19,7 @@ export default function HomeCarousel() {
 				throw new Error("Failed to fetch products");
 			}
 			setDeals(deals)
+			// setIsLoading(false)
 		}
 		fetchDeals()
 	}, [])
@@ -33,30 +35,27 @@ export default function HomeCarousel() {
 				{
 					deals && deals?.length >= 1
 						?
-						<>
-							{
-								deals.map((deal) =>
-								(
-									<Link key={deal.id} href={deal.link_to}>
-										<div className="relative h-[30svw] w-full md:h-[20svw] border-2 rounded">
-											<Image src={deal.image} alt={deal.title} fill className="object-cover rounded" />
-										</div>
-									</Link>
-								))
-							}
-						</>
-						:
+						deals.map((deal) =>
 						(
-							<div className="relative h-[30svw] w-full md:h-[20svw] border-2 rounded">
-								<Image src="/logo.jpg" alt="kwise logo" fill className="object-cover rounded" />
-							</div>
-						)
+							<Link key={deal.id} href={deal.link_to}>
+								<div className="relative h-[30svw] w-full md:h-[20svw] border-2 rounded">
+									<Image src={deal.image} alt={deal.title} fill className="object-cover rounded" />
+								</div>
+							</Link>
+						))
+						:
+						isLoading ?
+							[
+								// This will show shimmer pending the deals load
+								<div key={1} className={`${isLoading ? 'loading' : ''} imageWrappper h-[30svw] w-full md:h-[20svw] border-2 rounded}`}></div>
+							]
+							:
+							[
+								<div key={1} className="relative h-[30svw] w-full md:h-[20svw] border-2 rounded" >
+									<Image src="/logo.jpg" alt="kwise logo" fill className="object-cover rounded" />
+								</div>
+							]
 				}
-				<>
-					{/* requires a default so I just added that */}
-					<div className="relative h-[30svw] w-full md:h-[20svw] border-2 rounded">
-						<Image src="/logo.jpg" alt="kwise logo" fill className="object-cover rounded" />
-					</div></>
 			</Carousel>
 		</div>
 	);

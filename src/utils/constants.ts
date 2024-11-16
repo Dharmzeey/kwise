@@ -1,5 +1,4 @@
-// export const BASE_URL = "https://api.kwiseworld.com/v1";
-export const BASE_URL = "http://localhost:8000/v1";
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const ACCESS_TOKEN_NAME = "_kw_aa"; // access token
 export const REFRESH_TOKEN_NAME = "_kw_ad"; // refresh token

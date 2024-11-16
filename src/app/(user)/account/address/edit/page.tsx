@@ -9,6 +9,7 @@ import { UserAddressData } from "@/types/userInterfaces";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { ZodIssue } from "zod";
 
 const initialState = {
     message: "",
@@ -20,8 +21,10 @@ export default function EditAddress() {
     const router = useRouter()
     const [userAddressInfo, setUserAddressInfo] = useState<UserAddressData | null>(null);
     const [state, formAction] = useFormState(updateUserAddress, initialState);
+    const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [states, setStates] = useState<PlaceData[]>();
     const [lgas, setLgas] = useState<PlaceData[]>();
+
     useEffect(() => {
         async function fetchStates() {
             const response = await fetchStatesApi()
@@ -31,6 +34,7 @@ export default function EditAddress() {
         }
         fetchStates()
     }, [])
+
     useEffect(() => {
         async function fetchUserAddress() {
             // retrieve the user info, the query the LGA DB with state id and the sets the lga to the one that matches the state
@@ -44,6 +48,7 @@ export default function EditAddress() {
         }
         fetchUserAddress()
     }, [])
+
     useEffect(() => {
         if (state.status === 200) {
             router.push("/account/address");
@@ -51,6 +56,7 @@ export default function EditAddress() {
             router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         }
     }, [state, router, pathName]);
+
     const fetchLgas = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;
         if (selectedValue) {
@@ -65,13 +71,20 @@ export default function EditAddress() {
         }
     };
 
+    useEffect(() => {
+        setErrors(state.errors)
+    }, [state])
+
+    const getErrorForField = (fieldName: string) => {
+        return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+    };
 
     return (
         <>
             {userAddressInfo != null && (<>
                 <h1 className="text-[372F2F] font-bold mb-2" >Edit Address Information</h1>
-                <form action={formAction}>
-                    <EditableSelectField label="State" name="state" id="state" data={states} defaultValue={userAddressInfo.state} handleStateChange={fetchLgas} />
+                <form action={formAction} >
+                    <EditableSelectField label="State" name="state" id="state" data={states} defaultValue={userAddressInfo.state} handleStateChange={fetchLgas} error={getErrorForField('state')} />
                     <EditableInputFIeld
                         inputFor="city-town"
                         inputText="City / Town"
@@ -80,8 +93,9 @@ export default function EditAddress() {
                         inputName="city-town"
                         defaultValue={userAddressInfo.city_town}
                         required
+                        error={getErrorForField('city_town')}
                     />
-                    <EditableSelectField label="Local Government Area" name="lga" id="lga" data={lgas} defaultValue={ userAddressInfo.lga} />
+                    <EditableSelectField label="Local Government Area" name="lga" id="lga" data={lgas} defaultValue={userAddressInfo.lga} error={getErrorForField('lga')} />
 
                     <EditableInputFIeld
                         inputFor="prominent-motor-park"
@@ -90,6 +104,7 @@ export default function EditAddress() {
                         inputId="prominent-motor-park"
                         inputName="prominent-motor-park"
                         defaultValue={userAddressInfo.prominent_motor_park}
+                        error={getErrorForField('prominent_motor_park')}
                     />
                     <EditableInputFIeld
                         inputFor="landmark-signatory-place"
@@ -98,6 +113,7 @@ export default function EditAddress() {
                         inputId="landmark-signatory-place"
                         inputName="landmark-signatory-place"
                         defaultValue={userAddressInfo.landmark_signatory_place}
+                        error={getErrorForField('landmark_signatory_place')}
                     />
                     <EditableTextAreaFIeld
                         inputFor="address"
@@ -106,6 +122,7 @@ export default function EditAddress() {
                         inputName="address"
                         defaultValue={userAddressInfo.address}
                         required
+                        error={getErrorForField('address')}
                     />
                     <SubmitButton pendingText="Updating..." buttonText="UPDATE ADDRESS" />
                     {/* Display feedback message */}

@@ -6,7 +6,8 @@ import { EditableInputFIeld } from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ZodIssue } from "zod";
 
 const initialState = {
   message: "",
@@ -17,6 +18,7 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const queryParams = searchParams!.get("callbackUrl");
   const [state, formAction] = useFormState(loginUser, initialState);
+  const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   useEffect(() => {
     if (state.status === 200) {
       // the status will come from authApi through authAction
@@ -28,6 +30,14 @@ export default function LoginPage() {
     }
   }, [state, queryParams, router, searchParams]);
 
+  useEffect(() => {
+    setErrors(state.errors)
+  }, [state])
+
+  const getErrorForField = (fieldName: string) => {
+    return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+  };
+
   return (
     <>
       <form action={formAction}>
@@ -38,6 +48,7 @@ export default function LoginPage() {
           inputId="email"
           inputName="email"
           required
+          error={getErrorForField('email')}
         />
         <EditableInputFIeld
           inputFor="password"
@@ -46,6 +57,7 @@ export default function LoginPage() {
           inputId="password"
           inputName="password"
           required
+          error={getErrorForField('password')}
         />
 
         <SubmitButton pendingText="Logging in..." buttonText="LOGIN" />
@@ -55,7 +67,7 @@ export default function LoginPage() {
           className="sr-o text-red-600 text-center"
           role="status"
         >
-          {state.message} {state.error}
+          {state.error}
         </p>
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">

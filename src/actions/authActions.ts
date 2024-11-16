@@ -8,20 +8,19 @@ import {
   verifyCodeApi,
   verifyResetCodeApi,
 } from "@/services/authApis";
-import { ApiResponse } from "@/types/apiResponse";
+import { ActionResponse } from "@/types/apiResponse";
 import { z } from "zod";
+import { phoneNumberValidator } from '@/utils/filter';
 
 export async function createUser(
-  prevState: ApiResponse,
+  prevState: ActionResponse,
   formData: FormData
-) {
+): Promise<ActionResponse> {
   const schema = z
     .object({
       email: z.string().email("Invalid email address"),
       phone_number: z
-        .string()
-        .min(10, "Invalid phone number")
-        .max(11, "11 digit phone number required"),
+        .string().refine(phoneNumberValidator, "Invalid Phone Number"),
       password: z.string().min(8, "Password must be at least 8 characters"),
       confirm_password: z
         .string()
@@ -41,7 +40,7 @@ export async function createUser(
 
   if (!parse.success) {
     return {
-      error: `Failed to sign up. Please check the input. ${parse.error.message}`,
+      errors: parse.error.errors,
     };
   }
 
@@ -50,9 +49,9 @@ export async function createUser(
 }
 
 export async function verifyCode(
-  prevState: ApiResponse,
+  prevState: ActionResponse,
   formData: FormData
-) {
+): Promise<ActionResponse> {
   const schema = z.object({
     email_pin: z.string().length(6, "Invalid pin"),
   });
@@ -63,7 +62,7 @@ export async function verifyCode(
 
   if (!parse.success) {
     return {
-      message: `Pin verification Invalid. Please check the input. ${parse.error.message}`,
+      errors: parse.error.errors,
     };
   }
   const data = parse.data;
@@ -71,12 +70,12 @@ export async function verifyCode(
 }
 
 export async function loginUser(
-  prevState: ApiResponse,
+  prevState: ActionResponse,
   formData: FormData
-) {
+): Promise<ActionResponse> {
   const schema = z.object({
     email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
   });
 
   const parse = schema.safeParse({
@@ -86,19 +85,18 @@ export async function loginUser(
 
   if (!parse.success) {
     return {
-      message: `Failed to login. Please check the input. ${parse.error.message}`,
+      errors: parse.error.errors,
     };
   }
 
   const data = parse.data;
-
   return loginUserApi(data);
 }
 
 export async function forgotPassword(
-  prevState: ApiResponse,
+  prevState: ActionResponse,
   formData: FormData
-) {
+) : Promise<ActionResponse> {
   const schema = z.object({
     email: z.string().email("Invalid email address"),
   });
@@ -109,7 +107,7 @@ export async function forgotPassword(
 
   if (!parse.success) {
     return {
-      message: `Forgort password request failed. ${parse.error.message}`,
+      errors: parse.error.errors,
     };
   }
 
@@ -118,9 +116,9 @@ export async function forgotPassword(
 }
 
 export async function verifyResetCode(
-  prevState: ApiResponse,
+  prevState: ActionResponse,
   formData: FormData
-) {
+) : Promise<ActionResponse> {
   const schema = z.object({
     email: z.string().email("Invalid email address"),
     reset_token: z.string(),
@@ -135,7 +133,7 @@ export async function verifyResetCode(
 
   if (!parse.success) {
     return {
-      message: `Pin verification Invalid. Please check the input. ${parse.error.message}`,
+      errors: parse.error.errors,
     };
   }
   const data = parse.data;
@@ -144,9 +142,9 @@ export async function verifyResetCode(
 
 
 export async function createNewPassword(
-  prevState: ApiResponse,
+  prevState: ActionResponse,
   formData: FormData
-) {
+) : Promise<ActionResponse> {
   const schema = z.object({
     email: z.string().email("Invalid email address"),
     reset_token: z.string(),
@@ -159,7 +157,7 @@ export async function createNewPassword(
       message: "Passwords do not match",
       path: ["confirm_password"],
     });
-  
+
   const parse = schema.safeParse({
     email: formData.get("reset-email"),
     reset_token: formData.get("reset-token"),
@@ -169,8 +167,8 @@ export async function createNewPassword(
 
   if (!parse.success) {
     return {
-      error: `Password reset operation failed ${parse.error.message}`
-    }
+      errors: parse.error.errors,
+    };
   }
   const data = parse.data;
   return createNewPasswordApi(data)

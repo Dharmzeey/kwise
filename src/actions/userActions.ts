@@ -1,14 +1,15 @@
 "use server";
 
 import { createUserAddressApi, createUserInfoApi, updateUserAddressApi, updateUserInfoApi } from "@/services/userApis";
-import { ApiResponse } from "@/types/apiResponse";
+import { ActionResponse } from "@/types/apiResponse";
+import { phoneNumberValidator } from "@/utils/filter";
 import { z } from "zod";
 
 
 export async function createUserInfo(
-    prevState: ApiResponse,
+    prevState: ActionResponse,
     formData: FormData
-) {
+): Promise<ActionResponse>{
     const schema = z.object({
         first_name: z.string(),
         last_name: z.string(),
@@ -20,10 +21,9 @@ export async function createUserInfo(
             .or(z.literal('')),
         alternative_phone_number: z
             .string()
-            .min(10, "Invalid phone number")
-            .max(11, "11 digit phone number required")
             .optional()
-            .or(z.literal('')),
+            .or(z.literal(''))
+            .refine(phoneNumberValidator),
     })
 
     const parse = schema.safeParse({
@@ -35,7 +35,7 @@ export async function createUserInfo(
     })
     if (!parse.success) {
         return {
-            error: `Failed to create user information. Please check the input. ${parse.error.message}`,
+            errors: parse.error.errors,
         };
     }
     const data = parse.data;
@@ -44,9 +44,9 @@ export async function createUserInfo(
 
 
 export async function updateUserInfo(
-    prevState: ApiResponse,
+    prevState: ActionResponse,
     formData: FormData
-) {
+): Promise<ActionResponse>{
     const schema = z.object({
         first_name: z.string(),
         last_name: z.string(),
@@ -58,31 +58,33 @@ export async function updateUserInfo(
             .or(z.literal('')),
         alternative_phone_number: z
             .string()
-            .min(10, "Invalid phone number")
-            .max(11, "11 digit phone number required"),
+            .refine(phoneNumberValidator)
     })
+
 
     const parse = schema.safeParse({
         first_name: formData.get("first-name"),
         last_name: formData.get("last-name"),
         other_name: formData.get("other-name"),
-        altername_email: formData.get("alternative-email"),
+        alternative_email: formData.get("alternative-email"),
         alternative_phone_number: formData.get("alternative-phone-number"),
     })
     if (!parse.success) {
+        console.log(parse.error.errors)
         return {
-            error: `Failed to update user information. Please check the input. ${parse.error.message}`,
+            errors: parse.error.errors,
         };
     }
     const data = parse.data;
+    console.log(data)
     return updateUserInfoApi(data);
 }
 
 
-export async function createUserAddress(
-    prevState: ApiResponse,
+export async function createUserAddress (
+    prevState: ActionResponse,
     formData: FormData
-) {
+): Promise<ActionResponse>{
     const schema = z.object({
         state: z.string(),
         city_town: z.string(),
@@ -108,7 +110,7 @@ export async function createUserAddress(
     })
     if (!parse.success) {
         return {
-            error: `Failed to create user address information. Please check the input. ${parse.error.message}`,
+            errors: parse.error.errors,
         };
     }
     const data = parse.data;
@@ -117,9 +119,9 @@ export async function createUserAddress(
 
 
 export async function updateUserAddress(
-    prevState: ApiResponse,
+    prevState: ActionResponse,
     formData: FormData
-) {
+): Promise<ActionResponse> {
     const schema = z.object({
         state: z.string(),
         city_town: z.string(),

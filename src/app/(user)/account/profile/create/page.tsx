@@ -4,9 +4,10 @@ import { useFormState } from "react-dom";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { SubmitButton } from "@/components/submitButton";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createUserInfo } from "@/actions/userActions";
 import { resendEmailVerificationApi } from "@/services/authApis";
+import { ZodIssue } from "zod";
 
 const initialState = {
     message: "",
@@ -16,6 +17,7 @@ export default function CreateUserProfile() {
     const pathName = usePathname();
     const router = useRouter();
     const [state, formAction] = useFormState(createUserInfo, initialState);
+    const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
 
     useEffect(() => {
         async function verifyUser() {
@@ -30,9 +32,18 @@ export default function CreateUserProfile() {
             // this means token is absent
             router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         } else if (state.status === 403) {
-            verifyUser()
+            verifyUser()    
         }
     }, [state, pathName, router]);
+
+    useEffect(() => {
+        setErrors(state.errors)
+    }, [state])
+
+    const getErrorForField = (fieldName: string) => {
+        return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+    };
+
 
     return (
         <>
@@ -45,6 +56,7 @@ export default function CreateUserProfile() {
                     inputId="first-name"
                     inputName="first-name"
                     required
+                    error={getErrorForField('first_name')}
                 />
 
                 <EditableInputFIeld
@@ -54,6 +66,7 @@ export default function CreateUserProfile() {
                     inputId="last-name"
                     inputName="last-name"
                     required
+                    error={getErrorForField('last_name')}
                 />
 
                 <EditableInputFIeld
@@ -62,6 +75,7 @@ export default function CreateUserProfile() {
                     inputType="text"
                     inputId="other-name"
                     inputName="other-name"
+                    error={getErrorForField('other_name')}
                 />
 
                 <EditableInputFIeld
@@ -70,6 +84,7 @@ export default function CreateUserProfile() {
                     inputType="email"
                     inputId="alternative-email"
                     inputName="alternative-email"
+                    error={getErrorForField('alterative_email')}
                 />
                 <EditableInputFIeld
                     inputFor="alternative-phone-number"
@@ -77,6 +92,7 @@ export default function CreateUserProfile() {
                     inputType="text"
                     inputId="alternative-phone-number"
                     inputName="alternative-phone-number"
+                    error={getErrorForField('altervative_phone_number')}
                 />
 
                 <SubmitButton pendingText="Creating..." buttonText="CREATE PROFILE" />

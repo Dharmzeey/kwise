@@ -8,6 +8,7 @@ type EditInputProp = {
   defaultValue?: string;
   required?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 };
 
 
@@ -20,6 +21,7 @@ type EditTextAreaProp = {
   defaultValue?: string;
   required?: boolean
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  error?: string;
 };
 
 type EditSelectProp = {
@@ -29,6 +31,7 @@ type EditSelectProp = {
   defaultValue?: string;
   data: PlaceData[] | undefined
   handleStateChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  error?: string;
 }
 
 type ViewInputProp = {
@@ -53,6 +56,9 @@ function EditableInputFIeld(inputProp: EditInputProp) {
           defaultValue={inputProp.defaultValue}
           onChange={inputProp.onChange}
         />
+        {/* Render error message if it exists */}
+        {inputProp.error && <p style={{ color: 'red' }}>{inputProp.error}</p>}
+      
       </div>
     </>
   );
@@ -75,6 +81,9 @@ function EditableTextAreaFIeld(inputProp: EditTextAreaProp) {
           onChange={inputProp.onChange}
           rows={5}
         ></textarea>
+        {/* Render error message if it exists */}
+        {inputProp.error && <p style={{ color: 'red' }}>{inputProp.error}</p>}
+
       </div>
     </>
   );

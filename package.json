@@ -24,7 +24,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/cookie": "^0.5.1",
     "@types/node": "^20",
     "@types/paystack__inline-js": "^1.0.0",
     "@types/react": "^18",

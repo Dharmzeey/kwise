@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ZodIssue } from "zod";
 
 const initialState = {
   message: "",
@@ -18,6 +19,7 @@ const initialState = {
 export default function EmailVerification() {
   const pathName = usePathname();
   const [state, formAction] = useFormState(verifyCode, initialState);
+  const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter();
   const [resetEmailCount, setResetEmailCount] = useState(0);
 
@@ -36,6 +38,15 @@ export default function EmailVerification() {
       return () => clearTimeout(timer); // Clean up the timer
     }
   }, [resetEmailCount]);
+
+  useEffect(() => {
+    setErrors(state.errors)
+  }, [state])
+
+  const getErrorForField = (fieldName: string) => {
+    return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+  };
+
 
   async function handleResendEmailVerification() {
     const response = await resendEmailVerificationApi();
@@ -61,6 +72,7 @@ export default function EmailVerification() {
     }
   }
 
+
   return (
     <>
       <form action={formAction}>
@@ -73,6 +85,7 @@ export default function EmailVerification() {
             inputId="email-pin"
             inputName="email-pin"
             required
+            error={getErrorForField('email_pin')}
           />
           <div className="text-right">
             <button
@@ -115,7 +128,7 @@ export default function EmailVerification() {
         <SubmitButton pendingText="Verifying..." buttonText="verify code" />
         {/* Display feedback message */}
         <p aria-live="polite" className="sr-onl text-red-600" role="status">
-          {state?.message} {state.error}
+          {state.error}
         </p>
       </form>
       <ToastContainer

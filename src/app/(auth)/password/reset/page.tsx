@@ -9,17 +9,17 @@ import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ZodIssue } from "zod";
 
 const initialState = {
     message: "",
-    token: "",
-    error: "",
 };
 
 export default function ResetPasswordCode() {
     const [state, formAction] = useFormState(verifyResetCode, initialState);
     const router = useRouter();
     const [resetEmailCount, setResetEmailCount] = useState(0);
+    const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [resetEmail, setResetEmail] = useState<string | null>(null);
     const [resetToken, setResetToken] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ export default function ResetPasswordCode() {
     }, [router]);
 
     useEffect(() => {
-        if (state.message === "Password reset PIN verified successfully") {
+        if (state.status === 200) {
             // Store the new reset token for the final step
             if (state.token) {
                 localStorage.setItem('resetToken', state.token);
@@ -67,13 +67,13 @@ export default function ResetPasswordCode() {
     // Handle resend password reset logic
     async function handleResendPasswordReset() {
         const response = await forgotPasswordApi({ email: resetEmail! }); // Include email in the API call bang operator becasue the resetEmail has been checked in the onclick
-        if (response.message === "Email has already been verified") {
+        if (response.status === 201) {
             toast.success(`${response.message}`, {
                 position: "top-center",
                 className: "my-toast",
             });
             router.push("/");
-        } else if (response.message === "You need to login first") {
+        } else if (response.status === 401) {
             toast.info(`${response.message}`, {
                 position: "top-center",
                 className: "my-toast",
@@ -88,6 +88,15 @@ export default function ResetPasswordCode() {
         }
     }
 
+    useEffect(() => {
+        setErrors(state.errors)
+    }, [state])
+
+    const getErrorForField = (fieldName: string) => {
+        return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+    };
+
+
     return (
         <>
             <form action={formAction}>
@@ -100,6 +109,7 @@ export default function ResetPasswordCode() {
                         inputId="email-pin"
                         inputName="email-pin"
                         required
+                        error={getErrorForField('email_pin')}
                     />
                     <div className="text-right">
                         <button

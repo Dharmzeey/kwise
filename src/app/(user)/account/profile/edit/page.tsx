@@ -1,14 +1,14 @@
 'use client';
 
 import { updateUserInfo } from "@/actions/userActions";
-import { EditableInputFIeld, ViewingInputField } from "@/components/interractivity/input";
+import { EditableInputFIeld } from "@/components/interractivity/input";
 import { SubmitButton } from "@/components/submitButton";
 import { retrieveUserInfoApi } from "@/services/userApis";
 import { UserProfileData } from "@/types/userInterfaces";
-import { stat } from "fs";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { ZodIssue } from "zod";
 
 const initialState = {
     message: "",
@@ -20,6 +20,7 @@ export default function EditProfile() {
     const router = useRouter()
     const [userDetails, setUserDetails] = useState<UserProfileData | null>(null);
     const [state, formAction] = useFormState(updateUserInfo, initialState);
+    const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     useEffect(() => {
         async function fetchUserInfo() {
             const response = await retrieveUserInfoApi();
@@ -27,6 +28,7 @@ export default function EditProfile() {
         }
         fetchUserInfo()
     }, [])
+    
     useEffect(() => {
         if (state.status === 200) {
             router.push("/account/profile");
@@ -34,6 +36,15 @@ export default function EditProfile() {
             router.push(`/login?callbackUrl=${encodeURIComponent(pathName!)}`);
         }
     }, [state, router, pathName]);
+
+    useEffect(() => {
+        setErrors(state.errors)
+    }, [state])
+
+    const getErrorForField = (fieldName: string) => {
+        return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+    };
+
 
     return (
         <>
@@ -48,6 +59,7 @@ export default function EditProfile() {
                         inputName="first-name"
                         defaultValue={userDetails.first_name}
                         required
+                        error={getErrorForField('first_name')}
                     />
 
                     <EditableInputFIeld
@@ -58,6 +70,7 @@ export default function EditProfile() {
                         inputName="last-name"
                         defaultValue={userDetails.last_name}
                         required
+                        error={getErrorForField('last_name')}
                     />
 
                     <EditableInputFIeld
@@ -67,6 +80,7 @@ export default function EditProfile() {
                         inputId="other-name"
                         inputName="other-name"
                         defaultValue={userDetails.other_name}
+                        error={getErrorForField('other_name')}
                     />
 
                     <EditableInputFIeld
@@ -76,6 +90,7 @@ export default function EditProfile() {
                         inputId="alternative-email"
                         inputName="alternative-email"
                         defaultValue={userDetails.alternative_email}
+                        error={getErrorForField('alternative_email')}
                     />
                     <EditableInputFIeld
                         inputFor="alternative-phone-number"
@@ -84,6 +99,7 @@ export default function EditProfile() {
                         inputId="alternative-phone-number"
                         inputName="alternative-phone-number"
                         defaultValue={userDetails.alternative_phone_number}
+                        error={getErrorForField('alternative_phone_number')}
                     />
                     <SubmitButton pendingText="Updating..." buttonText="UPDATE PROFILE" />
                     {/* Display feedback message */}

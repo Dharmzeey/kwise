@@ -19,6 +19,7 @@ const initialState: ApiResponse = {
 export default function CreateNewPassword() {
     const [state, formAction] = useFormState(createNewPassword, initialState);
     const router = useRouter()
+    const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [resetEmail, setResetEmail] = useState<string | null>(null);
     const [resetToken, setResetToken] = useState<string | null>(null);
 
@@ -57,6 +58,15 @@ export default function CreateNewPassword() {
             router.push("/password/forgot")
         }
     }, [state, router]);
+
+    useEffect(() => {
+        setErrors(state.errors)
+    }, [state])
+
+    const getErrorForField = (fieldName: string) => {
+        return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+    };
+
     return (
         <>
             <form action={formAction}>
@@ -67,6 +77,7 @@ export default function CreateNewPassword() {
                     inputId="password"
                     inputName="password"
                     required
+                    error={getErrorForField('password')}
                 />
 
                 <EditableInputFIeld
@@ -76,6 +87,7 @@ export default function CreateNewPassword() {
                     inputId="confirm-password"
                     inputName="confirm-password"
                     required
+                    error={getErrorForField('password')}
                 />
                 {/* Include hidden inputs for resetEmail and resetToken */}
                 <input type="hidden" name="reset-email" value={resetEmail || ""} />

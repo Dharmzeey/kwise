@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import Drawer from "./drawer/drawer";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCartContext } from "@/contexts/cartContext";
 import HandleProductSearch from "./interractivity/productSearch";
 import DrawerMediumLargeScreen from "./drawer/drawerMdLg";
@@ -39,9 +39,7 @@ export default function Header() {
 
                 <div className="hidden gap-3 md:flex lg:gap-20">
                     {/* This below will be hidden in small screen */}
-                    <Suspense fallback={<>ldkhkjwebkjeb n</>}>
-                        <DrawerMediumLargeScreen />
-                    </Suspense>
+                    <DrawerMediumLargeScreen />
                     <div className="relative">
                         <Link href="/cart" className="">
                             {

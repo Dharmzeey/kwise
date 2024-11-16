@@ -9,16 +9,16 @@ import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ZodIssue } from "zod";
 
-const initialState: ApiResponse = {
+const initialState = {
   message: "",
-  token: "",
-  error: "",
 };
 
 export default function ForgotPassword() {
   const [state, formAction] = useFormState(forgotPassword, initialState);
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter()
   useEffect(() => {
     if (state.status === 200) {
@@ -36,6 +36,15 @@ export default function ForgotPassword() {
       }
     }
   }, [state, router, email]);
+
+  useEffect(() => {
+    setErrors(state.errors)
+  }, [state])
+
+  const getErrorForField = (fieldName: string) => {
+    return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+  };
+
   return (
     <>
       <form action={formAction}>
@@ -48,6 +57,7 @@ export default function ForgotPassword() {
           inputValue={email}
           required
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+          error={getErrorForField('email')}
         />
 
         <SubmitButton pendingText="Processing..." buttonText="GET RESET CODE" />

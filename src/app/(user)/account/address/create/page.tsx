@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { createUserAddress } from "@/actions/userActions";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { fetchLgasApi, fetchStatesApi } from "@/services/baseAPis";
+import { ZodIssue } from "zod";
 
 const initialState = {
     message: "",
@@ -17,6 +18,7 @@ export default function CreateUserAddress() {
     const pathName = usePathname();
     const router = useRouter();
     const [formState, formAction] = useFormState(createUserAddress, initialState);
+    const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [states, setStates] = useState<PlaceData[]>();
     const [lgas, setLgas] = useState<PlaceData[]>();
 
@@ -60,13 +62,20 @@ export default function CreateUserAddress() {
             }
         }
     };
+    useEffect(() => {
+        setErrors(formState.errors)
+    }, [formState])
+
+    const getErrorForField = (fieldName: string) => {
+        return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+    };
 
 
     return (
         <>
             <h1 className="text-[372F2F] font-bold mb-2" >Address Information</h1>
             <form action={formAction}>
-                <EditableSelectField label="State" name="state" id="state" data={states} handleStateChange={fetchLgas} />
+                <EditableSelectField label="State" name="state" id="state" data={states} handleStateChange={fetchLgas} error={getErrorForField('state')} />
                 <EditableInputFIeld
                     inputFor="city-town"
                     inputText="City / Town"
@@ -74,8 +83,9 @@ export default function CreateUserAddress() {
                     inputId="city-town"
                     inputName="city-town"
                     required
+                    error={getErrorForField('city_town')}
                 />
-                <EditableSelectField label="Local Government Area" name="lga" id="lga" data={lgas} />
+                <EditableSelectField label="Local Government Area" name="lga" id="lga" data={lgas} error={getErrorForField('lga')} />
 
                 <EditableInputFIeld
                     inputFor="prominent-motor-park"
@@ -83,6 +93,7 @@ export default function CreateUserAddress() {
                     inputType="text"
                     inputId="prominent-motor-park"
                     inputName="prominent-motor-park"
+                    error={getErrorForField('prominent_motor_park')}
                 />
                 <EditableInputFIeld
                     inputFor="landmark-signatory-place"
@@ -90,6 +101,7 @@ export default function CreateUserAddress() {
                     inputType="text"
                     inputId="landmark-signatory-place"
                     inputName="landmark-signatory-place"
+                    error={getErrorForField('landmark_signatory_place')}
                 />
                 <EditableTextAreaFIeld
                     inputFor="address"
@@ -97,6 +109,7 @@ export default function CreateUserAddress() {
                     inputId="address"
                     inputName="address"
                     required
+                    error={getErrorForField('address')}
                 />
 
                 <SubmitButton pendingText="Adding..." buttonText="ADD ADDRESS" />

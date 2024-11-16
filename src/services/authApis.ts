@@ -35,7 +35,7 @@ export async function createUserApi(data: CreateUserData): Promise<ApiResponse> 
                 const refresh_token = responseBody.refresh_token;
                 handleAccessToken(access_token);
                 handleRefreshToken(refresh_token);
-                return { message: "Sign up successful" };
+                return { message: "Sign up successful", status: 201 };
             default:
                 return { error: "Failed to sign up." };
         }
@@ -93,7 +93,7 @@ export async function resendEmailVerificationApi(): Promise<ApiResponse> {
         });
         switch (response.status) {
             case 201:
-                return { message: "Email has already been verified" };
+                return { message: "Email has already been verified", status: 201 };
             case 409:
                 return { error: "Email Verification already sent" };
             case 200:
@@ -190,7 +190,7 @@ export async function verifyResetCodeApi(data: ResetPasswordPinData): Promise<Ap
             case 400:
                 return handleErrorsResponse(responseBody) // this will help concatenate the errors into str 
             case 200:
-                return { message: "Password reset PIN verified successfully", token: responseBody.reset_token };
+                return { message: "Password reset PIN verified successfully", token: responseBody.reset_token, status: 200 };
             default:
                 return { error: "Email verification failed" };
         }

@@ -3,13 +3,15 @@ import { faBagShopping, faCaretDown, faCaretUp, faHeart, faUser } from "@fortawe
 import DrawerItem from "./drawerItems";
 import Link from "next/link";
 import { logout } from "@/services/authApis";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { fetchAuthenticatedUser } from "@/utils/cookieUtils";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export default function DrawerMediumLargeScreen() {
+
+    const pathName = usePathname()
     const [user, setUser] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [caretOpen, setCaretOpen] = useState(false)
@@ -27,9 +29,14 @@ export default function DrawerMediumLargeScreen() {
         setUser(authenticatedUser)
         setIsLoading(false)
     }
+
     useEffect(() => {
         getUser()
     }, [])
+
+    useEffect(() => {
+        setCaretOpen(false)
+    }, [pathName])
     return (
         <>
             <div className="relative">

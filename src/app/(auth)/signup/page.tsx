@@ -5,8 +5,9 @@ import { useFormState } from "react-dom";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ZodIssue } from "zod";
 
 const initialState = {
   message: "",
@@ -14,13 +15,22 @@ const initialState = {
 
 export default function SignupPage() {
   const [state, formAction] = useFormState(createUser, initialState);
+  const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter();
   useEffect(() => {
-    if (state.message === "Sign up successful") {
+    if (state.status === 200) {
       // the message will come from authApi through authAction
       router.push("/email-verification/confirm");
     }
   }, [state, router]);
+
+  useEffect(() => {
+    setErrors(state.errors)
+  }, [state])
+
+  const getErrorForField = (fieldName: string) => {
+    return errors?.filter((error) => error.path.includes(fieldName)).map((error) => error.message).join(', '); // Combines multiple messages if any
+  };
 
   return (
     <>
@@ -32,6 +42,7 @@ export default function SignupPage() {
           inputId="email"
           inputName="email"
           required
+          error={getErrorForField('email')}
         />
         <EditableInputFIeld
           inputFor="phone-number"
@@ -40,6 +51,7 @@ export default function SignupPage() {
           inputId="phone-number"
           inputName="phone-number"
           required
+          error={getErrorForField('phone_number')}
         />
         <EditableInputFIeld
           inputFor="password"
@@ -48,6 +60,7 @@ export default function SignupPage() {
           inputId="password"
           inputName="password"
           required
+          error={getErrorForField('password')}
         />
         <EditableInputFIeld
           inputFor="confirm-password"
@@ -56,6 +69,7 @@ export default function SignupPage() {
           inputId="confirm-password"
           inputName="confirm-password"
           required
+          error={getErrorForField('confirm_password')}
         />
 
         <SubmitButton
@@ -63,8 +77,8 @@ export default function SignupPage() {
           buttonText="create an account"
         />
         {/* Display feedback message */}
-        <p aria-live="polite" className="sr-onl text-red-600" role="status">
-          {state.message} {state.error}
+        <p aria-live="polite" className="sr-onl text-red-500 text-center" role="status">
+          {state.error}
         </p>
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">

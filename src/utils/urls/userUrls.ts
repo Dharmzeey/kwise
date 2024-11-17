@@ -16,3 +16,8 @@ export const UPDATE_USER_ADDRESS = `${BASE_URL}/users/address/update/`;
 // orders
 export const GET_PENDING_ORDERS = `${BASE_URL}/users/orders/pending/`;
 export const GET_COMPLETED_ORDERS = `${BASE_URL}/users/orders/completed/`;
+
+// wishlist
+export const ADD_WISHLIST = `${BASE_URL}/users/favourites/`;
+export const LIST_WISHLIST = `${BASE_URL}/users/favourites/`;
+export const DELETE_WISHLIST = (product_id:string)=>`${BASE_URL}/users/favourites/${product_id}/`;

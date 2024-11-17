@@ -62,7 +62,7 @@ export default function DrawerMediumLargeScreen() {
                                         <ul className="mt-3 leading-5 mb-4">
                                             <DrawerItem key="profile" icon={faUser} href="/account" text="Profile" />
                                             <DrawerItem key="orders" icon={faBagShopping} href="/account/orders" text="Orders" />
-                                            <DrawerItem key="wishlist" icon={faHeart} href="/" text="Wishlist" />
+                                            <DrawerItem key="wishlist" icon={faHeart} href="/account/wishlist" text="Wishlist" />
                                         </ul>
                                         <button
                                             onClick={handleLogout} className="cursor-pointer" >

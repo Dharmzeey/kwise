@@ -18,6 +18,7 @@ interface Product {
   stock: number;
   availabilityStatus: string;
   utilizationStatus: string;
+  user_wishlist: boolean;
 }
 
 interface Category {

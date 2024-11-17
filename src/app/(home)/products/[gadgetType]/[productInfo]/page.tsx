@@ -2,8 +2,6 @@ import { numberWithCommas } from "@/utils/filter";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { fetchProductById } from "@/services/productApi";
 import IncreamentDecreamentCheck from "@/components/cart/cartModification";
 import { Metadata } from "next";
@@ -11,6 +9,7 @@ import ProductNotFound from "@/components/products/productNotFound";
 import ImageComponent from "@/components/interractivity/image";
 import SimilarProducts from "@/components/products/similarProducts";
 import RecentlyViewed from "@/components/products/recentlyViewed";
+import Wishlist from "@/components/cart/wishlist";
 
 type Props = {
     params: {
@@ -68,7 +67,7 @@ export default async function ProductDetail({ params }: Props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <FontAwesomeIcon icon={faHeart} className="text-2xl md:pr-3" />
+                                    <Wishlist product_id={productId} userWishlist={ product.user_wishlist} />
                                 </div>
                             </div>
                         </div>

@@ -70,13 +70,11 @@ export async function updateUserInfo(
         alternative_phone_number: formData.get("alternative-phone-number"),
     })
     if (!parse.success) {
-        console.log(parse.error.errors)
         return {
             errors: parse.error.errors,
         };
     }
     const data = parse.data;
-    console.log(data)
     return updateUserInfoApi(data);
 }
 

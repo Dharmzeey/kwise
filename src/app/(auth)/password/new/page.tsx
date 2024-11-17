@@ -3,16 +3,14 @@
 import { createNewPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
-import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { toast, ToastContainer, Slide } from "react-toastify";
+import { ZodIssue } from "zod";
 
-const initialState: ApiResponse = {
+const initialState = {
     message: "",
-    token: "",
-    error: "",
 };
 
 

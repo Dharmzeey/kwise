@@ -9,6 +9,7 @@ import {
   PRODUCT_DETAILS_URL,
   SIMILAR_PRODUCTS_URL,
 } from "@/utils/urls/productUrls";
+import { fetchAccessTokenCookie } from "@/utils/cookieUtils";
 
 export async function fetchAllProducts() {
   const response = await fetch(PRODUCTS_URL);
@@ -20,7 +21,14 @@ export async function fetchAllProducts() {
 }
 
 export async function fetchProductById(id: string) {
-  const response = await fetch(PRODUCT_DETAILS_URL(id));
+  const token = fetchAccessTokenCookie();
+  const response = await fetch(PRODUCT_DETAILS_URL(id),
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token?.value || ""}`
+      }
+    });
   const product: Product = await response.json();
   if (!response.ok) {
     return null;
@@ -47,7 +55,7 @@ export async function fetchProductsByCategory(categoryName: string) {
 }
 
 export async function fetchProductsByBrand(categoryName: string, brandName: string) {
-  const response = await fetch(PRODUCT_BY_BRAND_URL(categoryName ,brandName));
+  const response = await fetch(PRODUCT_BY_BRAND_URL(categoryName, brandName));
   const products: Product[] = await response.json();
   if (!response.ok) {
     throw new Error("Failed to fetch products");

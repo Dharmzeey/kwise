@@ -43,7 +43,7 @@ type PendingOrderData = {
 }
 
 type CompletedOrderData = {
-    id: string
+    id: string;
     product_image: string;
     product_name: string;
     order_no: string;
@@ -53,6 +53,16 @@ type CompletedOrderData = {
     address: string;
 }
 
+type WishlistItem = {
+    id: string;
+    image: string;
+    name: string;
+    price: number;
+}
 
-export type { UserProfileData, UserAddressData, UserDeliveryData, PendingOrderData, CompletedOrderData }
+type WishlistData = {
+    product: WishlistItem
+}
+
+export type { UserProfileData, UserAddressData, UserDeliveryData, PendingOrderData, CompletedOrderData, WishlistData, WishlistItem }
 

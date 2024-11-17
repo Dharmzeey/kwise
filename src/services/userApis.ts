@@ -2,7 +2,7 @@
 
 import { ApiResponse } from "@/types/apiResponse";
 import { fetchAccessTokenCookie } from "@/utils/cookieUtils";
-import { ADD_USER_ADDRESS, ADD_USER_INFO, DELETE_USER_INFO, GET_COMPLETED_ORDERS, GET_PENDING_ORDERS, RETRIEVE_USER_ADDRESS, RETRIEVE_USER_INFO, UPDATE_USER_ADDRESS, UPDATE_USER_INFO, VERIFY_USER_INFO } from "@/utils/urls/userUrls";
+import { ADD_USER_ADDRESS, ADD_USER_INFO, ADD_WISHLIST, DELETE_USER_INFO, DELETE_WISHLIST, GET_COMPLETED_ORDERS, GET_PENDING_ORDERS, LIST_WISHLIST, RETRIEVE_USER_ADDRESS, RETRIEVE_USER_INFO, UPDATE_USER_ADDRESS, UPDATE_USER_INFO, VERIFY_USER_INFO } from "@/utils/urls/userUrls";
 import { handleErrorsResponse } from "./responseHandler";
 import { UserAddressData, UserProfileData } from "@/types/userInterfaces";
 
@@ -339,3 +339,85 @@ export async function completedOrdersApi(): Promise<ApiResponse> {
     }
 }
 
+
+// Wishlist
+// Wishlist
+// Wishlist
+export async function addWishlist(product_id: string): Promise<ApiResponse> {
+    try {
+        const token = fetchAccessTokenCookie();
+        const response = await fetch(ADD_WISHLIST, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token?.value || ""}`
+            },
+            body: JSON.stringify({ 'product_id': product_id })
+        });
+        const responseBody = await response.json();
+        switch (response.status) {
+            case 201:
+                return { data: responseBody, status: 201 }
+            case 401: {
+                return { status: 401 }
+            }
+            default:
+                return { error: "Error, wishlist cannot be added" }
+        }
+    } catch (error) {
+        return { error: "Error occured while adding wishlist" }
+    }
+}
+
+
+export async function listWishlist(): Promise<ApiResponse> {
+    try {
+        const token = fetchAccessTokenCookie();
+        const response = await fetch(LIST_WISHLIST, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token?.value || ""}`
+            },
+        });
+        const responseBody = await response.json();
+        switch (response.status) {
+            case 200:
+                return { data: responseBody, status: 200 }
+            case 401: {
+                return { status: 401 }
+            }
+            default:
+                return { error: "Error, wishlist cannot be fetched" }
+        }
+    } catch (error) {
+        return { error: "Error occured while fetching wishlist" }
+    }
+}
+
+
+export async function removeWishlist(product_id: string): Promise<ApiResponse> {
+    try {
+        const token = fetchAccessTokenCookie();
+        const response = await fetch(DELETE_WISHLIST(product_id), {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token?.value || ""}`
+            },
+        });
+        switch (response.status) {
+            case 204:
+                return { status: 204 }
+            case 404:
+                return { error: "Favorite not found.", status: 404 }
+            case 401: {
+                return { status: 401 }
+            }
+            default:
+                return { error: "Error, wishlist cannot be deleted" }
+        }
+    } catch (error) {
+        return { error: "Error occured while deleting wishlist" }
+    }
+}

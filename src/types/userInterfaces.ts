@@ -58,6 +58,7 @@ type WishlistItem = {
     image: string;
     name: string;
     price: number;
+    category: string;
 }
 
 type WishlistData = {

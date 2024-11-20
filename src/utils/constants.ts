@@ -5,5 +5,4 @@ export const IS_AUTHENTICATED = true;
 export const ACCESS_TOKEN_MAX_AGE = 60 * 60 * 24 * 14; // 14 days
 export const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 30; // 1 day
 export const SESSION_TOKEN_MAX_AGE = 60 * 60 * 24 * 14; // 14 days
-
 export const SESSION_ID = "sessionid";

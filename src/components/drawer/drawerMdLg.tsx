@@ -4,16 +4,14 @@ import DrawerItem from "./drawerItems";
 import Link from "next/link";
 import { logout } from "@/services/authApis";
 import { usePathname, useRouter } from "next/navigation";
-import { fetchAuthenticatedUser } from "@/utils/cookieUtils";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuthContext } from "@/contexts/authContext";
 
 
 export default function DrawerMediumLargeScreen() {
-
+    const user = useAuthContext();
     const pathName = usePathname()
-    const [user, setUser] = useState<string | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
     const [caretOpen, setCaretOpen] = useState(false)
     const router = useRouter()
     const toggleCaret = () => {
@@ -24,15 +22,7 @@ export default function DrawerMediumLargeScreen() {
         location.reload()
         router.push("/")
     }
-    async function getUser() {
-        const authenticatedUser = await fetchAuthenticatedUser()
-        setUser(authenticatedUser)
-        setIsLoading(false)
-    }
 
-    useEffect(() => {
-        getUser()
-    }, [])
 
     useEffect(() => {
         setCaretOpen(false)
@@ -73,30 +63,20 @@ export default function DrawerMediumLargeScreen() {
                             </div>
                         </>
                         :
-                        isLoading
-                            ?
-                            <>
-                                <div className="flex items-center justify-center h-[4vh] w-6 relative" >
-                                    <div className="absolute left-1/2 -translate-x-1/2 opacity-50">
-                                    </div>
-                                    <div className="animate-spin rounded-full w-3 h-3 border-t-2 border-b-2 border-gray-300"></div>
+                        <>
+                            <div className="flex gap-2">
+                                <FontAwesomeIcon icon={faUser} />
+                                <div>
+                                    <Link href="/login" className="">
+                                        Login
+                                    </Link>
+                                    /
+                                    <Link href="/signup" className="">
+                                        Register
+                                    </Link>
                                 </div>
-                            </>
-                            :
-                            <>
-                                <div className="flex gap-2">
-                                    <FontAwesomeIcon icon={faUser} />
-                                    <div>
-                                        <Link href="/login" className="">
-                                            Login
-                                        </Link>
-                                        /
-                                        <Link href="/signup" className="">
-                                            Register
-                                        </Link>
-                                    </div>
-                                </div>
-                            </>
+                            </div>
+                        </>
                 }
             </div>
         </>

@@ -46,7 +46,10 @@ const IncreamentDecreamentCheck = ({ product }: { product: Product }) => {
 	const add = async () => {
 		const response = await addToCartApi({ product_id: product.id, action: "update", quantity: count })
 		if (response.status === 202) {
-			alert("item added successfully")
+			toast.success("item added successfully", {
+				position: "top-center",
+				className: "my-toast",
+			});
 		}
 		updateCartCount()
 		setCount(1)

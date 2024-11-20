@@ -56,6 +56,6 @@
   }
   .my-toast{
     @apply bg-secondary-color m-auto rounded-b;
-    width: max(55%, 12rem);
+    width: max(75%, 20rem);
   }
 }

@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import NewDeliveryInfo from "@/components/cart/newDeliveryInfo";
 import DefaultDeliveryInfo from "@/components/cart/defaultDeliveryInfo";
 import { resendEmailVerificationApi } from "@/services/authApis";
+import { useCartContext } from "@/contexts/cartContext";
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -20,6 +21,8 @@ export default function CheckoutPage() {
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const [selectedDelivery, setSelectedDelivery] = useState(""); // Track selected delivery
+
+    const { updateCartCount } = useCartContext();
 
     useEffect(() => {
         async function fetchCheckout() {
@@ -73,7 +76,7 @@ export default function CheckoutPage() {
                         <>
                             {grandTotalPrice && grandTotalPrice > 0 ?
                                 <>
-                                    <h1 className="font-bold mb-2 text-secondary-gray-color">Order Information</h1>
+                                    <h1 className="font-bold mb-2 text-secondary-gray-color text-lg">Order Information</h1>
                                     <div className="flex justify-between font-bold mb-2">
                                         <span>Total</span>
                                         <span>₦ {numberWithCommas(grandTotalPrice)}</span>
@@ -95,7 +98,7 @@ export default function CheckoutPage() {
                                             }
                                         </div>
                                         {/* Delivery Information */}
-                                        <h1 className="font-bold my-2 text-secondary-gray-color">Delivery Information</h1>
+                                        <h1 className="font-bold my-2 text-secondary-gray-color text-lg">Delivery Information</h1>
                                         <section className="flex flex-col gap-3">
                                             <div>
                                                 <label htmlFor="default-delivery" className="flex gap-1 font-bold">

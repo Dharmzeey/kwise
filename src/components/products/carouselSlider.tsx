@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Deal } from "@/types/productInterfaces";
 import Link from "next/link";
 import { DEALS_URL } from "@/utils/urls/productUrls";
+import ImageComponent from "../interractivity/image";
 
 export default function HomeCarousel() {
 	const [deals, setDeals] = useState<Deal[] | null>(null);
@@ -19,7 +20,7 @@ export default function HomeCarousel() {
 				throw new Error("Failed to fetch products");
 			}
 			setDeals(deals)
-			// setIsLoading(false)
+			setIsLoading(false)
 		}
 		fetchDeals()
 	}, [])
@@ -39,7 +40,7 @@ export default function HomeCarousel() {
 						(
 							<Link key={deal.id} href={deal.link_to}>
 								<div className="relative h-[30svw] w-full md:h-[20svw] border-2 rounded">
-									<Image src={deal.image} alt={deal.title} fill className="object-cover rounded" />
+									<ImageComponent src={deal.image} alt={deal.title}  />
 								</div>
 							</Link>
 						))

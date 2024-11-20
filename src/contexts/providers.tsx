@@ -1,12 +1,14 @@
 'use client';
-import Header from "@/components/header";
+import { AuthProvider } from "./authContext";
 import { CartProvider } from "./cartContext";
 
 
 export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <CartProvider>
-            {children}
-        </CartProvider>
+        <AuthProvider>
+            <CartProvider>
+                {children}
+            </CartProvider>
+        </AuthProvider>
     );
 }

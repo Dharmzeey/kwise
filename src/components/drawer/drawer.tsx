@@ -4,26 +4,17 @@ import DrawerItem from "./drawerItems";
 import Link from "next/link";
 import { logout } from "@/services/authApis";
 import { useRouter } from "next/navigation";
-import { fetchAuthenticatedUser } from "@/utils/cookieUtils";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useAuthContext } from "@/contexts/authContext";
 
 
 export default function Drawer() {
-    const [user, setUser] = useState<string | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const user = useAuthContext()
     const router = useRouter()
     function handleLogout() {
         logout()
         router.push("/")
     }
-    async function getUser() {
-        const authenticatedUser = await fetchAuthenticatedUser()
-        setUser(authenticatedUser)
-        setIsLoading(false)
-    }
-    useEffect(() => {
-        getUser()
-    }, [])
     return (
         <>
             <div className="relative">
@@ -44,26 +35,16 @@ export default function Drawer() {
                                 </div>
                             </>
                             :
-                            isLoading
-                                ?
-                                <>
-                                    <div className="flex items-center justify-center h-[40vh] relative" >
-                                        <div className="absolute left-1/2 -translate-x-1/2 opacity-50">
-                                        </div>
-                                        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-300"></div>
-                                    </div>
-                                </>
-                                :
-                                <>
-                                    <div className="text-center py-20 flex flex-col gap-4">
-                                        <Link href="/login" className="font-bold">
-                                            LOGIN
-                                        </Link>
-                                        <Link href="/signup" className="font-bold">
-                                            CREATE AN ACCOUNT
-                                        </Link>
-                                    </div>
-                                </>
+                            <>
+                                <div className="text-center py-20 flex flex-col gap-4">
+                                    <Link href="/login" className="font-bold">
+                                        LOGIN
+                                    </Link>
+                                    <Link href="/signup" className="font-bold">
+                                        CREATE AN ACCOUNT
+                                    </Link>
+                                </div>
+                            </>
                     }
                 </div>
             </div>

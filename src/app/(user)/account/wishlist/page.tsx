@@ -2,6 +2,8 @@ import { EmptyWishlist, WishlistCard } from "@/components/user/wishlistComponent
 import { listWishlist } from "@/services/userApis"
 import { WishlistData } from "@/types/userInterfaces";
 import { redirect } from "next/navigation";
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default async function Wishlist() {
     const response = await listWishlist();
@@ -19,6 +21,12 @@ export default async function Wishlist() {
                     )) :
                     <EmptyWishlist />
             }
+            <ToastContainer
+                limit={5}
+                autoClose={2000}
+                transition={Slide}
+                closeOnClick
+            />
         </>
     )
 }

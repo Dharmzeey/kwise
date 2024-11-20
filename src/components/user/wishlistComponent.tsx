@@ -11,6 +11,7 @@ import { useCartContext } from "@/contexts/cartContext";
 import { addToCartApi } from "@/services/cartApis";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 
 type Wishlist = {
@@ -25,7 +26,10 @@ function WishlistCard(prop: Wishlist) {
         const response = await addToCartApi({ product_id: prop.wishlist.id, action: "update", quantity: 1 })
         if (response.status === 202) {
             await removeWishlist(prop.wishlist.id)
-            alert("item added successfully")
+            toast.info("Item added to cart successfully", {
+                position: "top-center",
+                className: "my-toast",
+            });
             router.push("/cart")
         }
         updateCartCount()
@@ -42,7 +46,7 @@ function WishlistCard(prop: Wishlist) {
             <div className="shadow shadow-gray-300 pr-3 rounded mb-3">
                 <div className="grid grid-cols-[1fr_4fr_1fr] gap-2 mb-1">
                     <div className="relative min-h-[60px] md:min-h-[90px] min-w-[80px] lg:min-w-[110px] lg:min-h-[100px]  w-[13svw]">
-                        <Link
+                        <Link prefetch={true}
                             href={`/products/${prop.wishlist.category}/${prop.wishlist.id}`}
                         >
                             <ImageComponent src={prop.wishlist.image} alt={prop.wishlist.name} />

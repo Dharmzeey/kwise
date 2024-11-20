@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_NAME, ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, SESSION_ID, SESSION_TOKEN_MAX_AGE } from "./constants";
+import { ACCESS_TOKEN_NAME, ACCESS_TOKEN_MAX_AGE,  SESSION_ID, SESSION_TOKEN_MAX_AGE } from "./constants";
 
 
 function handleAccessToken(token: string) {
@@ -15,16 +15,16 @@ function handleAccessToken(token: string) {
     });
 }
 
-function handleRefreshToken(token: string) {
-    cookies().set({
-        name: REFRESH_TOKEN_NAME,
-        value: token,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: REFRESH_TOKEN_MAX_AGE,
-        path: "/",
-    });
-}
+// function handleRefreshToken(token: string) {
+//     cookies().set({
+//         name: REFRESH_TOKEN_NAME,
+//         value: token,
+//         httpOnly: true,
+//         secure: process.env.NODE_ENV === "production",
+//         maxAge: REFRESH_TOKEN_MAX_AGE,
+//         path: "/",
+//     });
+// }
 
 
 function fetchAccessTokenCookie() {
@@ -41,7 +41,7 @@ function fetchAuthenticatedUser() {
 function removeAllTokens() {
     const cookieStore = cookies();
     cookieStore.delete(ACCESS_TOKEN_NAME)
-    cookieStore.delete(REFRESH_TOKEN_NAME)
+    // cookieStore.delete(REFRESH_TOKEN_NAME)
 }
 
 function setSessionId(session_token: string) {
@@ -62,4 +62,4 @@ function getSessionId() {
     return cookieStore.get(SESSION_ID)?.value || null;
 }
 
-export { handleAccessToken, handleRefreshToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens, setSessionId, getSessionId }
+export { handleAccessToken, fetchAccessTokenCookie, fetchAuthenticatedUser, removeAllTokens, setSessionId, getSessionId }

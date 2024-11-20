@@ -9,6 +9,9 @@ import { CartData } from "@/types/cartInterfaces";
 import { numberWithCommas } from "@/utils/filter";
 import { useEffect, useState } from "react";
 
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function CartPage() {
     const [grandTotalPrice, setGrandTotalPrice] = useState<number>();
     const [data, setData] = useState<CartData[]>();
@@ -86,6 +89,12 @@ export default function CartPage() {
                     )
 
             }
+            <ToastContainer
+                limit={5}
+                autoClose={2000}
+                transition={Slide}
+                closeOnClick
+            />
         </>
     )
 }

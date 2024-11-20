@@ -38,9 +38,15 @@ export default function CartItem({
 			if (response.status === 202) {
 				updteGrandTotal()
 				setCount(count + 1);
-				alert("cart modified successfully")
+				toast.success("cart modified successfully", {
+					position: "top-center",
+					className: "my-toast",
+				});
 			} else {
-				alert("Product not in cart")
+				toast.info("Product not in cart", {
+					position: "top-center",
+					className: "my-toast",
+				});
 			}
 		} else {
 			toast.info("Maximum available product reached", {
@@ -60,9 +66,15 @@ export default function CartItem({
 			if (response.status === 202) {
 				updteGrandTotal()
 				setCount(count - 1);
-				alert("cart modified successfully")
+				toast.success("cart modified successfully", {
+					position: "top-center",
+					className: "my-toast",
+				});
 			} else {
-				alert("Product not in cart")
+				toast.info("Product not in cart", {
+					position: "top-center",
+					className: "my-toast",
+				});
 			}
 		} else {
 			toast.info("Cannot go below 1 item", {
@@ -82,9 +94,15 @@ export default function CartItem({
 			if (response.status === 202) {
 				updteGrandTotal()
 				setCount(count - 1);
-				alert("cart modified successfully")
+				toast.success("cart modified successfully", {
+					position: "top-center",
+					className: "my-toast",
+				});
 			} else {
-				alert("Product not in cart")
+				toast.info("Product not in cart", {
+					position: "top-center",
+					className: "my-toast",
+				});
 			}
 		} else {
 			toast.info("Cannot go below 1 item", {
@@ -101,9 +119,15 @@ export default function CartItem({
 		if (response.status === 202) {
 			removeCartItem(cartItem.product.id);
 			updteGrandTotal()
-			alert("cart item removed successfully")
+			toast.success("cart item removed successfully", {
+				position: "top-center",
+				className: "my-toast",
+			});
 		} else {
-			alert("Product not in cart")
+			toast.info("Product not in cart", {
+				position: "top-center",
+				className: "my-toast",
+			});
 		}
 		await updateCartCount()
 	}
@@ -122,12 +146,12 @@ export default function CartItem({
 					</Link>
 				</div>
 				<div className="ml-2 pt-1 pr-1 flex flex-col gap-2">
-					<div className="flex justify-between">
-						<div>{cartItem.product.name}</div>
+					<div className="flex justify-between gap-2">
+						<div className="w-11/12 text-justify">{cartItem.product.name}</div>
 						<b>(x{count})</b>
 					</div>
 					<div>₦ {numberWithCommas(cartItem.product.price)}</div>
-					<div className="flex justify-between">
+					<div className="flex justify-between pb-4">
 						<div className="flex items-center border-y border-gray-50 rounded">
 							<button
 								className="px-2 bg-main-color text-white text-sm rounded-l"

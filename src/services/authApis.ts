@@ -11,7 +11,7 @@ import {
 } from "@/utils/urls/authUrls";
 import { handleErrorsResponse } from "./responseHandler";
 import { ApiResponse, ForgotPasswordData } from "@/types/apiResponse";
-import { fetchAccessTokenCookie, handleAccessToken, handleRefreshToken, removeAllTokens } from "@/utils/cookieUtils";
+import { fetchAccessTokenCookie, handleAccessToken, removeAllTokens } from "@/utils/cookieUtils";
 import { CreateUserData, PinVerificationData, LoginUserData, ResetPasswordPinData, CreateNewPasswordData } from "@/types/authInterfaces";
 
 
@@ -32,9 +32,9 @@ export async function createUserApi(data: CreateUserData): Promise<ApiResponse> 
                 };
             case 201:
                 const access_token = responseBody.access_token;
-                const refresh_token = responseBody.refresh_token;
+                // const refresh_token = responseBody.refresh_token;
                 handleAccessToken(access_token);
-                handleRefreshToken(refresh_token);
+                // handleRefreshToken(refresh_token);
                 return { message: "Sign up successful", status: 201 };
             default:
                 return { error: "Failed to sign up." };
@@ -129,9 +129,9 @@ export async function loginUserApi(data: LoginUserData): Promise<ApiResponse> {
                 };
             case 200:
                 const access_token = responseBody.access_token;
-                const refresh_token = responseBody.refresh_token;
+                // const refresh_token = responseBody.refresh_token;
                 handleAccessToken(access_token);
-                handleRefreshToken(refresh_token);
+                // handleRefreshToken(refresh_token);
                 return { message: "Login successful",status: 200 };
             default:
                 return { error: "Failed to Log user in." };

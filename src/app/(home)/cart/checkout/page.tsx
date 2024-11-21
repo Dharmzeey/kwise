@@ -10,25 +10,27 @@ import { usePathname, useRouter } from "next/navigation";
 import NewDeliveryInfo from "@/components/cart/newDeliveryInfo";
 import DefaultDeliveryInfo from "@/components/cart/defaultDeliveryInfo";
 import { resendEmailVerificationApi } from "@/services/authApis";
-import { useCartContext } from "@/contexts/cartContext";
 
 export default function CheckoutPage() {
     const router = useRouter();
     const pathName = usePathname();
-    const [grandTotalPrice, setGrandTotalPrice] = useState<number>();
+    const [grandTotalPrice, setGrandTotalPrice] = useState<number>(); // This will also take into delivery fee
+    const [totalPrice, setTotalPrice] = useState<number>(); // This is without delivery fee
+    const [deliveryFee, setDeliveryFee] = useState<number>(0); // This is delivery fee
     const [checkoutData, setCheckoutData] = useState<CheckoutItemsData[]>();
     const [checkoutDetails, setCheckoutDetails] = useState<CheckoutDetails>();
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const [selectedDelivery, setSelectedDelivery] = useState(""); // Track selected delivery
 
-    const { updateCartCount } = useCartContext();
+
 
     useEffect(() => {
         async function fetchCheckout() {
             const response = await checkoutItemsApi();
             if (response.status === 200) {
                 setGrandTotalPrice(response.data.grand_total)
+                setTotalPrice(response.data.grand_total)
                 setCheckoutData(response.data.item_list)
                 setIsLoading(false)
             }
@@ -66,6 +68,11 @@ export default function CheckoutPage() {
         setSelectedDelivery(event.target.value); // Update selected delivery option
     };
 
+    const updateGrandTotalPrice = (deliveryFee: string) => {
+        setDeliveryFee(parseInt(deliveryFee))
+        setGrandTotalPrice(totalPrice! + parseInt(deliveryFee));
+    };
+
     return (
         <>
             {
@@ -77,7 +84,7 @@ export default function CheckoutPage() {
                             {grandTotalPrice && grandTotalPrice > 0 ?
                                 <>
                                     <h1 className="font-bold mb-2 text-secondary-gray-color text-lg">Order Information</h1>
-                                    <div className="flex justify-between font-bold mb-2">
+                                    <div className="flex justify-between font-bold mb-2 text-lg">
                                         <span>Total</span>
                                         <span>₦ {numberWithCommas(grandTotalPrice)}</span>
                                     </div>
@@ -97,6 +104,13 @@ export default function CheckoutPage() {
                                                 )
                                             }
                                         </div>
+                                        {
+                                            deliveryFee > 0 &&
+                                            <div className="my-3 flex justify-between font-bold text-lg">
+                                                    <div>Delivery Fee: </div>
+                                                    <div>₦  {numberWithCommas(deliveryFee)}</div>
+                                            </div>
+                                        }
                                         {/* Delivery Information */}
                                         <h1 className="font-bold my-2 text-secondary-gray-color text-lg">Delivery Information</h1>
                                         <section className="flex flex-col gap-3">
@@ -112,7 +126,10 @@ export default function CheckoutPage() {
                                                     <span>Use default delivery address</span>
                                                 </label>
                                                 {selectedDelivery === "default-delivery" && checkoutDetails && (
-                                                    <DefaultDeliveryInfo checkoutDetails={checkoutDetails} />
+                                                    <DefaultDeliveryInfo
+                                                        checkoutDetails={checkoutDetails}
+                                                        updateGrandTotalPrice={updateGrandTotalPrice}
+                                                    />
                                                 )}
                                             </div>
 
@@ -127,7 +144,7 @@ export default function CheckoutPage() {
                                                     />
                                                     <span>Use another delivery address</span>
                                                 </label>
-                                                {selectedDelivery === "new-delivery" && <NewDeliveryInfo />}
+                                                {selectedDelivery === "new-delivery" && <NewDeliveryInfo updateGrandTotalPrice={updateGrandTotalPrice} />}
                                             </div>
                                         </section>
                                     </>

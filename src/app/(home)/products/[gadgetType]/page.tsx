@@ -49,11 +49,11 @@ export default async function DevicePage({ params, searchParams: queryParams }: 
           <div className="flex gap-7">
             <h1>{params.gadgetType}</h1>
             <div className="flex gap-4 opacity-70">
-              <Link href={`/products/${params.gadgetType}`}>
+              <Link prefetch={true} href={`/products/${params.gadgetType}`}>
                 <h2>All</h2>
               </Link>
               {brands.map((brand) => (
-                <Link key={brand.id} href={`/products/${params.gadgetType}/?brandName=${brand.name}`}>
+                <Link prefetch={true} key={brand.id} href={`/products/${params.gadgetType}/?brandName=${brand.name}`}>
                   <h2> {brand.name}</h2>
                 </Link>
               ))}

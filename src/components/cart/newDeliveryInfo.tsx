@@ -5,16 +5,25 @@ import { EditableInputFIeld, EditableSelectField, EditableTextAreaFIeld } from "
 import { SubmitButton } from "../submitButton";
 import { useNewDeliveryInfo } from "@/actions/cartActions";
 import { useRouter } from "next/navigation";
+import { numberWithCommas } from "@/utils/filter";
 
 const initialState = {
     message: "",
 };
 
-export default function NewDeliveryInfo() {
+type NewDeliveryProp = {
+    updateGrandTotalPrice: (deliveryFee: string) => void
+}
+
+export default function NewDeliveryInfo(
+    prop: NewDeliveryProp
+) {
     const router = useRouter()
     const [formState, formAction] = useFormState(useNewDeliveryInfo, initialState);
     const [states, setStates] = useState<PlaceData[]>();
-    const [lgas, setLgas] = useState<PlaceData[]>();
+    const [lgas, setLgas] = useState<LgaData[]>();
+    const [deliveryFee, setDeliveryFee] = useState<number>();
+    const [deliveryDays, setDeliveryDays] = useState<number>();
 
     useEffect(() => {
         async function fetchStates() {
@@ -33,12 +42,22 @@ export default function NewDeliveryInfo() {
                 const response = await fetchLgasApi(selectedValue)
                 if (response.status === 200) {
                     setLgas(response.data)
+                    setDeliveryFee(undefined)
+                    setDeliveryDays(undefined)
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
     };
+
+    const handleDeliveryFee = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = event.target.value;
+        const fee = lgas?.find((val) => val.id == selectedValue)
+        setDeliveryFee(fee?.delivery_fee)
+        setDeliveryDays(fee?.delivery_days)
+        prop.updateGrandTotalPrice(fee?.delivery_fee?.toString() ?? '0')
+    }
 
     useEffect(() => {
         if (formState.status === 200) {
@@ -73,13 +92,21 @@ export default function NewDeliveryInfo() {
                     inputName="city-town"
                     required
                 />
-                <EditableSelectField label="Local Government Area" name="lga" id="lga" data={lgas} />
+                <EditableSelectField label="Local Government Area" name="lga" id="lga" data={lgas} handleStateChange={handleDeliveryFee} />
+                {deliveryFee &&
+                    <>
+                        <div className="text-lg">
+                            <b>Delivery Fee: ₦ {numberWithCommas(deliveryFee)}</b>
+                        </div>
+                        <div>You will receive your item in {deliveryDays} days</div>
+                    </>}
                 <EditableInputFIeld
                     inputFor="prominent-motor-park"
                     inputText="Prominent Motor Park"
                     inputType="text"
                     inputId="prominent-motor-park"
                     inputName="prominent-motor-park"
+                    required
                 />
                 <EditableInputFIeld
                     inputFor="landmark-signatory-place"
@@ -87,6 +114,7 @@ export default function NewDeliveryInfo() {
                     inputType="text"
                     inputId="landmark-signatory-place"
                     inputName="landmark-signatory-place"
+                    required
                 />
                 <EditableTextAreaFIeld
                     inputFor="address"

@@ -6,7 +6,6 @@ type CartData = {
     price: string;
     product: Product;
     total_price: string;
-
 }
 
 
@@ -24,6 +23,8 @@ type CheckoutDetails = {
     address: string,
     phone_number: string,
     alternative_phone_number: string,
+    delivery_fee: number,
+    delivery_days: number,
 }
     
 export type { CartData, CheckoutItemsData, CheckoutDetails }

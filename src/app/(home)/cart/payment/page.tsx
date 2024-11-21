@@ -34,8 +34,6 @@ export default function Payment() {
                 const PaystackPop = (await import("@paystack/inline-js")).default;
                 const popup = new PaystackPop();
                 const paymentStatus = popup.resumeTransaction(accessCode as unknown as { accessCode: string });
-                console.log(paymentStatus)
-                console.log(paymentStatus.getStatus)
 
                 setProcessing(false);
                 // router.push('/account/orders/pending')

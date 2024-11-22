@@ -10,7 +10,7 @@ export default async function Wishlist() {
 
     if (response.status === 401) {
         // Redirect to login if unauthorized
-        redirect("/login?callbackUrl=/account/orders/completed");
+        redirect("/login?callbackUrl=/account/wishlist");
     }
     const wishlists: WishlistData[] = response.data
     return (

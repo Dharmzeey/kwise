@@ -12,7 +12,6 @@ type CartData = {
     quantity?: number;
 }
 
-const token = fetchAccessTokenCookie();
 
 export async function addToCartApi(data: CartData): Promise<ApiResponse> {
     try {
@@ -115,6 +114,7 @@ export async function getCartSummaryApi(): Promise<ApiResponse> {
 
 export async function checkoutItemsApi(): Promise<ApiResponse> {
     try {
+        const token = fetchAccessTokenCookie();
         const response = await fetch(CHECKOUT_URL, {
             headers: {
                 Cookie: `sessionid=${getSessionId()}`,
@@ -137,6 +137,7 @@ export async function checkoutItemsApi(): Promise<ApiResponse> {
 
 export async function checkoutDetailsApi(): Promise<ApiResponse> {
     try {
+        const token = fetchAccessTokenCookie();
         const response = await fetch(CHECKOUT_DETAILS_URL, {
             headers: {
                 Authorization: `Bearer ${token?.value || ""}`,
@@ -163,6 +164,7 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
 
 export async function orderAddressSummaryApi(data: UserDeliveryData): Promise<ApiResponse> {
     try {
+        const token = fetchAccessTokenCookie();
         const response = await fetch(ORDER_ADDRESS_SUMMARY_URL, {
             method: "POST",
             headers: {

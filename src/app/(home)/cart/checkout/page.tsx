@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import NewDeliveryInfo from "@/components/cart/newDeliveryInfo";
 import DefaultDeliveryInfo from "@/components/cart/defaultDeliveryInfo";
 import { resendEmailVerificationApi } from "@/services/authApis";
+import { EmptyCart } from "@/components/cart/emptyCart";
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -34,8 +35,8 @@ export default function CheckoutPage() {
                 setCheckoutData(response.data.item_list)
                 setIsLoading(false)
             }
+            setIsLoading(false)
         }
-        setIsLoading(false)
         fetchCheckout()
     }, [])
 
@@ -106,9 +107,9 @@ export default function CheckoutPage() {
                                         </div>
                                         {
                                             deliveryFee > 0 &&
-                                            <div className="my-3 flex justify-between font-bold text-lg">
-                                                    <div>Delivery Fee: </div>
-                                                    <div>₦  {numberWithCommas(deliveryFee)}</div>
+                                            <div className="my-3 flex justify-between font-bold text-lg text-secondary-color">
+                                                <div>Delivery Fee: </div>
+                                                <div>₦  {numberWithCommas(deliveryFee)}</div>
                                             </div>
                                         }
                                         {/* Delivery Information */}
@@ -150,7 +151,7 @@ export default function CheckoutPage() {
                                     </>
                                     :
                                     <>
-                                        <h1>No Order Information</h1>
+                                        <EmptyCart />
                                     </>
                             }
                         </>

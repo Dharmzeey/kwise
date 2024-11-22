@@ -26,7 +26,7 @@ export default function DefaultDeliveryInfo(
 
     useEffect(() => {
         prop.updateGrandTotalPrice(prop.checkoutDetails.delivery_fee.toString())
-    },[])
+    },[prop])
     return (
         <>
             <div className="leading-6">

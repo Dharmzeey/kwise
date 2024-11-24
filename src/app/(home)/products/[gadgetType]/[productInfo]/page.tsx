@@ -1,6 +1,4 @@
 import { numberWithCommas } from "@/utils/filter";
-import { Slide, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import { fetchProductById } from "@/services/productApi";
 import IncreamentDecreamentCheck from "@/components/cart/cartModification";
@@ -93,12 +91,6 @@ export default async function ProductDetail({ params }: Props) {
             ) : (
                 <ProductNotFound />
             )}
-            <ToastContainer
-                limit={5}
-                autoClose={2000}
-                transition={Slide}
-                closeOnClick
-            />
         </>
     );
 }

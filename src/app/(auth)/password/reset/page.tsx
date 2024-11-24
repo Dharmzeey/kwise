@@ -7,8 +7,7 @@ import { forgotPasswordApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
-import { Slide, toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast} from "react-toastify";
 import { ZodIssue } from "zod";
 
 const initialState = {
@@ -138,13 +137,6 @@ export default function ResetPasswordCode() {
                     {state?.message} {state?.error}
                 </p>
             </form>
-
-            <ToastContainer
-                limit={5}
-                autoClose={2000}
-                transition={Slide}
-                closeOnClick
-            />
         </>
     );
 }

@@ -38,7 +38,7 @@ export default function HandleProductSearch() {
                         <input
                             type="text"
                             placeholder="Search item..."
-                            className="p-2  w-[min(90%,36rem)]"
+                            className="p-2 w-[min(90%,36rem)] focus-visible:outline-none"
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onKeyDown={handleKeyDown}

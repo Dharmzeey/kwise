@@ -7,8 +7,7 @@ import { resendEmailVerificationApi } from "@/services/authApis";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
-import { Slide, toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { ZodIssue } from "zod";
 
 const initialState = {
@@ -128,15 +127,9 @@ export default function EmailVerification() {
         <SubmitButton pendingText="Verifying..." buttonText="verify code" />
         {/* Display feedback message */}
         <p aria-live="polite" className="sr-onl text-red-600" role="status">
-          {state.error}
+          {state.error} {state.message}
         </p>
       </form>
-      <ToastContainer
-        limit={5}
-        autoClose={2000}
-        transition={Slide}
-        closeOnClick
-      />
     </>
   );
 }

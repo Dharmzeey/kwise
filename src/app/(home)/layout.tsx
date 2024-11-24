@@ -8,6 +8,9 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Providers } from "@/contexts/providers";
 
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const istokWeb = Istok_Web({
   weight: ["400", "700"],
@@ -34,6 +37,12 @@ export default function HomeLayout({
           <Header />
           <div className="container m-auto py-4 px-2 lg:px-28 min-h-[80svh]">{children}</div>
           <Footer />
+          <ToastContainer
+            limit={5}
+            autoClose={2000}
+            transition={Slide}
+            closeOnClick
+          />
         </body>
       </Providers>
     </html>

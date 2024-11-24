@@ -6,7 +6,7 @@ import { EditableInputFIeld } from "@/components/interractivity/input";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
-import { toast, ToastContainer, Slide } from "react-toastify";
+import { toast} from "react-toastify";
 import { ZodIssue } from "zod";
 
 const initialState = {
@@ -101,12 +101,6 @@ export default function CreateNewPassword() {
                     {state.message} {state.error}
                 </p>
             </form>
-            <ToastContainer
-                limit={5}
-                autoClose={2000}
-                transition={Slide}
-                closeOnClick
-            />
         </>
     )
 }

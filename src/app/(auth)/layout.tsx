@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Istok_Web } from "next/font/google";
 import "../globals.css";
 import Image from "next/image";
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const istokWeb = Istok_Web({
     weight: ["400", "700"],
@@ -32,6 +34,12 @@ export default function AuthLayout({
                         <div className="px-4">{children}</div>
                     </div>
                 </main>
+                <ToastContainer
+                    limit={5}
+                    autoClose={2000}
+                    transition={Slide}
+                    closeOnClick
+                />
             </body>
         </html>
     );

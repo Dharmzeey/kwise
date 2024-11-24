@@ -67,7 +67,7 @@ export default function LoginPage() {
           className="sr-o text-red-600 text-center"
           role="status"
         >
-          {state.error}
+          {state.error} {state.message}
         </p>
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">

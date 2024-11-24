@@ -18,7 +18,7 @@ export default function SignupPage() {
   const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter();
   useEffect(() => {
-    if (state.status === 200) {
+    if (state.status === 201) {
       // the message will come from authApi through authAction
       router.push("/email-verification/confirm");
     }
@@ -78,8 +78,11 @@ export default function SignupPage() {
         />
         {/* Display feedback message */}
         <p aria-live="polite" className="sr-onl text-red-500 text-center" role="status">
-          {state.error}
+          {state.error} {state.message}
         </p>
+        
+
+
       </form>
       <div className="flex flex-col items-center gap-1 mt-3">
         <p>
@@ -89,6 +92,7 @@ export default function SignupPage() {
           </Link>
         </p>
       </div>
+
     </>
   );
 }

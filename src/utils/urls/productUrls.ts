@@ -4,7 +4,7 @@ import { BASE_URL } from "../constants";
 export const PRODUCT_CATEGORIES_URL = `${BASE_URL}/products/categories/`;
 
 // Deals
-export const DEALS_URL = `${BASE_URL}/products/deals`;
+export const DEALS_URL = `${BASE_URL}/products/deals/`;
 
 // products
 export const PRODUCT_BRAND_URL = (categoryName: string) => `${BASE_URL}/products/brands/?q=${categoryName}`;

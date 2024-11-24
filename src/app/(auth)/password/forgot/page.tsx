@@ -3,11 +3,10 @@
 import { forgotPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
-import { ApiResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
-import { Slide, toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ZodIssue } from "zod";
 
@@ -70,12 +69,6 @@ export default function ForgotPassword() {
           {state.message} {state.error}
         </p>
       </form>
-      <ToastContainer
-        limit={5}
-        autoClose={2000}
-        transition={Slide}
-        closeOnClick
-      />
     </>
   );
 }

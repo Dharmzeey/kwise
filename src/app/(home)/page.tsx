@@ -1,8 +1,6 @@
 import ProductCategory from "@/components/products/productCategory";
-import HomeCarousel from "@/components/products/carouselSlider";
 import { fetchAllProducts } from "@/services/productApi";
-import { ToastContainer, Slide } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import HomeCarousel from "@/components/products/homeCarousel";
 
 export default async function Home() {
   const products = await fetchAllProducts();
@@ -51,12 +49,6 @@ export default async function Home() {
           </p>
         </div>
       )}
-      <ToastContainer
-        limit={5}
-        autoClose={2000}
-        transition={Slide}
-        closeOnClick
-      />
     </main>
   );
 }

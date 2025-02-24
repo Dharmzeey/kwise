@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { PRODUCT_SEARCH_URL } from "@/utils/urls/productUrls";
 import { useEffect, useState } from "react";
 import ProductSearch from "@/components/products/productSearch";
-import HandleProductSearch from "@/components/interractivity/productSearch";
 import Loading from "@/components/loading";
 import ProductNotFound from "@/components/products/productNotFound";
 

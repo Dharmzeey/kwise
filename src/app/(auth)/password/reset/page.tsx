@@ -5,8 +5,7 @@ import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { forgotPasswordApi } from "@/services/authApis";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState, useActionState } from "react";
 import { toast} from "react-toastify";
 import { ZodIssue } from "zod";
 
@@ -15,7 +14,7 @@ const initialState = {
 };
 
 export default function ResetPasswordCode() {
-    const [state, formAction] = useFormState(verifyResetCode, initialState);
+    const [state, formAction] = useActionState(verifyResetCode, initialState);
     const router = useRouter();
     const [resetEmailCount, setResetEmailCount] = useState(0);
     const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);

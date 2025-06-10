@@ -17,18 +17,18 @@ const ImageComponent = (imageProp: ImageProp) => {
         <>
             <div className={`imageWrapper ${isLoading ? 'loading' : ''}`}>
                 {/* The imageWrapper and loading is imported in the globals.css */}
-            <Image
-                alt={imageProp.alt}
-                src={imageProp.src}
-                priority
-                // height={imageProp.height}
-                // width={imageProp.width}
-                fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                onLoad={() => setIsLoading(false)}
-                className={`rounded object-cover`}
+                <Image
+                    alt={imageProp.alt}
+                    src={imageProp.src}
+                    priority
+                    // height={imageProp.height}
+                    // width={imageProp.width}
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                    onLoad={() => setIsLoading(false)}
+                    className={`object-cover transition-transform duration-500 group-hover:scale-105`}
                 />
-                </div>
+            </div>
         </>
     )
 }

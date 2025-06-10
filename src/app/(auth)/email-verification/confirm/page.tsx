@@ -5,8 +5,7 @@ import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState, useActionState } from "react";
 import { toast } from "react-toastify";
 import { ZodIssue } from "zod";
 
@@ -17,7 +16,7 @@ const initialState = {
 
 export default function EmailVerification() {
   const pathName = usePathname();
-  const [state, formAction] = useFormState(verifyCode, initialState);
+  const [state, formAction] = useActionState(verifyCode, initialState);
   const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter();
   const [resetEmailCount, setResetEmailCount] = useState(0);

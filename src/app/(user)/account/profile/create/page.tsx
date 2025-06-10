@@ -1,10 +1,9 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { SubmitButton } from "@/components/submitButton";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useActionState } from "react";
 import { createUserInfo } from "@/actions/userActions";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { ZodIssue } from "zod";
@@ -16,7 +15,7 @@ const initialState = {
 export default function CreateUserProfile() {
     const pathName = usePathname();
     const router = useRouter();
-    const [state, formAction] = useFormState(createUserInfo, initialState);
+    const [state, formAction] = useActionState(createUserInfo, initialState);
     const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
 
     useEffect(() => {

@@ -6,8 +6,7 @@ import { SubmitButton } from "@/components/submitButton";
 import { retrieveUserInfoApi } from "@/services/userApis";
 import { UserProfileData } from "@/types/userInterfaces";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState, useActionState } from "react";
 import { ZodIssue } from "zod";
 
 const initialState = {
@@ -19,7 +18,7 @@ export default function EditProfile() {
     const pathName = usePathname();
     const router = useRouter()
     const [userDetails, setUserDetails] = useState<UserProfileData | null>(null);
-    const [state, formAction] = useFormState(updateUserInfo, initialState);
+    const [state, formAction] = useActionState(updateUserInfo, initialState);
     const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     useEffect(() => {
         async function fetchUserInfo() {

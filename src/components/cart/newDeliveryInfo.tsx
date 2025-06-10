@@ -1,6 +1,5 @@
 import { fetchStatesApi, fetchLgasApi } from "@/services/baseAPis";
-import { useState, useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useState, useEffect, useActionState } from "react";
 import { EditableInputFIeld, EditableSelectField, EditableTextAreaFIeld } from "../interractivity/input";
 import { SubmitButton } from "../submitButton";
 import { useNewDeliveryInfo } from "@/actions/cartActions";
@@ -19,7 +18,7 @@ export default function NewDeliveryInfo(
     prop: NewDeliveryProp
 ) {
     const router = useRouter()
-    const [formState, formAction] = useFormState(useNewDeliveryInfo, initialState);
+    const [formState, formAction] = useActionState(useNewDeliveryInfo, initialState);
     const [states, setStates] = useState<PlaceData[]>();
     const [lgas, setLgas] = useState<LgaData[]>();
     const [deliveryFee, setDeliveryFee] = useState<number>();

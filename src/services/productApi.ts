@@ -1,4 +1,4 @@
-import "server-only";
+// import "server-only";
 
 import { Brand, Product } from "@/types/productInterfaces";
 import {
@@ -21,7 +21,7 @@ export async function fetchAllProducts() {
 }
 
 export async function fetchProductById(id: string) {
-  const token = fetchAccessTokenCookie();
+  const token = await fetchAccessTokenCookie();
   const response = await fetch(PRODUCT_DETAILS_URL(id),
     {
       headers: {

@@ -1,21 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import url('./module.css'); */
 
+/* Root Variables */
 :root {
   --main-color: #FF5100;
+  /* Vibrant Orange */
   --secondary-color: #020E42;
+  /* Deep Navy */
   --text-black-color: #000000;
   --text-white-color: #ffffff;
   --text-blue-color: #2400FF;
   --text-grey-color: #3A3633;
-  --border-color: 255, 255, 255;
+  --border-color: rgba(0, 0, 0, 0.1);
   --success-color: #00B900;
   --error-color: #FF0000;
   --footer-color: #729DED;
 }
 
+/* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -24,38 +27,82 @@
   }
 }
 
-*:focus:not(input[type="text"]){
-  @apply outline-2 outline-outline-color outline-offset-2 border-none;
+/* Focus Styles */
+*:focus:not(input[type="text"]) {
+  @apply outline-2 outline-secondary-color outline-offset-2 border-none;
 }
 
+/* Custom Utilities */
 @layer utilities {
-  @import url('./module.css');
   .text-balance {
     text-wrap: balance;
   }
+
+  .input-border-color {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
   .brand-new {
     background-color: var(--secondary-color);
+    @apply text-white px-4 py-2 rounded-full text-xs font-medium;
   }
+
   .uk-used {
     background-color: var(--main-color);
+    @apply text-white px-4 py-2 rounded-full text-xs font-medium;
   }
+
   .in-stock {
     background-color: var(--success-color);
+    @apply text-white px-4 py-2 rounded-full text-xs font-medium;
   }
+
   .out-of-stock {
     background-color: var(--error-color);
+    @apply text-white px-4 py-2 rounded-full text-xs font-medium;
   }
+
+  .submitted,
+  .shipped,
+  .completed {
+    @apply text-white px-4 py-2 rounded-full text-xs font-medium;
+  }
+
   .submitted {
     background-color: var(--main-color);
   }
+
   .shipped {
     background-color: var(--secondary-color);
   }
+
   .completed {
     background-color: var(--success-color);
   }
-  .my-toast{
-    @apply bg-secondary-color m-auto rounded-b;
+
+  .my-toast {
+    @apply bg-secondary-color m-auto rounded-md shadow-lg;
     width: max(75%, 20rem);
+  }
+
+  /* Hover Effects */
+  .hover-scale:hover {
+    @apply scale-105 transition-transform duration-200;
+  }
+
+  .hover-shadow:hover {
+    @apply shadow-md transition-shadow duration-200;
+  }
+
+  /* Fade In Animation */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
   }
 }

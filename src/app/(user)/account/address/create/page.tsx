@@ -1,10 +1,9 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { EditableInputFIeld, EditableSelectField, EditableTextAreaFIeld } from "@/components/interractivity/input";
 import { SubmitButton } from "@/components/submitButton";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useActionState } from "react";
 import { createUserAddress } from "@/actions/userActions";
 import { resendEmailVerificationApi } from "@/services/authApis";
 import { fetchLgasApi, fetchStatesApi } from "@/services/baseAPis";
@@ -17,7 +16,7 @@ const initialState = {
 export default function CreateUserAddress() {
     const pathName = usePathname();
     const router = useRouter();
-    const [formState, formAction] = useFormState(createUserAddress, initialState);
+    const [formState, formAction] = useActionState(createUserAddress, initialState);
     const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [states, setStates] = useState<PlaceData[]>();
     const [lgas, setLgas] = useState<PlaceData[]>();

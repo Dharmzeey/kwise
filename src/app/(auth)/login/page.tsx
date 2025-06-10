@@ -1,12 +1,11 @@
 "use client";
 
 import { loginUser } from "@/actions/authActions";
-import { useFormState } from "react-dom";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useActionState } from "react";
 import { ZodIssue } from "zod";
 
 const initialState = {
@@ -17,7 +16,7 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryParams = searchParams!.get("callbackUrl");
-  const [state, formAction] = useFormState(loginUser, initialState);
+  const [state, formAction] = useActionState(loginUser, initialState);
   const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   useEffect(() => {
     if (state.status === 200) {

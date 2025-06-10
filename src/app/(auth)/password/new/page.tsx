@@ -4,8 +4,7 @@ import { createNewPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState, useActionState } from "react";
 import { toast} from "react-toastify";
 import { ZodIssue } from "zod";
 
@@ -15,7 +14,7 @@ const initialState = {
 
 
 export default function CreateNewPassword() {
-    const [state, formAction] = useFormState(createNewPassword, initialState);
+    const [state, formAction] = useActionState(createNewPassword, initialState);
     const router = useRouter()
     const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [resetEmail, setResetEmail] = useState<string | null>(null);

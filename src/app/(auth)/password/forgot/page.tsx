@@ -4,8 +4,7 @@ import { forgotPassword } from "@/actions/authActions";
 import { SubmitButton } from "@/components/submitButton";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState, useActionState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ZodIssue } from "zod";
@@ -15,7 +14,7 @@ const initialState = {
 };
 
 export default function ForgotPassword() {
-  const [state, formAction] = useFormState(forgotPassword, initialState);
+  const [state, formAction] = useActionState(forgotPassword, initialState);
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter()

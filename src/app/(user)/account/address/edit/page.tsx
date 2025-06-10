@@ -7,8 +7,7 @@ import { fetchLgasApi, fetchStatesApi } from "@/services/baseAPis";
 import { retrieveUserAddressApi } from "@/services/userApis";
 import { UserAddressData } from "@/types/userInterfaces";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState, useActionState } from "react";
 import { ZodIssue } from "zod";
 
 const initialState = {
@@ -20,7 +19,7 @@ export default function EditAddress() {
     const pathName = usePathname();
     const router = useRouter()
     const [userAddressInfo, setUserAddressInfo] = useState<UserAddressData | null>(null);
-    const [state, formAction] = useFormState(updateUserAddress, initialState);
+    const [state, formAction] = useActionState(updateUserAddress, initialState);
     const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
     const [states, setStates] = useState<PlaceData[]>();
     const [lgas, setLgas] = useState<PlaceData[]>();

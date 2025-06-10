@@ -1,46 +1,63 @@
-import type { Metadata } from "next";
-import { Istok_Web } from "next/font/google";
-import "../globals.css";
+// app/auth/layout.tsx
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { ToastContainer, Slide } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const istokWeb = Istok_Web({
-    weight: ["400", "700"],
-    subsets: ["latin"],
-    display: "swap",
-    adjustFontFallback: false,
-});
-
-export const metadata: Metadata = {
-    title: "Kwise World",
-    description:
-        "Dealer of guaranteed apple and Samsung phones both brand new, direct UK/US and fairly used. Swap your old phones to latest ones. Guaranteed Laptops, Accessories, Game consoles etc. Retail and bulk purchase always available.",
-};
 
 export default function AuthLayout({
     children,
-}: Readonly<{
+}: {
     children: React.ReactNode;
-}>) {
+}) {
     return (
-        <html lang="en">
-            <body className={`${istokWeb.className} container text-xs md:text-sm m-auto bg-white`}>
-                <main className="flex justify-center mt-20">
-                    <div className="w-full max-w-md px-4">
-                        <div className="flex justify-center mb-4">
-                            <Image src="/logo.jpg" alt="logo" width={75} height={35} priority />
-                        </div>
-                        <div className="px-4">{children}</div>
-                    </div>
-                </main>
-                <ToastContainer
-                    limit={5}
-                    autoClose={2000}
-                    transition={Slide}
-                    closeOnClick
-                />
-            </body>
-        </html>
+        <>
+            {/* Background Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-orange-50 z-0"></div>
+
+            {/* Auth Card */}
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="relative z-10 w-full max-w-md mx-auto rounded-2xl shadow-xl bg-white/90 backdrop-blur-sm border border-gray-100 overflow-hidden mt-8 mb-12"
+            >
+                {/* Logo Section */}
+                <div className="flex justify-center py-8">
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                    >
+                        <Image
+                            src="/logo.jpg"
+                            alt="Kwise World Logo"
+                            width={100}
+                            height={40}
+                            priority
+                            className="object-contain"
+                        />
+                    </motion.div>
+                </div>
+
+                {/* Form Container */}
+                <div className="px-6 pb-8">{children}</div>
+            </motion.div>
+
+            {/* Toast Notifications */}
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                className="z-50"
+            />
+        </>
     );
 }

@@ -1,11 +1,10 @@
 "use client";
 
 import { createUser } from "@/actions/authActions";
-import { useFormState } from "react-dom";
 import { EditableInputFIeld } from "@/components/interractivity/input";
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { ZodIssue } from "zod";
 
@@ -14,7 +13,7 @@ const initialState = {
 };
 
 export default function SignupPage() {
-  const [state, formAction] = useFormState(createUser, initialState);
+  const [state, formAction] = useActionState(createUser, initialState);
   const [errors, setErrors] = useState<ZodIssue[] | undefined>([]);
   const router = useRouter();
   useEffect(() => {

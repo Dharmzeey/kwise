@@ -47,7 +47,7 @@ export async function createUserApi(data: CreateUserData): Promise<ApiResponse> 
 // code verification on signup
 export async function verifyCodeApi(data: PinVerificationData): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(CONFIRM_EMAIL_VERIFICATION, {
             method: "POST",
             headers: {
@@ -83,7 +83,7 @@ export async function verifyCodeApi(data: PinVerificationData): Promise<ApiRespo
 
 export async function resendEmailVerificationApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(SEND_EMAIL_VERIFICATION, {
             method: "POST",
             headers: {

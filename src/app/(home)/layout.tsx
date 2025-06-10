@@ -19,11 +19,6 @@ const istokWeb = Istok_Web({
   adjustFontFallback: false,
 });
 
-export const metadata: Metadata = {
-  title: "Kwise World",
-  description:
-    "Dealer of guaranteed apple and Samsung phones both brand new, direct UK/US and fairly used. Swap your old phones to latest ones. Guaranteed Laptops, Accessories, Game consoles etc. Retail and bulk purchase always available.",
-};
 
 export default function HomeLayout({
   children,
@@ -31,9 +26,8 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
       <Providers>
-        <body className={`${istokWeb.className} text-xs md:text-sm bg-white `}>
+        <div className={`${istokWeb.className} text-xs md:text-sm bg-white `}>
           <Header />
           <div className="container m-auto py-4 px-2 lg:px-28 min-h-[80svh]">{children}</div>
           <Footer />
@@ -43,8 +37,7 @@ export default function HomeLayout({
             transition={Slide}
             closeOnClick
           />
-        </body>
+        </div>
       </Providers>
-    </html>
   );
 }

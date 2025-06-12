@@ -11,86 +11,81 @@ type CompletedOrder = {
     order: CompletedOrderData
 }
 
-function PendingOrderCard(prop: PendingOrder) {
+function PendingOrderCard({ order }: PendingOrder) {
     return (
-        <>
-            <div className="shadow shadow-gray-300 pb-2 pr-2 rounded mb-3">
-                <div className="grid grid-cols-[1fr_4fr] gap-2 mb-1">
-                    <div className="relative row-span-2">
-                        <ImageComponent src={prop.order.product_image} alt={prop.order.product_name} />
+        <div className="rounded-md shadow-sm border border-gray-200 mb-4 overflow-hidden bg-white hover:shadow-md transition">
+            <div className="grid md:grid-cols-3 gap-3 p-4">
+                {/* Product Image */}
+                <div className="relative w-full h-40">
+                    <ImageComponent src={order.product_image} alt={order.product_name} />
+                </div>
+
+                {/* Product and Order Info */}
+                <div className="flex flex-col gap-2 justify-between">
+                    <div>
+                        <h2 className="text-base font-semibold text-gray-800 line-clamp-4">{order.product_name}</h2>
+                        <div className="text-main-color font-medium">₦{numberWithCommas(order.price)}</div>
                     </div>
-                    <div className="flex flex-col pt-1 gap-1 px-2">
-                        <div className="flex justify-between">
-                            <h2>{prop.order.product_name}</h2>
-                            <div>₦{numberWithCommas(prop.order.price)}</div>
-                        </div>
-                        <div className="flex justify-between">
-                            <div>Order no: {prop.order.order_no} </div>
-                            <div>(x{prop.order.quantity})</div>
-                        </div>
-                        <div>
-                            <div className={` inline ${prop.order.shipped ? "shipped"
-                                : "submitted"
-                                } text-white px-2 p-1  rounded-sm`} >
-                                {
-                                    prop.order.shipped ?
-                                        <span>Shipped</span> : <span>Shipping</span>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="px-2 pt-1 leading-5 col-span-2 md:col-span-1">
-                        <h2>Delivery Information</h2>
-                        <div>
-                            <p className="text-justify">Address: {prop.order.address}</p>
-                            <div>Phone No: {prop.order.phone_number}</div>
-                            <div>Estimated delivery date: {prop.order.estimated_delivery_date}</div>
+                    <div className="text-sm text-gray-600 flex flex-col gap-1">
+                        <div>Order No: {order.order_no}</div>
+                        <div>Quantity: x{order.quantity}</div>
+                        <div className="mt-2">
+                            <span className={`text-xs px-2 py-1 rounded-sm text-white ${order.shipped ? "bg-green-600" : "bg-yellow-500"}`}>
+                                {order.shipped ? "Shipped" : "Shipping"}
+                            </span>
                         </div>
                     </div>
                 </div>
 
+                {/* Delivery Info */}
+                <div className="text-sm text-gray-700 leading-6">
+                    <h3 className="font-semibold mb-1">Delivery Information</h3>
+                    <p>Address: {order.address}</p>
+                    <div>Phone: {order.phone_number}</div>
+                    <div>Estimated delivery: {order.estimated_delivery_date}</div>
+                </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }
+  
 
 
-function CompletedOrderCard(prop: CompletedOrder) {
+function CompletedOrderCard({ order }: CompletedOrder) {
     return (
-        <>
-            <div className="shadow shadow-gray-300 pb-2 pr-2 rounded mb-3">
-                <div className="grid grid-cols-[1fr_4fr] gap-2 mb-1">
-                    <div className="relative row-span-2">
-                        <ImageComponent src={prop.order.product_image} alt={prop.order.product_name} />
+        <div className="rounded-md shadow-sm border border-gray-200 mb-4 overflow-hidden bg-white hover:shadow-md transition">
+            <div className="grid md:grid-cols-3 gap-4 p-4">
+                {/* Product Image */}
+                <div className="relative w-full h-40">
+                    <ImageComponent src={order.product_image} alt={order.product_name} />
+                </div>
+
+                {/* Product and Order Info */}
+                <div className="flex flex-col gap-2 justify-between">
+                    <div>
+                        <h2 className="text-base font-semibold text-gray-800 line-clamp-4">{order.product_name}</h2>
+                        <div className="text-main-color font-medium">₦{numberWithCommas(order.price)}</div>
                     </div>
-                    <div className="flex flex-col pt-1 px-2 gap-1">
-                        <div className="flex justify-between">
-                            <h2>{prop.order.product_name}</h2>
-                            <div>₦{numberWithCommas(prop.order.price)}</div>
-                        </div>
-                        <div className="flex justify-between">
-                            <div>Order no: {prop.order.order_no} </div>
-                            <div>(x{prop.order.quantity})</div>
-                        </div>
+                    <div className="text-sm text-gray-600 flex flex-col gap-1">
+                        <div>Order No: {order.order_no}</div>
+                        <div>Quantity: x{order.quantity}</div>
                         <div>
-                            <div>
-                                <div className="inline completed text-white px-2 p-1  rounded-sm">
-                                    <span>Completed</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="px-2 pt-1 leading-5 col-span-2 md:col-span-1">
-                        <div>
-                            <div>Delivery date: {prop.order.delivery_date}</div>
-                            <p className="text-justify">Address: {prop.order.address}</p>
+                            <span className="text-xs px-2 py-1 rounded-sm text-white bg-green-700">Completed</span>
                         </div>
                     </div>
                 </div>
+
+                {/* Delivery Info */}
+                <div className="text-sm text-gray-700 leading-6">
+                    <h3 className="font-semibold mb-1">Delivery Details</h3>
+                    <div>Delivered on: {order.delivery_date}</div>
+                    <p>Address: {order.address}</p>
+                </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }
+  
 
 function EmptyOrder() {
     return (

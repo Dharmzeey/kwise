@@ -7,11 +7,11 @@ import { INITIATE_PATMENT_URL } from "@/utils/urls/paymentUrls";
 
 export async function initiatePaymentApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(INITIATE_PATMENT_URL, {
             method: "POST",
             headers: {
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
                 Authorization: `Bearer ${token?.value || ""}`,
                 "Content-Type": "application/json",
             },
@@ -32,7 +32,7 @@ export async function initiatePaymentApi(): Promise<ApiResponse> {
                 return { error: "Could not be initialized, reload and try again" }
         }
     } catch (error) {
-        throw error
+        // throw error
         return { error: "Error occured while trying to initialize payment" }
     }
 }

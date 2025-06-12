@@ -134,57 +134,59 @@ export default function CartItem({
 
 
 	return (
-		<>
-			<div className="grid grid-cols-[auto_1fr] mb-3 shadow pr-1">
-				<div className="w-[8.5rem] h-[7.5rem] relative">
-					<Link
-						href={`/products/${cartItem.product.category}/${cartItem.product.id}`}
-					>
-						<div className="relative h-full">
-							<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
-						</div>
+		<div className="grid grid-cols-[auto_1fr] gap-4 items-start bg-white rounded-md shadow-md p-3 mb-4">
+			{/* Product Image */}
+			<div className="w-[8.5rem] h-[7.5rem] relative overflow-hidden rounded-md">
+				<Link prefetch href={`/products/${cartItem.product.category}/${cartItem.product.id}`}>
+					<ImageComponent src={cartItem.product.image} alt={cartItem.product.name} />
+				</Link>
+			</div>
+
+			{/* Product Info & Controls */}
+			<div className="flex flex-col gap-2 justify-between h-full w-full">
+				{/* Product Name and Quantity */}
+				<div className="flex justify-between items-start">
+					<Link prefetch href={`/products/${cartItem.product.category}/${cartItem.product.id}`}>
+						<div className="text-sm font-semibold text-gray-800 leading-snug line-clamp-4">{cartItem.product.name}</div>
 					</Link>
+					<div className="text-sm font-medium text-gray-600">(x{count})</div>
 				</div>
-				<div className="ml-2 pt-1 pr-1 flex flex-col gap-2">
-					<div className="flex justify-between gap-2">
-						<div className="w-11/12 text-justify">{cartItem.product.name}</div>
-						<b>(x{count})</b>
+
+				{/* Price */}
+				<div className="text-main-color font-semibold text-base">
+					₦ {numberWithCommas(cartItem.product.price)}
+				</div>
+
+				{/* Controls */}
+				<div className="flex justify-between items-center mt-2">
+					{/* Quantity Buttons */}
+					<div className="flex items-center border rounded overflow-hidden text-sm">
+						<button
+							className="bg-main-color text-white px-3 py-1 hover:bg-opacity-90 transition"
+							onClick={decreament}
+						>
+							&minus;
+						</button>
+						<span className="px-4 ">{count}</span>
+						<button
+							className="bg-main-color text-white px-3 py-1 hover:bg-opacity-90 transition"
+							onClick={increament}
+						>
+							&#43;
+						</button>
 					</div>
-					<div>₦ {numberWithCommas(cartItem.product.price)}</div>
-					<div className="flex justify-between pb-4">
-						<div className="flex items-center border-y border-gray-50 rounded">
-							<button
-								className="px-2 bg-main-color text-white text-sm rounded-l"
-								onClick={decreament}
-							>
-								&minus;
-							</button>
-							<span className="px-3">{count}</span>
-							<button
-								className="px-2 bg-main-color text-white text-sm rounded-r"
-								onClick={increament}
-							>
-								&#43;
-							</button>
-						</div>
-						{/* <div className="self-start shadow rounded">
-							<button className="px-2 bg-main-color text-white text-sm text-bold uppercase rounded"
-								onClick={update}
-							>
-								Update
-							</button>
-						</div> */}
-						<div>
-							<button type="button" onClick={remove}>
-								<FontAwesomeIcon
-									icon={faTrash}
-									className="text-main-color text-[18px]"
-								/>
-							</button>
-						</div>
-					</div>
+
+					{/* Remove Button */}
+					<button
+						type="button"
+						onClick={remove}
+						className="text-red-500 hover:text-red-600 transition"
+						title="Remove from cart"
+					>
+						<FontAwesomeIcon icon={faTrash} className="text-[18px]" />
+					</button>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

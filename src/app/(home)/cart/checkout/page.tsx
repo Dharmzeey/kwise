@@ -87,7 +87,7 @@ export default function CheckoutPage() {
                                     <h1 className="font-bold mb-2 text-secondary-gray-color text-lg">Order Information</h1>
                                     <div className="flex justify-between font-bold mb-2 text-lg">
                                         <span>Total</span>
-                                        <span>₦ {numberWithCommas(grandTotalPrice)}</span>
+                                        <span className="text-main-color font-semibold">₦ {numberWithCommas(grandTotalPrice)}</span>
                                     </div>
                                 </>
                                 :
@@ -116,7 +116,7 @@ export default function CheckoutPage() {
                                         <h1 className="font-bold my-2 text-secondary-gray-color text-lg">Delivery Information</h1>
                                         <section className="flex flex-col gap-3">
                                             <div>
-                                                <label htmlFor="default-delivery" className="flex gap-1 font-bold">
+                                                <label htmlFor="default-delivery" className="flex gap-1 font-bold mb-2">
                                                     <input
                                                         type="radio"
                                                         name="delivery"

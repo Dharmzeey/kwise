@@ -10,7 +10,7 @@ import { UserAddressData, UserProfileData } from "@/types/userInterfaces";
 
 export async function verifyUserInfoApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(VERIFY_USER_INFO, {
             method: "GET",
             headers: {
@@ -38,7 +38,7 @@ export async function verifyUserInfoApi(): Promise<ApiResponse> {
 
 export async function createUserInfoApi(data: UserProfileData): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(ADD_USER_INFO, {
             method: "POST",
             headers: {
@@ -73,7 +73,7 @@ export async function createUserInfoApi(data: UserProfileData): Promise<ApiRespo
 
 export async function retrieveUserInfoApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(RETRIEVE_USER_INFO, {
             method: "GET",
             headers: {
@@ -100,7 +100,7 @@ export async function retrieveUserInfoApi(): Promise<ApiResponse> {
 
 export async function updateUserInfoApi(data: UserProfileData): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(UPDATE_USER_INFO, {
             method: "PATCH",
             headers: {
@@ -134,7 +134,7 @@ export async function updateUserInfoApi(data: UserProfileData): Promise<ApiRespo
 // This below deletes the user permanently and not just the user info
 export async function deleteUserApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(DELETE_USER_INFO, {
             method: "DELETE",
             headers: {
@@ -162,7 +162,7 @@ export async function deleteUserApi(): Promise<ApiResponse> {
 
 export async function verifyUserAddressApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(VERIFY_USER_INFO, {
             method: "GET",
             headers: {
@@ -191,7 +191,7 @@ export async function verifyUserAddressApi(): Promise<ApiResponse> {
 
 export async function createUserAddressApi(data: UserAddressData): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(ADD_USER_ADDRESS, {
             method: "POST",
             headers: {
@@ -226,7 +226,7 @@ export async function createUserAddressApi(data: UserAddressData): Promise<ApiRe
 
 export async function retrieveUserAddressApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(RETRIEVE_USER_ADDRESS, {
             method: "GET",
             headers: {
@@ -253,7 +253,7 @@ export async function retrieveUserAddressApi(): Promise<ApiResponse> {
 
 export async function updateUserAddressApi(data: UserAddressData): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(UPDATE_USER_ADDRESS, {
             method: "PATCH",
             headers: {
@@ -289,7 +289,7 @@ export async function updateUserAddressApi(data: UserAddressData): Promise<ApiRe
 // Orders
 export async function pendingOrdersApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(GET_PENDING_ORDERS, {
             cache: 'no-store',
             method: "GET",
@@ -316,7 +316,7 @@ export async function pendingOrdersApi(): Promise<ApiResponse> {
 
 export async function completedOrdersApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(GET_COMPLETED_ORDERS, {
             method: "GET",
             headers: {
@@ -345,7 +345,7 @@ export async function completedOrdersApi(): Promise<ApiResponse> {
 // Wishlist
 export async function addWishlist(product_id: string): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(ADD_WISHLIST, {
             method: "POST",
             headers: {
@@ -372,7 +372,7 @@ export async function addWishlist(product_id: string): Promise<ApiResponse> {
 
 export async function listWishlist(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(LIST_WISHLIST, {
             method: "GET",
             headers: {
@@ -398,7 +398,7 @@ export async function listWishlist(): Promise<ApiResponse> {
 
 export async function removeWishlist(product_id: string): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(DELETE_WISHLIST(product_id), {
             method: "DELETE",
             headers: {

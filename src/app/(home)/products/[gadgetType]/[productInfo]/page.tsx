@@ -47,7 +47,7 @@ export default async function ProductDetail({ params }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr_1fr] gap-8">
                 {/* Left Column - Image */}
                 <div className="space-y-4">
-                    <div className="relative w-full h-[40svw] md:h-[30svw] lg:h-[40svw] rounded-xl overflow-hidden shadow-md group">
+                    <div className="relative w-full h-[40svw] md:h-[30svw] rounded-xl overflow-hidden shadow-md group">
                         <ImageComponent src={product.image} alt={product.name} />
                     </div>
 
@@ -66,9 +66,9 @@ export default async function ProductDetail({ params }: Props) {
                 </div>
 
                 {/* Middle Column - Info */}
-                <div className="space-y-6">
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{product.name}</h1>
-                    <p className="text-3xl font-semibold text-secondary-color">₦{numberWithCommas(product.price)}</p>
+                <div className="space-y-4">
+                    <h1 className="text-xl md:text-2xl font-bold text-gray-800">{product.name}</h1>
+                    <p className="text-2xl font-semibold text-secondary-color">₦{numberWithCommas(product.price)}</p>
                     <div className="mt-4">
                         <h2 className="text-lg font-semibold text-gray-700 mb-2">Description</h2>
                         <p className="text-gray-600 leading-relaxed text-justify">{product.description}</p>

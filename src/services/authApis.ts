@@ -130,7 +130,7 @@ export async function loginUserApi(data: LoginUserData): Promise<ApiResponse> {
             case 200:
                 const access_token = responseBody.access_token;
                 // const refresh_token = responseBody.refresh_token;
-                handleAccessToken(access_token);
+                await handleAccessToken(access_token);
                 // handleRefreshToken(refresh_token);
                 return { message: "Login successful",status: 200 };
             default:

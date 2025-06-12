@@ -19,68 +19,80 @@ type Wishlist = {
 }
 
 
-function WishlistCard(prop: Wishlist) {
+function WishlistCard({ wishlist }: Wishlist) {
     const { updateCartCount } = useCartContext();
-    const router = useRouter()
+    const router = useRouter();
+
     const add = async () => {
-        const response = await addToCartApi({ product_id: prop.wishlist.id, action: "update", quantity: 1 })
+        const response = await addToCartApi({
+            product_id: wishlist.id,
+            action: "update",
+            quantity: 1,
+        });
         if (response.status === 202) {
-            await removeWishlist(prop.wishlist.id)
-            toast.info("Item added to cart successfully", {
+            await removeWishlist(wishlist.id);
+            toast.info("Item added to cart", {
                 position: "top-center",
                 className: "my-toast",
             });
-            router.push("/cart")
+            router.push("/cart");
         }
-        updateCartCount()
-    }
+        updateCartCount();
+    };
 
     const remove = async () => {
-        const response = await removeWishlist(prop.wishlist.id)
-        if (response.status === 204) {
-            location.reload()
-        }
-    }
+        const response = await removeWishlist(wishlist.id);
+        if (response.status === 204) location.reload();
+    };
+
     return (
-        <>
-            <div className="shadow shadow-gray-300 pr-3 rounded mb-3">
-                <div className="grid grid-cols-[1fr_4fr_1fr] gap-2 mb-1">
-                    <div className="relative min-h-[60px] md:min-h-[90px] min-w-[80px] lg:min-w-[110px] lg:min-h-[100px]  w-[13svw]">
-                        <Link prefetch={true}
-                            href={`/products/${prop.wishlist.category}/${prop.wishlist.id}`}
-                        >
-                            <ImageComponent src={prop.wishlist.image} alt={prop.wishlist.name} />
-                        </Link>                        
-                    </div>
+        <div className="flex flex-row items-start md:items-center gap-4 p-4 mb-4 rounded-lg shadow border bg-white">
+            {/* Product Image */}
+            <Link
+                prefetch={true}
+                href={`/products/${wishlist.category}/${wishlist.id}`}
+                className="min-w-[100px] max-w-[110px] md:max-w-[140px] relative w-full h-32 md:h-40"
+            >
+                <ImageComponent src={wishlist.image} alt={wishlist.name} />
+            </Link>
 
-                    <div className="flex flex-col gap-3 pt-2">
-                        <Link
-                            href={`/products/${prop.wishlist.category}/${prop.wishlist.id}`}
-                        >
-                            <h2 className="w-[350px] md:w-[500px] lg:w-[550px] xl:w-[750px] whitespace-nowrap overflow-hidden overflow-ellipsis">{prop.wishlist.name}</h2>
-                        </Link>
-                        {/* <div className="pt-2 text-xs text-justify">{prop.wishlist.name.substring(0, PRODUCT_NAME_LENGTH)}{prop.wishlist.name.length > PRODUCT_NAME_LENGTH && <>....</>}</div> */}
-                        <div className=" rounded md:self-auto w-full">
-                            <button className="p-2 bg-main-color w-1/2 text-white text-sm text-bold uppercase rounded" onClick={add}>
-                                Add to cart
-                            </button>
-                        </div>
-                    </div>
+            {/* Product Info */}
+            <div className="flex-1 space-y-2">
+                <Link
+                    href={`/products/${wishlist.category}/${wishlist.id}`}
+                    className="block"
+                >
+                    <h2 className="text-base md:text-lg font-semibold line-clamp-1">
+                        {wishlist.name}
+                    </h2>
+                </Link>
 
-                    <div className="flex flex-col gap-3 pt-2 pr-8">
-                        <div className="self-end">₦{numberWithCommas(prop.wishlist.price)}</div>
-                        <button type="button" className="self-end" onClick={remove}>
-                            <FontAwesomeIcon
-                                icon={faTrash}
-                                className="text-main-color text-[18px]"
-                            />
-                        </button>
-                    </div>
+                <div className="text-sm text-gray-700">
+                    <span className="font-semibold">₦{numberWithCommas(wishlist.price)}</span>
+                </div>
+
+                <div className="flex gap-2">
+                    <button
+                        className="px-4 py-2 text-sm rounded bg-main-color text-white hover:bg-opacity-90"
+                        onClick={add}
+                    >
+                        Add to Cart
+                    </button>
+
+                    <button
+                        type="button"
+                        className="p-2 text-red-500 hover:text-red-700"
+                        onClick={remove}
+                        aria-label="Remove from wishlist"
+                    >
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
                 </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }
+  
 
 function EmptyWishlist() {
     return (

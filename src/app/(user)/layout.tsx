@@ -12,38 +12,34 @@ import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const istokWeb = Istok_Web({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  adjustFontFallback: false,
+    weight: ["400", "700"],
+    subsets: ["latin"],
+    display: "swap",
+    adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
-  title: "Kwise World",
-  description:
-    "Dealer of guaranteed apple and Samsung phones both brand new, direct UK/US and fairly used. Swap your old phones to latest ones. Guaranteed Laptops, Accessories, Game consoles etc. Retail and bulk purchase always available.",
+    title: "Kwise World",
+    description:
+        "Dealer of guaranteed apple and Samsung phones both brand new, direct UK/US and fairly used. Swap your old phones to latest ones. Guaranteed Laptops, Accessories, Game consoles etc. Retail and bulk purchase always available.",
 };
 
 export default function UserLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <Providers>
-        <body className={`${istokWeb.className} text-xs md:text-sm bg-white`}>
-          <Header />
-          <div className="container m-auto py-4 px-2 lg:px-28 min-h-[70svh]">{children}</div>
-          <Footer />
-          <ToastContainer
-            limit={5}
-            autoClose={2000}
-            transition={Slide}
-            closeOnClick
-          />
-        </body>
-      </Providers>
-    </html>
-  );
+    return (
+        <Providers>
+            <Header />
+            <div className="container m-auto py-4 px-2 lg:px-28 min-h-[70svh]">{children}</div>
+            <Footer />
+            <ToastContainer
+                limit={5}
+                autoClose={2000}
+                transition={Slide}
+                closeOnClick
+            />
+        </Providers>
+    );
 }

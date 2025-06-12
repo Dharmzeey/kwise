@@ -41,85 +41,88 @@ type ViewInputProp = {
 
 function EditableInputFIeld(inputProp: EditInputProp) {
   return (
-    <>
-      <div className="my-3">
-        <label htmlFor={inputProp.inputFor} className="text-[#030D41]">{inputProp.inputText}</label>
-        <br />
-        <input
-          type={inputProp.inputType}
-          id={inputProp.inputId}
-          name={inputProp.inputName}
-          // will be required by default, it will be turned off when the component is invoked
-          required={inputProp.required}
-          className="px-2 py-2 border border-input-border-color w-full rounded"
-          value={inputProp.inputValue}
-          defaultValue={inputProp.defaultValue}
-          onChange={inputProp.onChange}
-        />
-        {/* Render error message if it exists */}
-        {inputProp.error && <p style={{ color: 'red' }}>{inputProp.error}</p>}
-      
-      </div>
-    </>
+    <div className="mb-5">
+      <label htmlFor={inputProp.inputFor} className="block mb-1 text-sm font-medium text-gray-700">
+        {inputProp.inputText}
+      </label>
+      <input
+        type={inputProp.inputType}
+        id={inputProp.inputId}
+        name={inputProp.inputName}
+        required={inputProp.required}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-main-color focus:border-main-color text-sm"
+        value={inputProp.inputValue}
+        defaultValue={inputProp.defaultValue}
+        onChange={inputProp.onChange}
+      />
+      {inputProp.error && <p className="text-red-500 text-xs mt-1">{inputProp.error}</p>}
+    </div>
   );
 }
+
 
 function EditableTextAreaFIeld(inputProp: EditTextAreaProp) {
   return (
-    <>
-      <div className="my-3">
-        <label htmlFor={inputProp.inputFor} className="text-[#030D41]">{inputProp.inputText}</label>
-        <br />
-        <textarea
-          id={inputProp.inputId}
-          name={inputProp.inputName}
-          // will be required by default, it will be turned off when the component is invoked
-          required={inputProp.required}
-          className="px-2 py-2 border border-input-border-color w-full rounded"
-          value={inputProp.inputValue}
-          defaultValue={inputProp.defaultValue}
-          onChange={inputProp.onChange}
-          rows={5}
-        ></textarea>
-        {/* Render error message if it exists */}
-        {inputProp.error && <p style={{ color: 'red' }}>{inputProp.error}</p>}
-
-      </div>
-    </>
+    <div className="mb-5">
+      <label htmlFor={inputProp.inputFor} className="block mb-1 text-sm font-medium text-gray-700">
+        {inputProp.inputText}
+      </label>
+      <textarea
+        id={inputProp.inputId}
+        name={inputProp.inputName}
+        required={inputProp.required}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-main-color focus:border-main-color text-sm"
+        value={inputProp.inputValue}
+        defaultValue={inputProp.defaultValue}
+        onChange={inputProp.onChange}
+        rows={5}
+      ></textarea>
+      {inputProp.error && <p className="text-red-500 text-xs mt-1">{inputProp.error}</p>}
+    </div>
   );
 }
+
 
 
 function EditableSelectField(inputProp: EditSelectProp) {
   return (
-    <>
-      <label htmlFor={inputProp.name} className="text-[#030D41]">{inputProp.label}</label>
-      <select name={inputProp.name} id={inputProp.id} onChange={inputProp.handleStateChange} defaultValue={inputProp.defaultValue} className="px-2 py-2 border border-input-border-color w-full rounded min-h-8" required >
+    <div className="mb-5">
+      <label htmlFor={inputProp.id} className="block mb-1 text-sm font-medium text-gray-700">
+        {inputProp.label}
+      </label>
+      <select
+        id={inputProp.id}
+        name={inputProp.name}
+        onChange={inputProp.handleStateChange}
+        defaultValue={inputProp.defaultValue}
+        required
+        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-main-color focus:border-main-color text-sm"
+      >
         <option value="">---</option>
-        {
-          inputProp.data?.map((place) => (
-            <option key={place.id} value={place.id} >{place.name}</option>
-          ))
-        }
-
+        {inputProp.data?.map((place) => (
+          <option key={place.id} value={place.id}>
+            {place.name}
+          </option>
+        ))}
       </select>
-    </>
-  )
+      {inputProp.error && <p className="text-red-500 text-xs mt-1">{inputProp.error}</p>}
+    </div>
+  );
 }
+
 
 
 function ViewingInputField(inputProp: ViewInputProp) {
   return (
-    <>
-      <div className="mb-3">
-        <h2 className="mb-1 text-[#030D41]">{inputProp.heading}</h2>
-        <div className="px-2 py-2 border border-input-border-color w-full rounded min-h-8">
-          {inputProp.text}
-        </div>
+    <div className="mb-4">
+      <p className="text-sm text-gray-500">{inputProp.heading}</p>
+      <div className="text-[15px] text-gray-800 font-medium bg-gray-50 px-3 py-2 rounded border border-gray-200 mt-1">
+        {inputProp.text || <span className="text-gray-400 italic">Not provided</span>}
       </div>
-    </>
-  )
+    </div>
+  );
 }
+
 
 
 export { EditableInputFIeld, EditableTextAreaFIeld, EditableSelectField, ViewingInputField };

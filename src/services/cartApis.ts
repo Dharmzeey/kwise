@@ -19,12 +19,12 @@ export async function addToCartApi(data: CartData): Promise<ApiResponse> {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
             },
             body: JSON.stringify(data),
         })
         const sessionId = response.headers.get('set-cookie');
-        setSessionId(sessionId!)
+        await setSessionId(sessionId!)
 
         switch (response.status) {
             case 202:
@@ -44,13 +44,13 @@ export async function modifyCartApi(data: CartData): Promise<ApiResponse> {
         const response = await fetch(ADD_TO_CART_URL, {
             method: "POST",
             headers: {
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         })
         const sessionId = response.headers.get('set-cookie');
-        setSessionId(sessionId!)
+        await setSessionId(sessionId!)
         const responseBody = await response.json();
         switch (response.status) {
             case 202:
@@ -69,11 +69,11 @@ export async function getCartApi(): Promise<ApiResponse> {
     try {
         const response = await fetch(FETCH_CART_URL, {
             headers: {
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
             }
         })
         const sessionId = response.headers.get('set-cookie');
-        setSessionId(sessionId!)
+        await setSessionId(sessionId!)
         const responseBody = await response.json();
         switch (response.status) {
             case 200:
@@ -93,11 +93,11 @@ export async function getCartSummaryApi(): Promise<ApiResponse> {
     try {
         const response = await fetch(FETCH_CART_URL, {
             headers: {
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
             }
         })
         const sessionId = response.headers.get('set-cookie');
-        setSessionId(sessionId!)
+        await setSessionId(sessionId!)
         const responseBody = await response.json();
         switch (response.status) {
             case 200:
@@ -114,15 +114,15 @@ export async function getCartSummaryApi(): Promise<ApiResponse> {
 
 export async function checkoutItemsApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(CHECKOUT_URL, {
             headers: {
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
                 Authorization: `Bearer ${token?.value || ""}`,
             }
         })
         const sessionId = response.headers.get('set-cookie');
-        setSessionId(sessionId!)
+        await setSessionId(sessionId!)
         const responseBody = await response.json();
         switch (response.status) {
             case 200:
@@ -137,7 +137,7 @@ export async function checkoutItemsApi(): Promise<ApiResponse> {
 
 export async function checkoutDetailsApi(): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(CHECKOUT_DETAILS_URL, {
             headers: {
                 Authorization: `Bearer ${token?.value || ""}`,
@@ -164,18 +164,18 @@ export async function checkoutDetailsApi(): Promise<ApiResponse> {
 
 export async function orderAddressSummaryApi(data: UserDeliveryData): Promise<ApiResponse> {
     try {
-        const token = fetchAccessTokenCookie();
+        const token = await fetchAccessTokenCookie();
         const response = await fetch(ORDER_ADDRESS_SUMMARY_URL, {
             method: "POST",
             headers: {
-                Cookie: `sessionid=${getSessionId()}`,
+                Cookie: `sessionid=${await getSessionId()}`,
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token?.value || ""}`
             },
             body: JSON.stringify(data)
         });
         const sessionId = response.headers.get('set-cookie');
-        setSessionId(sessionId!)
+        await setSessionId(sessionId!)
         const responseBody = await response.json();
         switch (response.status) {
             case 401: {

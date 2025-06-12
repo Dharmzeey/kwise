@@ -10,7 +10,6 @@ import SimilarProducts from "@/components/products/similarProducts";
 import RecentlyViewed from "@/components/products/recentlyViewed";
 import Wishlist from "@/components/cart/wishlist";
 import { Metadata } from "next";
-import { MotionSection } from "@/components/interractivity/MotionWrapper";
 
 type Props = {
     params: Promise<{

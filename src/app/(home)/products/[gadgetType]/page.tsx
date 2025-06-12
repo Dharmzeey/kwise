@@ -8,16 +8,16 @@ import {
 import { Metadata } from "next";
 
 type Props = {
-    params: {
+    params: Promise<{
         gadgetType: string;
-    };
-    searchParams: {
+    }>;
+    searchParams: Promise<{
         brandName?: string;
-    };
+    }>;
 };
 
 export const generateMetadata = async (props: Props): Promise<Metadata> => {
-    const { gadgetType } = await  props.params;
+    const { gadgetType } = await props.params;
     const brands = await fetchProductBrands(gadgetType);
     if (!brands || brands.length === 0) {
         return {

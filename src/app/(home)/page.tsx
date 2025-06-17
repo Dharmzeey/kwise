@@ -18,6 +18,7 @@ export default function Home() {
                 const data = await fetchAllProducts();
                 setProducts(data);
             } catch (err) {
+                console.log(err)
                 setError("Failed to load products.");
             } finally {
                 setLoading(false);

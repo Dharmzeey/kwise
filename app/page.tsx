@@ -1,65 +1,76 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import { fetchCategories, fetchProducts } from "@/lib/api";
+import HeroEditorial from "@/components/home/HeroEditorial";
+import CategoryTiles from "@/components/home/CategoryTiles";
+import BrandStrip from "@/components/home/BrandStrip";
+import ProductCard from "@/components/shop/ProductCard";
+import Btn from "@/components/ui/Btn";
+import Icon from "@/components/ui/Icon";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Kwise World — Trusted Gadgets, Delivered",
+  description:
+    "Shop brand-new and UK-used phones, laptops, and accessories — every unit tested before it ships. Fast delivery across Nigeria.",
+};
+
+export default async function HomePage() {
+  const [categories, featuredPage, offersPage] = await Promise.all([
+    fetchCategories().catch(() => []),
+    fetchProducts({ sort: "featured", page: 1 }).catch(() => ({ results: [], count: 0, next: null, previous: null })),
+    fetchProducts({ one_time: true, page: 1 }).catch(() => ({ results: [], count: 0, next: null, previous: null })),
+  ]);
+
+  const heroProducts = featuredPage.results.slice(0, 6);
+  const featured = featuredPage.results.slice(0, 4);
+  const offers = offersPage.results.slice(0, 4);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <HeroEditorial products={heroProducts} />
+      <CategoryTiles categories={categories} />
+
+      {/* Featured products row */}
+      {featured.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <div className="sec-head">
+              <h2>Featured picks</h2>
+              <Btn kind="ghost" href="/category/all">
+                See all <Icon name="arrowRight" size={15} />
+              </Btn>
+            </div>
+            <div className="prod-grid">
+              {featured.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* One-time offers spotlight */}
+      {offers.length > 0 && (
+        <section className="section offers-section">
+          <div className="container">
+            <div className="sec-head">
+              <div>
+                <h2><Icon name="bolt" size={22} stroke={0} className="offers-bolt" /> One-Time Offers</h2>
+                <p className="sec-sub">Limited units — once they&apos;re gone, they&apos;re gone.</p>
+              </div>
+              <Btn kind="orange" href="/offers">
+                View all offers <Icon name="arrowRight" size={15} />
+              </Btn>
+            </div>
+            <div className="prod-grid">
+              {offers.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <BrandStrip />
+    </>
   );
 }

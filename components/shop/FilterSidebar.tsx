@@ -8,20 +8,26 @@ interface FilterSidebarProps {
   category: Category | null;
   brand: string | null;
   setBrand: (slug: string | null) => void;
+  series: string | null;
+  setSeries: (s: string | null) => void;
+  seriesList: string[];
   statuses: ProductStatus[];
   toggleStatus: (s: ProductStatus) => void;
   maxPrice: number;
   setMaxPrice: (v: number) => void;
 }
 
-const ALL_STATUSES: ProductStatus[] = ["Brand New", "UK-Used", "Nigeria-Used"];
+const ALL_STATUSES: ProductStatus[] = ["Brand New", "Foreign Used", "Nigeria-Used"];
 
 export default function FilterSidebar({
   open, category, brand, setBrand,
+  series, setSeries, seriesList,
   statuses, toggleStatus, maxPrice, setMaxPrice,
 }: FilterSidebarProps) {
   return (
     <aside className={`filters${open ? " open" : ""}`} aria-label="Product filters">
+
+      {/* Brand filter */}
       {category && category.brands.length > 0 && (
         <div className="filter-group">
           <h4>Brand</h4>
@@ -34,6 +40,25 @@ export default function FilterSidebar({
                 onClick={() => setBrand(b.slug)}
               >
                 {b.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Series filter — shown when series data is available */}
+      {seriesList.length > 0 && (
+        <div className="filter-group">
+          <h4>Series</h4>
+          <div className="filter-group-chips">
+            <button className={`chip${!series ? " on" : ""}`} onClick={() => setSeries(null)}>All</button>
+            {seriesList.map((s) => (
+              <button
+                key={s}
+                className={`chip${series === s ? " on" : ""}`}
+                onClick={() => setSeries(s)}
+              >
+                {s}
               </button>
             ))}
           </div>

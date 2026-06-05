@@ -30,7 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         onClick={() => router.push(`/product/${product.id}`)}
         aria-label={`View ${product.name}`}
       >
-        <ProductThumb thumb={product.thumb} tint={product.tint} name={product.name} />
+        <ProductThumb image={product.image} thumb={product.thumb} tint={product.tint} name={product.name} />
         <div className="pcard-badges">
           {product.is_one_time && (
             <span className="badge badge-ot">

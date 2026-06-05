@@ -13,7 +13,7 @@ const VALUES = [
   {
     icon: "shieldCheck",
     title: "Honest grading",
-    desc: "Brand New, UK-Used, Nigeria-Used — we label it plainly and disclose every flaw.",
+    desc: "Brand New, Foreign Used, Nigeria-Used — we label it plainly and disclose every flaw.",
   },
   {
     icon: "bolt",

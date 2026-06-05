@@ -36,6 +36,7 @@ export default function ProductDetailClient({ product }: Props) {
         <div className="pdp-media">
           <div className="pdp-main">
             <ProductThumb
+              image={product.image}
               thumb={product.thumb}
               tint={product.tint}
               name={product.name}

@@ -29,7 +29,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const cat = categories.find((c) => c.slug === slug);
 
-  const validStatus = (["Brand New", "UK-Used", "Nigeria-Used"] as ProductStatus[]).find(
+  const validStatus = (["Brand New", "Foreign Used", "Nigeria-Used"] as ProductStatus[]).find(
     (s) => s === sp.status
   );
   const validSort = (["featured", "low", "high", "rating"] as SortOption[]).find(
@@ -39,6 +39,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const initialProducts = await fetchProducts({
     category: slug === "all" ? undefined : slug,
     brand: sp.brand,
+    series: sp.series,
     q: sp.q,
     status: validStatus,
     sort: validSort,
@@ -54,6 +55,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       initialProducts={initialProducts}
       initialFilters={{
         brand: sp.brand,
+        series: sp.series,
         q: sp.q,
         status: validStatus,
         sort: validSort,

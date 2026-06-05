@@ -8,11 +8,13 @@
 // ── Catalog ───────────────────────────────────────────────────────────────────
 
 export interface Brand {
+  id: number;
   slug: string;
   name: string;
 }
 
 export interface Category {
+  id: number;
   slug: string;
   name: string;
   icon: string;
@@ -20,7 +22,7 @@ export interface Category {
   brands: Brand[];
 }
 
-export type ProductStatus = "Brand New" | "UK-Used" | "Nigeria-Used";
+export type ProductStatus = "Brand New" | "Foreign Used" | "Nigeria-Used";
 export type ProductTint = "blue" | "indigo" | "orange";
 
 export interface ProductSpec {
@@ -43,6 +45,7 @@ export interface ProductListItem {
   name: string;
   category_slug: string;
   brand_slug: string;
+  image: string | null;
   thumb: string;
   tint: ProductTint;
   price: number;
@@ -57,6 +60,7 @@ export interface ProductListItem {
   stock: number;
   sold_out: boolean;
   colors: string[];
+  series: string;
 }
 
 /** Full shape returned by the product detail endpoint. */
@@ -122,6 +126,78 @@ export interface UserProfile {
   phone: string;
   full_name: string;
   date_joined: string;
+  is_superuser: boolean;
+}
+
+// ── Admin ─────────────────────────────────────────────────────────────────────
+
+export interface AdminStats {
+  products: number;
+  orders: number;
+  pending_orders: number;
+  total_revenue: number;
+}
+
+export interface AdminProduct {
+  id: string;        // slug
+  slug: string;
+  name: string;
+  category: number;
+  category_slug: string;
+  brand: number;
+  brand_slug: string;
+  image: string | null;
+  thumb: string;
+  tint: ProductTint;
+  price: number;
+  old_price: number | null;
+  status: ProductStatus;
+  rating: number;
+  review_count: number;
+  is_featured: boolean;
+  badge: string;
+  is_one_time: boolean;
+  stock: number;
+  sold_out: boolean;
+  description: string;
+  one_time_note: string;
+  colors: string[];
+  specs: ProductSpec[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminOrder {
+  id: number;
+  reference: string;
+  status: string;
+  subtotal: number;
+  delivery_fee: number;
+  total: number;
+  guest_name: string;
+  guest_email: string;
+  guest_phone: string;
+  delivery_address: string;
+  items: OrderItem[];
+  created_at: string;
+}
+
+export interface ProductWritePayload {
+  name: string;
+  category: number;
+  brand: number;
+  thumb: string;
+  tint: ProductTint;
+  price: number;
+  old_price?: number | null;
+  status: ProductStatus;
+  is_featured?: boolean;
+  badge?: string;
+  is_one_time?: boolean;
+  stock?: number;
+  description: string;
+  one_time_note?: string;
+  colors?: string[];
 }
 
 export interface TokenPair {
@@ -163,6 +239,7 @@ export type SortOption = "featured" | "low" | "high" | "rating";
 export interface ProductFilters {
   category?: string;
   brand?: string;
+  series?: string;
   status?: ProductStatus;
   q?: string;
   one_time?: boolean;

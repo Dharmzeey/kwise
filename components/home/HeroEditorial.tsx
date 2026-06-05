@@ -59,7 +59,7 @@ export default function HeroEditorial({ products }: Props) {
               onClick={() => router.push(`/product/${main.id}`)}
             >
               <div key={`main-${main.id}`} className="hero-card-anim">
-                <ProductThumb thumb={main.thumb} tint={main.tint} name={main.name} size="hero" />
+                <ProductThumb image={main.image} thumb={main.thumb} tint={main.tint} name={main.name} size="hero" />
                 <div className="hero-card-tag">
                   <div className="hero-card-tag-info">
                     <StatusPill status={main.status} />
@@ -77,7 +77,7 @@ export default function HeroEditorial({ products }: Props) {
                 className="hero-card hero-card-float hf1"
                 onClick={() => router.push(`/product/${f1.id}`)}
               >
-                <ProductThumb thumb={f1.thumb} tint={f1.tint} />
+                <ProductThumb image={f1.image} thumb={f1.thumb} tint={f1.tint} />
                 <div className="hero-card-tag hero-card-tag-sm">
                   <span>{f1.name}</span>
                 </div>
@@ -91,7 +91,7 @@ export default function HeroEditorial({ products }: Props) {
                 className="hero-card hero-card-float hf2"
                 onClick={() => router.push(`/product/${f2.id}`)}
               >
-                <ProductThumb thumb={f2.thumb} tint={f2.tint} />
+                <ProductThumb image={f2.image} thumb={f2.thumb} tint={f2.tint} />
                 <div className="hero-card-tag hero-card-tag-sm">
                   <span>{f2.name}</span>
                 </div>

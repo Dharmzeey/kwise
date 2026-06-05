@@ -131,14 +131,10 @@ export default function AuthClient({ mode }: Props) {
             />
           </label>
 
-          <Btn kind="primary" size="lg" type="submit" disabled={loading}>
+          <Btn kind="primary" size="md" full type="submit" disabled={loading}>
             {loading
-              ? isLogin
-                ? "Signing in…"
-                : "Creating account…"
-              : isLogin
-              ? "Sign in"
-              : "Create account"}
+              ? isLogin ? "Signing in…" : "Creating account…"
+              : isLogin ? "Sign in" : "Create account"}
           </Btn>
         </form>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { fetchProducts } from "@/lib/api";
+import { useState, useTransition, useEffect } from "react";
+import { fetchProducts, fetchCategorySeries } from "@/lib/api";
 import type { Category, ProductListItem, PaginatedResponse, ProductFilters, ProductStatus, SortOption } from "@/lib/types";
 import ProductCard from "@/components/shop/ProductCard";
 import FilterSidebar from "@/components/shop/FilterSidebar";
@@ -33,12 +33,20 @@ export default function CategoryPageClient({
 }: Props) {
   const [q, setQ] = useState(initialFilters.q ?? "");
   const [brand, setBrand] = useState<string | null>(initialFilters.brand ?? null);
+  const [series, setSeries] = useState<string | null>(initialFilters.series ?? null);
+  const [seriesList, setSeriesList] = useState<string[]>([]);
   const [statuses, setStatuses] = useState<ProductStatus[]>(
     initialFilters.status ? [initialFilters.status] : []
   );
   const [maxPrice, setMaxPrice] = useState(initialFilters.max_price ?? DEFAULT_MAX_PRICE);
   const [sort, setSort] = useState<SortOption>(initialFilters.sort ?? "featured");
   const [showFilters, setShowFilters] = useState(false);
+
+  // Fetch series list for this category (skip for "all")
+  useEffect(() => {
+    if (slug === "all") return;
+    fetchCategorySeries(slug).then(setSeriesList).catch(() => {});
+  }, [slug]);
 
   const [products, setProducts] = useState(initialProducts.results);
   const [count, setCount] = useState(initialProducts.count);
@@ -66,12 +74,14 @@ export default function CategoryPageClient({
 
   function buildFilters(overrides?: Partial<{
     brand: string | null;
+    series: string | null;
     statuses: ProductStatus[];
     maxPrice: number;
     sort: SortOption;
     q: string;
   }>): ProductFilters {
     const b = overrides?.brand !== undefined ? overrides.brand : brand;
+    const sr = overrides?.series !== undefined ? overrides.series : series;
     const s = overrides?.statuses ?? statuses;
     const mp = overrides?.maxPrice ?? maxPrice;
     const so = overrides?.sort ?? sort;
@@ -79,6 +89,7 @@ export default function CategoryPageClient({
     return {
       category: slug === "all" ? undefined : slug,
       brand: b ?? undefined,
+      series: sr ?? undefined,
       status: s.length === 1 ? s[0] : undefined,
       max_price: mp < DEFAULT_MAX_PRICE ? mp : undefined,
       sort: so,
@@ -104,7 +115,13 @@ export default function CategoryPageClient({
 
   function handleBrand(b: string | null) {
     setBrand(b);
-    runSearch(buildFilters({ brand: b }));
+    setSeries(null); // reset series when brand changes
+    runSearch(buildFilters({ brand: b, series: null }));
+  }
+
+  function handleSeries(s: string | null) {
+    setSeries(s);
+    runSearch(buildFilters({ series: s }));
   }
 
   function handleToggleStatus(s: ProductStatus) {
@@ -192,6 +209,9 @@ export default function CategoryPageClient({
             category={cat}
             brand={brand}
             setBrand={handleBrand}
+            series={series}
+            setSeries={handleSeries}
+            seriesList={seriesList}
             statuses={statuses}
             toggleStatus={handleToggleStatus}
             maxPrice={maxPrice}

@@ -15,9 +15,16 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
   const { cartCount } = useCart();
+  const [mounted, setMounted] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [q, setQ] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+    setIsLoggedIn(document.cookie.includes("kw_access="));
+  }, []);
 
   // Close mobile menu on navigation
   useEffect(() => { setMenuOpen(false); }, [pathname]);
@@ -58,17 +65,10 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
               onMouseEnter={() => setMegaOpen(true)}
               onClick={() => setMegaOpen((v) => !v)}
             >
-              Shop <Icon name="chevronDown" size={15} />
+              Shop <Icon name="chevronDown" size={14} />
             </button>
-
-            {categories.map((c) => (
-              <Link key={c.slug} className="navlink" href={`/category/${c.slug}`}>
-                {c.name}
-              </Link>
-            ))}
-
             <Link className="navlink navlink-ot" href="/offers">
-              <Icon name="bolt" size={14} stroke={0} /> One-Time Offers
+              <Icon name="bolt" size={13} stroke={0} /> One-Time Offers
             </Link>
             <Link className="navlink" href="/about">About</Link>
 
@@ -115,12 +115,12 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
           </form>
 
           <div className="header-actions">
-            <Link className="iconbtn" href="/login" aria-label="Account">
+            <Link className="iconbtn" href={isLoggedIn ? "/profile" : "/login"} aria-label="Account">
               <Icon name="user" />
             </Link>
             <button className="iconbtn cartbtn" onClick={onOpenCart} aria-label="Open cart">
               <Icon name="cart" />
-              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+              {mounted && cartCount > 0 && <span className="cart-count">{cartCount}</span>}
             </button>
           </div>
         </div>
@@ -157,8 +157,8 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
               <Icon name="bolt" size={18} stroke={0} />One-Time Offers
             </Link>
             <Link className="mm-link" href="/about">About</Link>
-            <Link className="mm-link" href="/login">
-              <Icon name="user" size={18} />Login / Sign up
+            <Link className="mm-link" href={isLoggedIn ? "/profile" : "/login"}>
+              <Icon name="user" size={18} />{isLoggedIn ? "My Account" : "Login / Sign up"}
             </Link>
           </div>
         </div>

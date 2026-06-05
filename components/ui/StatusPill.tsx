@@ -2,7 +2,7 @@ import type { ProductStatus } from "@/lib/types";
 
 const MAP: Record<ProductStatus, string> = {
   "Brand New":    "st-new",
-  "UK-Used":      "st-uk",
+  "Foreign Used": "st-uk",
   "Nigeria-Used": "st-ng",
 };
 

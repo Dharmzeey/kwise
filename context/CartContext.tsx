@@ -31,18 +31,22 @@ export function CartProvider({
   children: ReactNode;
   allProducts?: ProductListItem[];
 }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      return JSON.parse(localStorage.getItem("kw_cart") ?? "[]");
-    } catch {
-      return [];
-    }
-  });
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("kw_cart", JSON.stringify(items));
-  }, [items]);
+    try {
+      const stored = JSON.parse(localStorage.getItem("kw_cart") ?? "[]");
+      if (stored.length) setItems(stored);
+    } catch {
+      // ignore
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (hydrated) localStorage.setItem("kw_cart", JSON.stringify(items));
+  }, [items, hydrated]);
 
   const addItem = useCallback((product: ProductListItem, qty = 1) => {
     if (product.sold_out) return;

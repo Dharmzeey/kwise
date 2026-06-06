@@ -166,6 +166,25 @@ export async function fetchRelatedProducts(id: string): Promise<ProductListItem[
   return request<ProductListItem[]>(`/api/products/${id}/related/`);
 }
 
+// ── Cart ──────────────────────────────────────────────────────────────────────
+
+export interface CartVerifyItem {
+  product_id: string;
+  name?: string;
+  quantity: number;
+  unit_price?: number;
+  available: boolean;
+}
+
+export async function verifyCart(
+  items: { product_id: string; quantity: number }[]
+): Promise<CartVerifyItem[]> {
+  return request<CartVerifyItem[]>("/api/cart/verify/", {
+    method: "POST",
+    body: JSON.stringify(items),
+  });
+}
+
 // ── Orders ────────────────────────────────────────────────────────────────────
 
 export async function placeOrder(

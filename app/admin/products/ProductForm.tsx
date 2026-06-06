@@ -10,7 +10,7 @@ import {
   updateProductSpecs,
   fetchCategories,
 } from "@/lib/api";
-import type { AdminProduct, ProductWritePayload, Category } from "@/lib/types";
+import type { AdminProduct, ProductWritePayload, Category, ProductTint, ProductStatus } from "@/lib/types";
 
 interface Props { initial?: AdminProduct; }
 
@@ -196,7 +196,7 @@ export default function ProductForm({ initial }: Props) {
             </select>
           </label>
           <label>Colour tint
-            <select value={form.tint} onChange={(e) => set("tint", e.target.value)}>
+            <select value={form.tint} onChange={(e) => set("tint", e.target.value as ProductTint)}>
               {TINTS.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </label>
@@ -211,7 +211,7 @@ export default function ProductForm({ initial }: Props) {
         <h3>Details</h3>
         <div className="adm-form-row">
           <label>Condition *
-            <select required value={form.status} onChange={(e) => set("status", e.target.value)}>
+            <select required value={form.status} onChange={(e) => set("status", e.target.value as ProductStatus)}>
               {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </label>

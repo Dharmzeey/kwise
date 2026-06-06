@@ -56,6 +56,7 @@ export default function CategoryPageClient({
 
   // For "all" slug, aggregate brands from every category
   const allCategoryView: Category = {
+    id: 0,
     slug: "all",
     name: "All Products",
     icon: "grid",

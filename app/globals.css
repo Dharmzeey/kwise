@@ -505,6 +505,9 @@ img, svg { display: block; }
 @media (max-width: 820px) { .cart-layout { grid-template-columns: 1fr; } }
 
 /* ===================== CHECKOUT FORM ===================== */
+.price-alert { display: flex; align-items: center; gap: 10px; background: #fffbeb; border: 1px solid #f59e0b; color: #92400e; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: .875rem; }
+.price-alert--error { background: #fef2f2; border-color: #f87171; color: #991b1b; }
+.price-updated { color: #d97706; font-weight: 600; }
 .checkout-layout { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; padding-bottom: 60px; }
 .co-form { display: flex; flex-direction: column; gap: 24px; }
 .co-section { background: #fff; border: 1.5px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 16px; }

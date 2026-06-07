@@ -29,6 +29,7 @@ export default function OffersClient({ initialProducts }: Props) {
   }
 
   return (
+    <div className="page">
     <div className="container">
       <div className="page-head">
         <h1>
@@ -60,6 +61,7 @@ export default function OffersClient({ initialProducts }: Props) {
           </button>
         </div>
       )}
+    </div>
     </div>
   );
 }

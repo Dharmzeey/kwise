@@ -27,7 +27,7 @@ export default function ProductThumb({ image, thumb, tint, name, size = "card" }
           alt={name ?? "Product photo"}
           fill
           sizes="(max-width: 480px) 50vw, (max-width: 900px) 33vw, 25vw"
-          style={{ objectFit: "contain", padding: "8px" }}
+          style={{ objectFit: "cover" }}
         />
       </div>
     );

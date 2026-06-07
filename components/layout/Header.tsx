@@ -43,7 +43,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
         <div className="container topbar-in">
           <span><Icon name="truck" size={15} /> Delivery everywhere in Nigeria</span>
           <span className="topbar-tag">Integrity — we mean what we say.</span>
-          <Link className="topbar-wa" href="/about"><Icon name="whatsapp" size={15} /> Chat with us</Link>
+          <a className="topbar-wa" href="https://wa.me/2349048807490" target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={15} /> Chat with us</a>
         </div>
       </div>
 

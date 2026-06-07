@@ -237,7 +237,7 @@ export default function CategoryPageClient({
             {hasMore && (
               <div className="load-more-wrap">
                 <button
-                  className="btn btn-outline"
+                  className="btn btn-outline btn-md"
                   onClick={loadMore}
                   disabled={isPending}
                 >

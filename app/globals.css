@@ -57,7 +57,7 @@ img, svg { display: block; }
 @media (max-width: 560px) { .container { padding: 0 16px; } }
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 .main { flex: 1; }
-.page { animation: pageIn 0.42s cubic-bezier(0.22, 0.9, 0.3, 1); }
+.page { animation: pageIn 0.42s cubic-bezier(0.22, 0.9, 0.3, 1); padding-bottom: 80px; }
 @keyframes pageIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: none; }
@@ -200,6 +200,9 @@ img, svg { display: block; }
 .footer-col button:hover, .footer-col a:hover { color: #fff; }
 .footer-contact { gap: 8px; }
 .footer-contact span { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.footer-socials { display: flex; flex-direction: row; gap: 14px; margin-top: 6px; }
+.footer-socials a { padding: 0; color: var(--ink-3); }
+.footer-socials a:hover { color: #fff; }
 .footer-bot { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; border-top: 1px solid rgba(255,255,255,.07); font-size: 12px; }
 .footer-pay { color: #6b7a9a; }
 @media (max-width: 900px) { .footer-in { grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 32px; padding-bottom: 24px; } .footer-brand { grid-column: 1/-1; } }
@@ -362,6 +365,10 @@ img, svg { display: block; }
 .crumbs a:hover { text-decoration: underline; }
 .crumbs button { color: var(--blue); font-weight: 500; }
 .crumbs button:hover { text-decoration: underline; }
+.page-head { margin-bottom: 32px; padding-top: 40px; }
+.page-head h1 { font-size: 30px; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.page-sub { font-size: 14px; color: var(--ink-2); }
+.offers-bolt { color: var(--orange); flex-shrink: 0; }
 .cat-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 14px; }
 .cat-head h1 { font-size: 30px; margin-bottom: 4px; }
 .cat-head p  { font-size: 14px; color: var(--ink-2); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }

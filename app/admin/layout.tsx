@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { fetchProfile } from "@/lib/api";
@@ -37,7 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="adm-shell">
       <aside className="adm-sidebar">
         <div className="adm-logo">
-          <span className="logo-mark" style={{ width: 30, height: 30, fontSize: 16, borderRadius: 8 }}>K<span className="logo-dot" /></span>
+          <span className="logo-mark" style={{ width: 30, height: 30 }}><Image src="/logo.png" alt="Kwise" width={30} height={30} /></span>
           <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 14, color: "var(--ink)" }}>Admin</span>
         </div>
         <nav className="adm-nav">

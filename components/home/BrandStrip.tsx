@@ -1,4 +1,4 @@
-const BRANDS = ["Apple", "Samsung", "HP", "Lenovo", "Anker", "Oraimo"];
+const BRANDS = ["Apple", "Samsung", "HP", "Lenovo", "DELL", "Oraimo"];
 
 export default function BrandStrip() {
   return (

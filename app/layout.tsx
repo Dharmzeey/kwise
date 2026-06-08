@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     description: "Phones, laptops & accessories. Tested & verified. Fast delivery across Nigeria.",
     locale: "en_NG",
   },
+  icons: { icon: "/favicon.ico", shortcut: "/favicon.ico" },
   robots: { index: true, follow: true },
   alternates: { canonical: "https://kwiseworld.ng" },
 };

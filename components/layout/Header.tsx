@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import Icon from "@/components/ui/Icon";
@@ -55,7 +56,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
           </button>
 
           <Link className="logo" href="/">
-            <span className="logo-mark">K<span className="logo-dot" /></span>
+            <span className="logo-mark"><Image src="/logo.png" alt="Kwise" width={38} height={38} /></span>
             <span className="logo-text">Kwise<span> World</span></span>
           </Link>
 

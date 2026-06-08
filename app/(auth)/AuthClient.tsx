@@ -60,14 +60,15 @@ export default function AuthClient({ mode }: Props) {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-brand">
-          <Icon name="shieldCheck" size={28} />
-          <span>Kwise World</span>
+          {/* <Icon name="shieldCheck" size={28} />
+          <span>Kwise World</span> */}
         </div>
         <h1>{isLogin ? "Sign in" : "Create account"}</h1>
         <p className="auth-sub">
           {isLogin
             ? "Good to have you back."
-            : "Join thousands of satisfied customers."}
+            : "Join other satisfied customers."}
+            {/* : "Join thousands of satisfied customers."} */}
         </p>
 
         {error && <div className="auth-error">{error}</div>}

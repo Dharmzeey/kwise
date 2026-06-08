@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import { FaInstagram, FaTiktok } from "react-icons/fa6";
@@ -14,7 +15,7 @@ export default function Footer({ categories }: FooterProps) {
       <div className="container footer-in">
         <div className="footer-brand">
           <Link className="logo" href="/">
-            <span className="logo-mark logo-mark-light">K<span className="logo-dot" /></span>
+            <span className="logo-mark logo-mark-light"><Image src="/logo.png" alt="Kwise" width={38} height={38} /></span>
             <span className="logo-text logo-text-light">Kwise<span> World</span></span>
           </Link>
           <p className="footer-tag">

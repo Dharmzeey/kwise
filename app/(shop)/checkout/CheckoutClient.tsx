@@ -14,7 +14,7 @@ import ProductThumb from "@/components/ui/ProductThumb";
 
 export default function CheckoutClient() {
   const router = useRouter();
-  const { items, cartProducts, clearCart } = useCart();
+  const { items, clearCart } = useCart();
   const { showToast } = useToast();
 
   const [form, setForm] = useState({ phone: "", address: "" });
@@ -56,8 +56,8 @@ export default function CheckoutClient() {
             }
             if (v.unit_price !== undefined) {
               priceMap.set(v.product_id, v.unit_price);
-              const cartProduct = cartProducts.find((p) => p.id === v.product_id);
-              if (cartProduct && cartProduct.price !== v.unit_price) changed = true;
+              const cartItem = items.find((i) => i.id === v.product_id);
+              if (cartItem && cartItem.product.price !== v.unit_price) changed = true;
             }
           }
 
@@ -73,9 +73,7 @@ export default function CheckoutClient() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const lines = items
-    .map((it) => ({ ...it, product: cartProducts.find((p) => p.id === it.id) }))
-    .filter((l): l is typeof l & { product: NonNullable<typeof l.product> } => !!l.product);
+  const lines = items;
 
   // Use verified price if available, else fall back to cart price
   function unitPrice(id: string, fallback: number): number {

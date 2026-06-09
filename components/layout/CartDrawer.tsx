@@ -7,22 +7,16 @@ import ProductThumb from "@/components/ui/ProductThumb";
 import StatusPill from "@/components/ui/StatusPill";
 import { useCart } from "@/context/CartContext";
 import { formatNaira } from "@/lib/utils";
-import type { ProductListItem } from "@/lib/types";
-
 interface CartDrawerProps {
   open: boolean;
   onClose: () => void;
-  products: ProductListItem[];
 }
 
-export default function CartDrawer({ open, onClose, products }: CartDrawerProps) {
+export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const router = useRouter();
   const { items, updateQty, removeItem } = useCart();
 
-  const lines = items
-    .map((it) => ({ ...it, product: products.find((p) => p.id === it.id) }))
-    .filter((l): l is typeof l & { product: ProductListItem } => !!l.product);
-
+  const lines = items;
   const subtotal = lines.reduce((s, l) => s + l.product.price * l.qty, 0);
 
   function goTo(path: string) {

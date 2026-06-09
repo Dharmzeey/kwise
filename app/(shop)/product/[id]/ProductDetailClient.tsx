@@ -10,6 +10,7 @@ import Stars from "@/components/ui/Stars";
 import StatusPill from "@/components/ui/StatusPill";
 import ProductThumb from "@/components/ui/ProductThumb";
 import { formatNaira } from "@/lib/utils";
+import ReviewForm from "@/components/shop/ReviewForm";
 
 interface Props {
   product: ProductDetail;
@@ -202,49 +203,52 @@ export default function ProductDetailClient({ product }: Props) {
           )}
 
           {tab === "reviews" && (
-            product.reviews.length === 0 ? (
-              <p style={{ color: "var(--ink-3)", fontSize: 14 }}>
-                No reviews yet — be the first to buy this product.
-              </p>
-            ) : (
-              <>
-                <div className="rev-summary">
-                  <div className="rev-big">
-                    <strong>{Number(product.rating).toFixed(1)}</strong>
-                    <Stars value={product.rating} size={16} />
-                    <span>{product.review_count} reviews</span>
-                  </div>
-                </div>
-                <div className="rev-list">
-                  {product.reviews.map((r) => (
-                    <div className="rev" key={r.id}>
-                      <div className="rev-head">
-                        <span className="rev-av">{r.reviewer_name[0]}</span>
-                        <div>
-                          <strong>
-                            {r.reviewer_name}
-                            {r.is_verified && (
-                              <span className="rev-verified">
-                                <Icon name="check" size={11} /> Verified
-                              </span>
-                            )}
-                          </strong>
-                          <span className="rev-date">
-                            {new Date(r.created_at).toLocaleDateString("en-NG", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </span>
-                        </div>
-                        <Stars value={r.rating} size={13} />
-                      </div>
-                      <p>{r.text}</p>
+            <>
+              {product.reviews.length === 0 ? (
+                <p style={{ color: "var(--ink-3)", fontSize: 14, marginBottom: 24 }}>
+                  No reviews yet — be the first.
+                </p>
+              ) : (
+                <>
+                  <div className="rev-summary">
+                    <div className="rev-big">
+                      <strong>{Number(product.rating).toFixed(1)}</strong>
+                      <Stars value={product.rating} size={16} />
+                      <span>{product.review_count} reviews</span>
                     </div>
-                  ))}
-                </div>
-              </>
-            )
+                  </div>
+                  <div className="rev-list">
+                    {product.reviews.map((r) => (
+                      <div className="rev" key={r.id}>
+                        <div className="rev-head">
+                          <span className="rev-av">{r.reviewer_name[0]}</span>
+                          <div>
+                            <strong>
+                              {r.reviewer_name}
+                              {r.is_verified && (
+                                <span className="rev-verified">
+                                  <Icon name="check" size={11} /> Verified
+                                </span>
+                              )}
+                            </strong>
+                            <span className="rev-date">
+                              {new Date(r.created_at).toLocaleDateString("en-NG", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </span>
+                          </div>
+                          <Stars value={r.rating} size={13} />
+                        </div>
+                        <p>{r.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+              <ReviewForm productId={product.id} onSubmitted={() => {}} />
+            </>
           )}
         </div>
       </div>

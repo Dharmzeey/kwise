@@ -8,15 +8,14 @@ import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 import CartDrawer from "./CartDrawer";
-import type { Category, ProductListItem } from "@/lib/types";
+import type { Category } from "@/lib/types";
 
 interface ShellLayoutProps {
   children: React.ReactNode;
   categories: Category[];
-  products: ProductListItem[];
 }
 
-export default function ShellLayout({ children, categories, products }: ShellLayoutProps) {
+export default function ShellLayout({ children, categories }: ShellLayoutProps) {
   const [cartOpen, setCartOpen] = useState(false);
   const pathname = usePathname();
 
@@ -29,7 +28,7 @@ export default function ShellLayout({ children, categories, products }: ShellLay
       <Header categories={categories} onOpenCart={() => setCartOpen(true)} />
       <main className="main">{children}</main>
       <Footer categories={categories} />
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} products={products} />
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
 }

@@ -71,6 +71,9 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
             <Link className="navlink navlink-ot" href="/offers">
               <Icon name="bolt" size={13} stroke={0} /> One-Time Offers
             </Link>
+            <Link className="navlink navlink-swap" href="/swap">
+              <Icon name="refresh" size={13} /> Swap
+            </Link>
             <Link className="navlink" href="/about">About</Link>
 
             {megaOpen && (
@@ -99,6 +102,14 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
                   <p>Single-unit deals. Once it&apos;s gone, it&apos;s gone.</p>
                   <Link href="/offers" onClick={() => setMegaOpen(false)}>
                     See deals <Icon name="arrowRight" size={15} />
+                  </Link>
+                </div>
+                <div className="mega-promo mega-promo-swap">
+                  <Icon name="refresh" size={20} />
+                  <strong>Swap your iPhone</strong>
+                  <p>Trade in your current device and get the upgrade you want.</p>
+                  <Link href="/swap" onClick={() => setMegaOpen(false)}>
+                    Start swap <Icon name="arrowRight" size={15} />
                   </Link>
                 </div>
               </div>
@@ -156,6 +167,9 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
             ))}
             <Link className="mm-link mm-ot" href="/offers">
               <Icon name="bolt" size={18} stroke={0} />One-Time Offers
+            </Link>
+            <Link className="mm-link mm-swap" href="/swap">
+              <Icon name="refresh" size={18} />Swap your iPhone
             </Link>
             <Link className="mm-link" href="/about">About</Link>
             <Link className="mm-link" href={isLoggedIn ? "/profile" : "/login"}>

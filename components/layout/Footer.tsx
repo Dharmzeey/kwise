@@ -33,12 +33,13 @@ export default function Footer({ categories }: FooterProps) {
             <Link key={c.slug} href={`/category/${c.slug}`}>{c.name}</Link>
           ))}
           <Link href="/offers">One-Time Offers</Link>
+          <Link href="/swap">Swap your iPhone</Link>
         </div>
 
         <div className="footer-col">
           <h4>Company</h4>
           <Link href="/about">About us</Link>
-          <Link href="/login">My account</Link>
+          {/* <Link href="/login">My account</Link> */}
         </div>
 
         <div className="footer-col footer-contact">

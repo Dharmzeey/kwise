@@ -12,8 +12,6 @@ interface CartContextValue {
   items: CartItem[];
   /** Number of individual units in cart */
   cartCount: number;
-  /** Product details for items currently in cart (resolved from allProducts) */
-  cartProducts: ProductListItem[];
   /** Sum of price × qty for all cart items */
   subtotal: number;
   addItem: (product: ProductListItem, qty?: number) => void;
@@ -24,20 +22,15 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-export function CartProvider({
-  children,
-  allProducts = [],
-}: {
-  children: ReactNode;
-  allProducts?: ProductListItem[];
-}) {
+export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem("kw_cart") ?? "[]");
-      if (stored.length) setItems(stored);
+      const valid = stored.filter((i: CartItem) => i.id && i.qty && i.product);
+      if (valid.length) setItems(valid);
     } catch {
       // ignore
     }
@@ -55,10 +48,10 @@ export function CartProvider({
       const existing = prev.find((i) => i.id === product.id);
       if (existing) {
         return prev.map((i) =>
-          i.id === product.id ? { ...i, qty: clamp(i.qty + qty, 1, cap) } : i
+          i.id === product.id ? { ...i, qty: clamp(i.qty + qty, 1, cap), product } : i
         );
       }
-      return [...prev, { id: product.id, qty: clamp(qty, 1, cap) }];
+      return [...prev, { id: product.id, qty: clamp(qty, 1, cap), product }];
     });
   }, []);
 
@@ -77,14 +70,10 @@ export function CartProvider({
   const clearCart = useCallback(() => setItems([]), []);
 
   const cartCount = items.reduce((s, i) => s + i.qty, 0);
-  const cartProducts = allProducts.filter((p) => items.some((i) => i.id === p.id));
-  const subtotal = items.reduce((sum, item) => {
-    const p = allProducts.find((x) => x.id === item.id);
-    return sum + (p ? p.price * item.qty : 0);
-  }, 0);
+  const subtotal = items.reduce((sum, item) => sum + item.product.price * item.qty, 0);
 
   return (
-    <CartContext.Provider value={{ items, cartCount, cartProducts, subtotal, addItem, updateQty, removeItem, clearCart }}>
+    <CartContext.Provider value={{ items, cartCount, subtotal, addItem, updateQty, removeItem, clearCart }}>
       {children}
     </CartContext.Provider>
   );

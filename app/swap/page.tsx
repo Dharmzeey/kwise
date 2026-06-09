@@ -19,11 +19,35 @@ export const metadata: Metadata = {
   alternates: { canonical: "/swap" },
 };
 
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "iPhone Swap Estimator",
+  provider: {
+    "@type": "Organization",
+    name: "Kwise World",
+    url: "https://kwiseworld.ng",
+  },
+  serviceType: "Phone Trade-in / Swap",
+  areaServed: "NG",
+  description:
+    "Get an instant estimate for your iPhone swap in Nigerian Naira. Trade in your current iPhone and pay only the difference for an upgrade.",
+  url: "https://kwiseworld.ng/swap",
+};
+
 export default async function SwapPage() {
   const [seriesList, defects] = await Promise.all([
     swapApi.series(),
     swapApi.defects(),
   ]);
 
-  return <SwapApp seriesList={seriesList} defects={defects} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <SwapApp seriesList={seriesList} defects={defects} />
+    </>
+  );
 }

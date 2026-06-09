@@ -41,11 +41,11 @@ export default function HeroEditorial({ products }: Props) {
           <div className="hero-cta">
             <Btn kind="primary" size="lg" href="/category/phones" iconAfter="arrowRight">Shop phones</Btn>
             <Btn kind="ghost" size="lg" href="/offers">
-              <Icon name="bolt" size={18} stroke={0} /> One-Time Offers
+              <Icon name="bolt" size={2} stroke={0} /> One-Time Offers
             </Btn>
           </div>
           <div className="hero-stats">
-            <div><strong>4.8★</strong><span>2,400+ reviews</span></div>
+            <div><strong>★</strong><span>Excellent Reviews</span></div>
             <div><strong>36</strong><span>States covered</span></div>
             <div><strong>100%</strong><span>Tested units</span></div>
           </div>

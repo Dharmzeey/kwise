@@ -4,7 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { ToastProvider } from "@/context/ToastContext";
 import ShellLayout from "@/components/layout/ShellLayout";
-import { fetchCategories, fetchProducts } from "@/lib/api";
+import { fetchCategories } from "@/lib/api";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -46,17 +46,14 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [categories, productsPage] = await Promise.all([
-    fetchCategories().catch(() => []),
-    fetchProducts({ page: 1 }).catch(() => ({ results: [], count: 0, next: null, previous: null })),
-  ]);
+  const categories = await fetchCategories().catch(() => []);
 
   return (
     <html lang="en" className={`${sora.variable} ${manrope.variable}`}>
       <body>
-        <CartProvider allProducts={productsPage.results}>
+        <CartProvider>
           <ToastProvider>
-            <ShellLayout categories={categories} products={productsPage.results}>
+            <ShellLayout categories={categories}>
               {children}
             </ShellLayout>
           </ToastProvider>

@@ -23,6 +23,7 @@ import type {
   AdminOrder,
   ProductWritePayload,
   ProductSpec,
+  Review,
 } from "./types";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -164,6 +165,35 @@ export async function fetchProduct(id: string): Promise<ProductDetail> {
 
 export async function fetchRelatedProducts(id: string): Promise<ProductListItem[]> {
   return request<ProductListItem[]>(`/api/products/${id}/related/`);
+}
+
+// ── Reviews ───────────────────────────────────────────────────────────────────
+
+export async function fetchFeaturedReviews(limit = 6): Promise<Review[]> {
+  return request<Review[]>(`/api/reviews/?limit=${limit}`);
+}
+
+export async function submitReview(
+  productId: string,
+  payload: { rating: number; text: string }
+): Promise<Review> {
+  return request<Review>(`/api/products/${productId}/reviews/`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  }, true);
+}
+
+export async function fetchAdminReviews(verified?: boolean): Promise<Review[]> {
+  const param = verified === undefined ? "" : `?verified=${verified ? "1" : "0"}`;
+  return request<Review[]>(`/api/admin/reviews/${param}`, {}, true);
+}
+
+export async function toggleReviewVerified(id: number): Promise<Review> {
+  return request<Review>(`/api/admin/reviews/${id}/verify/`, { method: "PATCH" }, true);
+}
+
+export async function deleteReview(id: number): Promise<void> {
+  return request<void>(`/api/admin/reviews/${id}/verify/`, { method: "DELETE" }, true);
 }
 
 // ── Cart ──────────────────────────────────────────────────────────────────────

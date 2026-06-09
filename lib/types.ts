@@ -37,6 +37,7 @@ export interface Review {
   text: string;
   is_verified: boolean;
   created_at: string;
+  product_name: string;
 }
 
 /** Shape returned by the product list endpoint. */
@@ -77,6 +78,7 @@ export interface ProductDetail extends ProductListItem {
 export interface CartItem {
   id: string;       // product id
   qty: number;
+  product: ProductListItem;
 }
 
 // ── Orders ────────────────────────────────────────────────────────────────────

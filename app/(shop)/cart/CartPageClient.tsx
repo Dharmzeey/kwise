@@ -9,11 +9,9 @@ import ProductThumb from "@/components/ui/ProductThumb";
 import StatusPill from "@/components/ui/StatusPill";
 
 export default function CartPageClient() {
-  const { items, cartProducts, updateQty, removeItem, subtotal } = useCart();
+  const { items, updateQty, removeItem, subtotal } = useCart();
 
-  const lines = items
-    .map((it) => ({ ...it, product: cartProducts.find((p) => p.id === it.id) }))
-    .filter((l): l is typeof l & { product: NonNullable<typeof l.product> } => !!l.product);
+  const lines = items;
 
   const fee = deliveryFee(subtotal);
   const total = subtotal + fee;

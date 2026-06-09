@@ -26,13 +26,13 @@ const serviceJsonLd = {
   provider: {
     "@type": "Organization",
     name: "Kwise World",
-    url: "https://kwiseworld.ng",
+    url: "https://kwiseworld.com",
   },
   serviceType: "Phone Trade-in / Swap",
   areaServed: "NG",
   description:
     "Get an instant estimate for your iPhone swap in Nigerian Naira. Trade in your current iPhone and pay only the difference for an upgrade.",
-  url: "https://kwiseworld.ng/swap",
+  url: "https://kwiseworld.com/swap",
 };
 
 export default async function SwapPage() {

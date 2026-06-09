@@ -46,7 +46,7 @@ export default function Footer({ categories }: FooterProps) {
           <h4>Reach us</h4>
           <span><Icon name="pin" size={16} /> 92B Lagelu Plaza, Iwo Road, Ibadan</span>
           <span><Icon name="whatsapp" size={16} /> +234 904 880 7490</span>
-          <span><Icon name="mail" size={16} /> hello@kwiseworld.ng</span>
+          <span><Icon name="mail" size={16} /> hello@kwiseworld.com</span>
           <div className="footer-socials">
             <a href="https://www.instagram.com/kwise.world" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram size={18} /></a>
             <a href="https://www.tiktok.com/@kwiseworld4" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><FaTiktok size={18} /></a>

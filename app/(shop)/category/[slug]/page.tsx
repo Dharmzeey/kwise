@@ -27,7 +27,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
     ? `Shop ${cat.name} — ${cat.blurb}. Every unit tested before it ships.`
     : "Browse all gadgets at Kwise World. Phones, laptops, accessories — brand new and UK-used.";
 
-  const canonicalUrl = `https://kwiseworld.ng/category/${slug}`;
+  const canonicalUrl = `https://kwiseworld.com/category/${slug}`;
 
   const meta: Metadata = {
     title,
@@ -79,11 +79,11 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: cat ? cat.name : "All Products",
-    url: `https://kwiseworld.ng/category/${slug}`,
+    url: `https://kwiseworld.com/category/${slug}`,
     itemListElement: initialProducts.results.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `https://kwiseworld.ng/product/${p.id}`,
+      url: `https://kwiseworld.com/product/${p.id}`,
       name: p.name,
     })),
   };
@@ -96,13 +96,13 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://kwiseworld.ng",
+        item: "https://kwiseworld.com",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: cat ? cat.name : "All Products",
-        item: `https://kwiseworld.ng/category/${slug}`,
+        item: `https://kwiseworld.com/category/${slug}`,
       },
     ],
   };

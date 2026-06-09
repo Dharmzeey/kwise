@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const product = await fetchProduct(id).catch(() => null);
   if (!product) return { title: "Product not found" };
-  const url = `https://kwiseworld.ng/product/${product.id}`;
+  const url = `https://kwiseworld.com/product/${product.id}`;
   return {
     title: `${product.name} — Kwise World`,
     description: product.description,
@@ -75,7 +75,7 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
 
   const cat = categories.find((c) => c.slug === product.category_slug);
-  const productUrl = `https://kwiseworld.ng/product/${product.id}`;
+  const productUrl = `https://kwiseworld.com/product/${product.id}`;
   const verifiedReviews = product.reviews.filter((r) => r.is_verified);
 
   const productJsonLd = {
@@ -132,13 +132,13 @@ export default async function ProductPage({ params }: Props) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://kwiseworld.ng",
+        item: "https://kwiseworld.com",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: cat?.name ?? product.category_slug,
-        item: `https://kwiseworld.ng/category/${product.category_slug}`,
+        item: `https://kwiseworld.com/category/${product.category_slug}`,
       },
       {
         "@type": "ListItem",

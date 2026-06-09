@@ -38,11 +38,8 @@ export default function AboutPage() {
       {/* ── Hero ── */}
       <section className="about-hero">
         <div className="container about-hero-in">
-          <span className="eyebrow">
-            <Icon name="shieldCheck" size={15} /> About Kwise World
-          </span>
           <h1>
-            Integrity — we mean<br />what we say.
+            Integrity — we mean what we say.
           </h1>
           <p>
             Kwise World started on Iwo Road with one rule: describe every device
@@ -90,8 +87,8 @@ export default function AboutPage() {
               <p>Chat with a real person on WhatsApp. We&apos;ll help you pick the right device.</p>
             </div>
             <div className="about-cta-btns">
-              <Btn kind="orange" size="lg" href="https://wa.me/2349048807490">
-                <Icon name="whatsapp" size={18} /> Chat on WhatsApp
+              <Btn kind="orange" size="lg" href="https://wa.me/2349048807490" icon="whatsapp">
+                Chat on WhatsApp
               </Btn>
               <Btn kind="ghost" size="lg" href="/category/all" iconAfter="arrowRight">
                 Shop now

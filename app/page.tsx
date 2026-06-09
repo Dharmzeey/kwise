@@ -18,8 +18,8 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": ["Organization", "LocalBusiness"],
   name: "Kwise World",
-  url: "https://kwiseworld.ng",
-  logo: "https://kwiseworld.ng/logo.png",
+  url: "https://kwiseworld.com",
+  logo: "https://kwiseworld.com/logo.png",
   description:
     "Nigeria's trusted source for tested & verified phones, laptops, and accessories.",
   address: {

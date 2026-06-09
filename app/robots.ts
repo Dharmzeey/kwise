@@ -16,6 +16,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: "https://kwiseworld.ng/sitemap.xml",
+    sitemap: "https://kwiseworld.com/sitemap.xml",
   };
 }

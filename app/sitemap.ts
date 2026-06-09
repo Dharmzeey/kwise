@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { fetchCategories, fetchProducts } from "@/lib/api";
 import type { ProductListItem } from "@/lib/types";
 
-const BASE = "https://kwiseworld.ng";
+const BASE = "https://kwiseworld.com";
 
 async function fetchAllProducts(): Promise<ProductListItem[]> {
   const all: ProductListItem[] = [];

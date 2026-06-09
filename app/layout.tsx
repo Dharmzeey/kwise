@@ -20,7 +20,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kwiseworld.ng"),
+  metadataBase: new URL("https://kwiseworld.com"),
   title: {
     template: "%s | Kwise World",
     default: "Kwise World — Gadgets you can trust",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   icons: { icon: "/favicon.ico", shortcut: "/favicon.ico" },
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://kwiseworld.ng" },
+  alternates: { canonical: "https://kwiseworld.com" },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

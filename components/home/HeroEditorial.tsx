@@ -32,7 +32,6 @@ export default function HeroEditorial({ products }: Props) {
     <section className="hero hero-editorial">
       <div className="container hero-in">
         <div className="hero-copy">
-          <span className="eyebrow"><Icon name="shieldCheck" size={15} /> Integrity, every single sale</span>
           <h1>Gadgets you can <em>actually</em> trust.</h1>
           <p>
             iPhone &amp; Samsung, HP &amp; Lenovo, plus every accessory in between — brand new and
@@ -45,7 +44,7 @@ export default function HeroEditorial({ products }: Props) {
             </Btn>
           </div>
           <div className="hero-stats">
-            <div><strong>★</strong><span>Excellent Reviews</span></div>
+            <div><strong>★★★★★</strong><span>Excellent Reviews</span></div>
             <div><strong>36</strong><span>States covered</span></div>
             <div><strong>100%</strong><span>Tested units</span></div>
           </div>

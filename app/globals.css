@@ -587,12 +587,29 @@ img, svg { display: block; }
 /* ===================== CHECKOUT DONE ===================== */
 .checkout-done { max-width: 540px; margin: 0 auto; text-align: center; padding: 80px 20px 100px; display: flex; flex-direction: column; align-items: center; gap: 0; }
 .cd-check { width: 84px; height: 84px; border-radius: 50%; background: #E6F6EC; color: #138a4e; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px; animation: pop .5s cubic-bezier(.22,.9,.3,1); }
+.cd-check--green { background: #E6F6EC; color: #138a4e; }
+.cd-check--orange { background: var(--orange-tint); color: var(--orange); }
+.cd-spinner { width: 48px; height: 48px; border: 4px solid var(--line); border-top-color: var(--blue); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 20px; }
 @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
 .checkout-done h1 { font-size: 36px; margin-bottom: 14px; }
 .checkout-done > p { font-size: 16px; color: var(--ink-2); line-height: 1.6; }
 .cd-ref { background: var(--surface); border-radius: 12px; padding: 14px; margin: 24px 0; font-size: 14px; color: var(--ink-2); width: 100%; }
 .cd-ref strong { font-family: var(--font-head); color: var(--ink); }
 .cd-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ── Order timeline ── */
+.order-timeline { list-style: none; padding: 0; margin: 24px 0; width: 100%; text-align: left; display: flex; flex-direction: column; gap: 0; }
+.ot-step { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; position: relative; }
+.ot-step:not(:last-child)::before { content: ""; position: absolute; left: 9px; top: 30px; bottom: -12px; width: 2px; background: var(--line); }
+.ot-step--done::before { background: #138a4e !important; }
+.ot-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line); background: #fff; flex-shrink: 0; margin-top: 2px; }
+.ot-step--done .ot-dot { border-color: #138a4e; background: #138a4e; }
+.ot-step--current .ot-dot { box-shadow: 0 0 0 4px #E6F6EC; }
+.ot-body { display: flex; flex-direction: column; gap: 2px; }
+.ot-label { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.ot-step--done .ot-label { color: var(--ink); }
+.ot-time { font-size: 12px; color: var(--ink-3); }
 
 /* ===================== ABOUT PAGE ===================== */
 .about-hero { background: radial-gradient(120% 130% at 80% -20%, var(--blue-tint), #fff 60%); }

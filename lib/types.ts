@@ -94,6 +94,7 @@ export interface OrderItem {
 export interface Order {
   reference: string;
   status: string;
+  payment_status: "unpaid" | "paid" | "failed";
   subtotal: number;
   delivery_fee: number;
   total: number;
@@ -102,6 +103,9 @@ export interface Order {
   delivery_address: string;
   items: OrderItem[];
   created_at: string;
+  confirmed_at: string | null;
+  dispatched_at: string | null;
+  delivered_at: string | null;
 }
 
 export interface PlaceOrderPayload {
@@ -116,6 +120,7 @@ export interface PlaceOrderResponse {
   reference: string;
   total: number;
   status: string;
+  authorization_url: string | null;
 }
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
@@ -182,6 +187,9 @@ export interface AdminOrder {
   delivery_address: string;
   items: OrderItem[];
   created_at: string;
+  confirmed_at: string | null;
+  dispatched_at: string | null;
+  delivered_at: string | null;
 }
 
 export interface ProductWritePayload {

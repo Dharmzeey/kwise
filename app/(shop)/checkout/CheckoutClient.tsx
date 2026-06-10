@@ -115,9 +115,11 @@ export default function CheckoutClient() {
       };
       const res = await placeOrder(payload);
       clearCart();
-      router.push(`/order-confirmed?ref=${res.reference}`);
-    } catch {
-      showToast("Could not place order — please try again.");
+      // Redirect to Paystack hosted payment page
+      window.location.href = res.authorization_url!;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Could not place order — please try again.";
+      showToast(msg);
       setSubmitting(false);
     }
   }
@@ -197,7 +199,7 @@ export default function CheckoutClient() {
               type="submit"
               disabled={submitting || !ready || unavailable.length > 0}
             >
-              {submitting ? "Placing order…" : `Place order — ${formatNaira(total)}`}
+              {submitting ? "Redirecting to payment…" : `Pay ${formatNaira(total)}`}
             </Btn>
             <div className="sum-pay" style={{ marginTop: 14 }}>
               <Icon name="shieldCheck" size={15} /> Secure checkout · transfer, card or USSD

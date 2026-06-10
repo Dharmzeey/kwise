@@ -5,7 +5,24 @@ import type { AdminOrder } from "@/lib/types";
 
 function formatNaira(n: number) { return "₦" + n.toLocaleString("en-NG"); }
 
-const STATUSES = ["pending", "confirmed", "dispatched", "delivered", "cancelled"];
+function fmtDate(iso: string | null) {
+  if (!iso) return "—";
+  return new Date(iso).toLocaleString("en-NG", {
+    day: "numeric", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit",
+  });
+}
+
+// "confirmed" is set by the webhook only — admin can only move forward
+const ADMIN_SETTABLE = ["dispatched", "delivered", "cancelled"];
+
+const STATUS_LABEL: Record<string, string> = {
+  pending: "Pending",
+  confirmed: "Confirmed",
+  dispatched: "Dispatched",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+};
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<AdminOrder[]>([]);
@@ -43,8 +60,10 @@ export default function AdminOrdersPage() {
                 <th>Customer</th>
                 <th>Items</th>
                 <th>Total</th>
-                <th>Date</th>
-                <th>Status</th>
+                <th>Confirmed</th>
+                <th>Dispatched</th>
+                <th>Delivered</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -57,16 +76,28 @@ export default function AdminOrdersPage() {
                   </td>
                   <td>{o.items.length} item{o.items.length !== 1 ? "s" : ""}</td>
                   <td>{formatNaira(o.total)}</td>
-                  <td className="adm-sub">{new Date(o.created_at).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</td>
+                  <td className="adm-sub">{fmtDate(o.confirmed_at)}</td>
+                  <td className="adm-sub">{fmtDate(o.dispatched_at)}</td>
+                  <td className="adm-sub">{fmtDate(o.delivered_at)}</td>
                   <td>
-                    <select
-                      className="adm-status-select"
-                      value={o.status}
-                      disabled={updating === o.reference}
-                      onChange={(e) => handleStatus(o.reference, e.target.value)}
-                    >
-                      {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
+                    {o.status === "delivered" || o.status === "cancelled" ? (
+                      <span className="adm-badge">{STATUS_LABEL[o.status]}</span>
+                    ) : (
+                      <select
+                        className="adm-status-select"
+                        value={o.status}
+                        disabled={updating === o.reference}
+                        onChange={(e) => handleStatus(o.reference, e.target.value)}
+                      >
+                        {/* Show current status (read-only option if not admin-settable) */}
+                        {!ADMIN_SETTABLE.includes(o.status) && (
+                          <option value={o.status} disabled>{STATUS_LABEL[o.status]}</option>
+                        )}
+                        {ADMIN_SETTABLE.map((s) => (
+                          <option key={s} value={s}>{STATUS_LABEL[s]}</option>
+                        ))}
+                      </select>
+                    )}
                   </td>
                 </tr>
               ))}

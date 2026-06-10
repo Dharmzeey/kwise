@@ -1,5 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import { fetchAdminOrders, updateOrderStatus } from "@/lib/api";
 import type { AdminOrder } from "@/lib/types";
 
@@ -13,25 +16,62 @@ function fmtDate(iso: string | null) {
   });
 }
 
-// "confirmed" is set by the webhook only — admin can only move forward
 const ADMIN_SETTABLE = ["dispatched", "delivered", "cancelled"];
 
 const STATUS_LABEL: Record<string, string> = {
-  pending: "Pending",
-  confirmed: "Confirmed",
-  dispatched: "Dispatched",
-  delivered: "Delivered",
-  cancelled: "Cancelled",
+  pending: "Pending", confirmed: "Confirmed", dispatched: "Dispatched",
+  delivered: "Delivered", cancelled: "Cancelled",
 };
 
-export default function AdminOrdersPage() {
+const STATUS_TABS = ["all", "pending", "confirmed", "dispatched", "delivered", "cancelled"];
+
+function exportCSV(orders: AdminOrder[]) {
+  const rows = [
+    ["Reference", "Customer", "Email", "Phone", "Total", "Status", "Confirmed", "Dispatched", "Delivered", "Date"],
+    ...orders.map((o) => [
+      o.reference, o.guest_name, o.guest_email, o.guest_phone,
+      o.total, o.status,
+      o.confirmed_at ?? "", o.dispatched_at ?? "", o.delivered_at ?? "",
+      new Date(o.created_at).toLocaleDateString("en-NG"),
+    ]),
+  ];
+  const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "kwise-orders.csv"; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function AdminOrdersInner() {
+  const router = useRouter();
+  const params = useSearchParams();
   const [orders, setOrders] = useState<AdminOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [q, setQ] = useState(params.get("q") ?? "");
+  const [statusFilter, setStatusFilter] = useState(params.get("status") ?? "all");
 
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetchAdminOrders({
+        q: q || undefined,
+        status: statusFilter === "all" ? undefined : statusFilter,
+      });
+      setOrders(res.results);
+    } finally { setLoading(false); }
+  }, [q, statusFilter]);
+
+  useEffect(() => { load(); }, [load]);
+
+  // Sync URL params
   useEffect(() => {
-    fetchAdminOrders().then((r) => setOrders(r.results)).finally(() => setLoading(false));
-  }, []);
+    const p = new URLSearchParams();
+    if (q) p.set("q", q);
+    if (statusFilter !== "all") p.set("status", statusFilter);
+    router.replace(`/admin/orders${p.toString() ? `?${p}` : ""}`, { scroll: false });
+  }, [q, statusFilter, router]);
 
   async function handleStatus(reference: string, newStatus: string) {
     setUpdating(reference);
@@ -46,11 +86,39 @@ export default function AdminOrdersPage() {
     <div className="adm-page">
       <div className="adm-page-head">
         <h1 className="adm-title">Orders</h1>
-        <span className="adm-count">{orders.length} total</span>
+        <button className="btn btn-outline btn-sm" onClick={() => exportCSV(orders)}>
+          Export CSV
+        </button>
+      </div>
+
+      {/* Search */}
+      <div className="adm-toolbar">
+        <input
+          className="adm-search"
+          placeholder="Search by reference, name, email or phone…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+        <span className="adm-count">{orders.length} result{orders.length !== 1 ? "s" : ""}</span>
+      </div>
+
+      {/* Status tabs */}
+      <div className="adm-tabs">
+        {STATUS_TABS.map((s) => (
+          <button
+            key={s}
+            className={`adm-tab${statusFilter === s ? " on" : ""}`}
+            onClick={() => setStatusFilter(s)}
+          >
+            {s === "all" ? "All" : STATUS_LABEL[s]}
+          </button>
+        ))}
       </div>
 
       {loading ? (
         <p className="adm-loading">Loading…</p>
+      ) : orders.length === 0 ? (
+        <p className="adm-empty">No orders found.</p>
       ) : (
         <div className="adm-table-wrap">
           <table className="adm-table">
@@ -69,7 +137,11 @@ export default function AdminOrdersPage() {
             <tbody>
               {orders.map((o) => (
                 <tr key={o.reference}>
-                  <td><code className="adm-ref">{o.reference}</code></td>
+                  <td>
+                    <Link href={`/admin/orders/${o.reference}`} className="adm-ref-link">
+                      <code className="adm-ref">{o.reference}</code>
+                    </Link>
+                  </td>
                   <td>
                     <div>{o.guest_name || "—"}</div>
                     <div className="adm-sub">{o.guest_email}</div>
@@ -89,7 +161,6 @@ export default function AdminOrdersPage() {
                         disabled={updating === o.reference}
                         onChange={(e) => handleStatus(o.reference, e.target.value)}
                       >
-                        {/* Show current status (read-only option if not admin-settable) */}
                         {!ADMIN_SETTABLE.includes(o.status) && (
                           <option value={o.status} disabled>{STATUS_LABEL[o.status]}</option>
                         )}
@@ -107,4 +178,8 @@ export default function AdminOrdersPage() {
       )}
     </div>
   );
+}
+
+export default function AdminOrdersPage() {
+  return <Suspense><AdminOrdersInner /></Suspense>;
 }

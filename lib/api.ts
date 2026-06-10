@@ -7,6 +7,7 @@
 
 import type {
   Category,
+  Brand,
   ProductListItem,
   ProductDetail,
   PaginatedResponse,
@@ -21,6 +22,9 @@ import type {
   AdminStats,
   AdminProduct,
   AdminOrder,
+  AdminCustomer,
+  AdminCustomerDetail,
+  PendingTransaction,
   ProductWritePayload,
   ProductSpec,
   Review,
@@ -336,8 +340,8 @@ export async function updateProductSpecs(slug: string, specs: Pick<ProductSpec, 
   }, true);
 }
 
-export async function fetchAdminOrders(): Promise<PaginatedResponse<AdminOrder>> {
-  return request<PaginatedResponse<AdminOrder>>("/api/admin/orders/", {}, true);
+export async function fetchAdminOrders(params?: { q?: string; status?: string }): Promise<PaginatedResponse<AdminOrder>> {
+  return request<PaginatedResponse<AdminOrder>>(`/api/admin/orders/${qs(params ?? {})}`, {}, true);
 }
 
 export async function updateOrderStatus(reference: string, status: string): Promise<AdminOrder> {
@@ -345,4 +349,68 @@ export async function updateOrderStatus(reference: string, status: string): Prom
     method: "PATCH",
     body: JSON.stringify({ status }),
   }, true);
+}
+
+// ── Admin: Pending Transactions ───────────────────────────────────────────────
+
+export async function fetchAdminPendingTransactions(): Promise<PendingTransaction[]> {
+  return request<PendingTransaction[]>("/api/admin/pending-transactions/", {}, true);
+}
+
+// ── Admin: Customers ──────────────────────────────────────────────────────────
+
+export async function fetchAdminCustomers(q?: string): Promise<AdminCustomer[]> {
+  return request<AdminCustomer[]>(`/api/auth/admin/customers/${qs({ q })}`, {}, true);
+}
+
+export async function fetchAdminCustomer(id: number): Promise<AdminCustomerDetail> {
+  return request<AdminCustomerDetail>(`/api/auth/admin/customers/${id}/`, {}, true);
+}
+
+// ── Admin: Categories ─────────────────────────────────────────────────────────
+
+export async function fetchAdminCategories(): Promise<Category[]> {
+  return request<Category[]>("/api/admin/categories/", {}, true);
+}
+
+export async function createAdminCategory(payload: { name: string; icon: string; blurb: string }): Promise<Category> {
+  return request<Category>("/api/admin/categories/", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  }, true);
+}
+
+export async function updateAdminCategory(slug: string, payload: Partial<{ name: string; icon: string; blurb: string }>): Promise<Category> {
+  return request<Category>(`/api/admin/categories/${slug}/`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  }, true);
+}
+
+export async function deleteAdminCategory(slug: string): Promise<void> {
+  return request<void>(`/api/admin/categories/${slug}/`, { method: "DELETE" }, true);
+}
+
+// ── Admin: Brands ─────────────────────────────────────────────────────────────
+
+export async function fetchAdminBrands(): Promise<Brand[]> {
+  return request<Brand[]>("/api/admin/brands/", {}, true);
+}
+
+export async function createAdminBrand(payload: { name: string; category: number }): Promise<Brand> {
+  return request<Brand>("/api/admin/brands/", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  }, true);
+}
+
+export async function updateAdminBrand(id: number, payload: Partial<{ name: string; category: number }>): Promise<Brand> {
+  return request<Brand>(`/api/admin/brands/${id}/`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  }, true);
+}
+
+export async function deleteAdminBrand(id: number): Promise<void> {
+  return request<void>(`/api/admin/brands/${id}/`, { method: "DELETE" }, true);
 }

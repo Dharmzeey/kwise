@@ -32,6 +32,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin", label: "Dashboard", icon: "chart" },
     { href: "/admin/products", label: "Products", icon: "phone" },
     { href: "/admin/orders", label: "Orders", icon: "cart" },
+    { href: "/admin/pending", label: "Pending Payments", icon: "clock" },
+    { href: "/admin/customers", label: "Customers", icon: "user" },
+    { href: "/admin/catalog", label: "Categories & Brands", icon: "tag" },
     { href: "/admin/reviews", label: "Reviews", icon: "star" },
   ];
 
@@ -47,7 +50,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link
               key={item.href}
               href={item.href}
-              className={`adm-navlink${pathname === item.href ? " on" : ""}`}
+              className={`adm-navlink${pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href)) ? " on" : ""}`}
             >
               <Icon name={item.icon} size={16} />
               {item.label}

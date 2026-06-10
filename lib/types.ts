@@ -11,6 +11,8 @@ export interface Brand {
   id: number;
   slug: string;
   name: string;
+  category?: number;
+  category_name?: string;
 }
 
 export interface Category {
@@ -143,6 +145,38 @@ export interface AdminStats {
   orders: number;
   pending_orders: number;
   total_revenue: number;
+  recent_orders: AdminOrder[];
+  low_stock: AdminProduct[];
+}
+
+export interface PendingTransaction {
+  reference: string;
+  guest_name: string;
+  guest_email: string;
+  guest_phone: string;
+  delivery_address: string;
+  subtotal: number;
+  delivery_fee: number;
+  total: number;
+  cart_data: { product_slug: string; product_name: string; unit_price: number; quantity: number }[];
+  created_at: string;
+}
+
+export interface AdminCustomer {
+  id: number;
+  email: string;
+  full_name: string;
+  phone: string;
+  date_joined: string;
+  order_count: number;
+  total_spent: number;
+}
+
+export interface AdminCustomerDetail extends AdminCustomer {
+  first_name: string;
+  last_name: string;
+  is_active: boolean;
+  orders: Order[];
 }
 
 export interface AdminProduct {

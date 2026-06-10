@@ -828,6 +828,59 @@ img, svg { display: block; }
   .adm-checks { gap: 14px; }
 }
 
+/* ── Admin: new shared components ── */
+.adm-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.adm-search { flex: 1; max-width: 400px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 8px; font-size: 13.5px; outline: none; }
+.adm-search:focus { border-color: var(--blue); }
+.adm-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 20px; }
+.adm-tab { padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; font-size: 13px; cursor: pointer; color: var(--ink-2); }
+.adm-tab.on { background: var(--blue); color: #fff; border-color: var(--blue); }
+.adm-empty { font-size: 14px; color: var(--ink-3); padding: 24px 0; }
+.adm-desc { font-size: 13.5px; color: var(--ink-2); margin-bottom: 20px; line-height: 1.6; }
+.adm-badge--blue { background: var(--blue-tint); color: var(--blue); }
+.adm-badge--green { background: #e6f6ec; color: #138a4e; }
+.adm-badge--orange { background: var(--orange-tint); color: var(--orange); }
+.adm-badge--red { background: #fef2f2; color: #b91c1c; }
+.adm-badge--purple { background: #f3f0ff; color: #6d28d9; }
+.adm-ref-link { text-decoration: none; }
+.adm-ref-link:hover .adm-ref { background: var(--blue-tint); color: var(--blue); }
+.adm-action-link { background: none; border: none; padding: 0; font-size: 13px; color: var(--blue); cursor: pointer; text-decoration: underline; }
+.adm-action-link--danger { color: #b91c1c; }
+.adm-back-link { font-size: 13px; color: var(--ink-3); text-decoration: none; }
+.adm-back-link:hover { color: var(--ink); }
+.adm-see-all { font-size: 13px; color: var(--blue); text-decoration: none; }
+.adm-section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.adm-section-head h2 { font-size: 16px; margin: 0; display: flex; align-items: center; gap: 8px; }
+
+/* Dashboard two-col layout */
+.adm-dash-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+.adm-dash-section { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+@media (max-width: 900px) { .adm-dash-cols { grid-template-columns: 1fr; } }
+
+/* Order detail / customer detail grid */
+.adm-order-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+.adm-detail-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+.adm-detail-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); margin: 0 0 14px; }
+.adm-detail-card--wide { grid-column: 1 / -1; }
+.adm-dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 13.5px; margin: 0; }
+.adm-dl dt { color: var(--ink-2); white-space: nowrap; }
+.adm-dl dd { margin: 0; color: var(--ink); }
+.adm-total-row td { font-weight: 700; border-top: 2px solid var(--line); }
+@media (max-width: 760px) { .adm-order-detail-grid { grid-template-columns: 1fr; } }
+
+/* Catalog page */
+.adm-catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 20px; }
+@media (max-width: 860px) { .adm-catalog-grid { grid-template-columns: 1fr; } }
+
+/* Modal */
+.adm-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.adm-modal { background: #fff; border-radius: var(--radius); width: 100%; max-width: 480px; box-shadow: 0 12px 40px rgba(0,0,0,.15); }
+.adm-modal-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px 0; }
+.adm-modal-head h3 { font-size: 16px; margin: 0; }
+.adm-modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--ink-3); line-height: 1; padding: 0; }
+.adm-modal .adm-form { padding: 20px 22px 22px; }
+.adm-modal .adm-form-actions { position: static; padding: 0; background: none; border: none; }
+
 /* ===================== PROFILE PAGE ===================== */
 .prf-loading, .prf-orders-loading {
   display: flex; align-items: center; justify-content: center;

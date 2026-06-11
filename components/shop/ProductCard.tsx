@@ -11,9 +11,10 @@ import type { ProductListItem } from "@/lib/types";
 
 interface ProductCardProps {
   product: ProductListItem;
+  hideAdd?: boolean;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, hideAdd = false }: ProductCardProps) {
   const router = useRouter();
   const { addItem } = useCart();
   const { showToast } = useToast();
@@ -69,14 +70,16 @@ export default function ProductCard({ product }: ProductCardProps) {
               <span className="price-old">{formatNaira(product.old_price)}</span>
             )}
           </div>
-          <button
-            className="btn-add"
-            disabled={product.sold_out}
-            onClick={handleAdd}
-            aria-label={`Add ${product.name} to cart`}
-          >
-            <Icon name={product.sold_out ? "close" : "plus"} size={18} />
-          </button>
+          {!hideAdd && (
+            <button
+              className="btn-add"
+              disabled={product.sold_out}
+              onClick={handleAdd}
+              aria-label={`Add ${product.name} to cart`}
+            >
+              <Icon name={product.sold_out ? "close" : "plus"} size={18} />
+            </button>
+          )}
         </div>
 
         {product.is_one_time && product.stock > 0 && (

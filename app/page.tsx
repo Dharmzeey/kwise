@@ -63,7 +63,7 @@ export default async function HomePage() {
             </div>
             <div className="prod-grid">
               {featured.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard key={p.id} product={p} hideAdd />
               ))}
             </div>
           </div>
@@ -83,7 +83,7 @@ export default async function HomePage() {
             </div>
             <div className="prod-grid">
               {offers.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard key={p.id} product={p} hideAdd />
               ))}
             </div>
           </div>

@@ -140,8 +140,9 @@ export async function fetchCategories(): Promise<Category[]> {
   return request<Category[]>("/api/categories/");
 }
 
-export async function fetchCategorySeries(categorySlug: string): Promise<string[]> {
-  return request<string[]>(`/api/categories/${categorySlug}/series/`);
+export async function fetchCategorySeries(categorySlug: string, brandSlug?: string): Promise<string[]> {
+  const query = brandSlug ? `?brand=${encodeURIComponent(brandSlug)}` : "";
+  return request<string[]>(`/api/categories/${categorySlug}/series/${query}`);
 }
 
 // ── Products ──────────────────────────────────────────────────────────────────

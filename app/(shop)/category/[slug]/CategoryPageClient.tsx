@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useEffect, useCallback } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { fetchProducts, fetchCategorySeries } from "@/lib/api";
 import type { Category, ProductListItem, PaginatedResponse, ProductFilters, ProductStatus, SortOption } from "@/lib/types";
 import ProductCard from "@/components/shop/ProductCard";
@@ -41,12 +42,41 @@ export default function CategoryPageClient({
   const [maxPrice, setMaxPrice] = useState(initialFilters.max_price ?? DEFAULT_MAX_PRICE);
   const [sort, setSort] = useState<SortOption>(initialFilters.sort ?? "featured");
   const [showFilters, setShowFilters] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Fetch series list for this category (skip for "all")
+  const pushUrl = useCallback((overrides?: Partial<{
+    brand: string | null;
+    series: string | null;
+    statuses: ProductStatus[];
+    maxPrice: number;
+    sort: SortOption;
+    q: string;
+  }>) => {
+    const b = overrides?.brand !== undefined ? overrides.brand : brand;
+    const sr = overrides?.series !== undefined ? overrides.series : series;
+    const s = overrides?.statuses ?? statuses;
+    const mp = overrides?.maxPrice ?? maxPrice;
+    const so = overrides?.sort ?? sort;
+    const query = overrides?.q !== undefined ? overrides.q : q;
+
+    const params = new URLSearchParams();
+    if (b) params.set("brand", b);
+    if (sr) params.set("series", sr);
+    if (s.length === 1) params.set("status", s[0]);
+    if (mp < DEFAULT_MAX_PRICE) params.set("max_price", String(mp));
+    if (so !== "featured") params.set("sort", so);
+    if (query) params.set("q", query);
+
+    const qs = params.toString();
+    router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
+  }, [brand, series, statuses, maxPrice, sort, q, pathname, router]);
+
+  // Fetch series list — filtered by brand when one is selected
   useEffect(() => {
     if (slug === "all") return;
-    fetchCategorySeries(slug).then(setSeriesList).catch(() => {});
-  }, [slug]);
+    fetchCategorySeries(slug, brand ?? undefined).then(setSeriesList).catch(() => {});
+  }, [slug, brand]);
 
   const [products, setProducts] = useState(initialProducts.results);
   const [count, setCount] = useState(initialProducts.count);
@@ -116,12 +146,14 @@ export default function CategoryPageClient({
 
   function handleBrand(b: string | null) {
     setBrand(b);
-    setSeries(null); // reset series when brand changes
+    setSeries(null);
+    pushUrl({ brand: b, series: null });
     runSearch(buildFilters({ brand: b, series: null }));
   }
 
   function handleSeries(s: string | null) {
     setSeries(s);
+    pushUrl({ series: s });
     runSearch(buildFilters({ series: s }));
   }
 
@@ -130,11 +162,13 @@ export default function CategoryPageClient({
       ? statuses.filter((x) => x !== s)
       : [...statuses, s];
     setStatuses(next);
+    pushUrl({ statuses: next });
     runSearch(buildFilters({ statuses: next }));
   }
 
   function handleMaxPrice(v: number) {
     setMaxPrice(v);
+    pushUrl({ maxPrice: v });
     runSearch(buildFilters({ maxPrice: v }));
   }
 
@@ -168,6 +202,7 @@ export default function CategoryPageClient({
                   className="clear-search"
                   onClick={() => {
                     setQ("");
+                    pushUrl({ q: "" });
                     runSearch(buildFilters({ q: "" }));
                   }}
                 >
@@ -190,6 +225,7 @@ export default function CategoryPageClient({
                 onChange={(e) => {
                   const s = e.target.value as SortOption;
                   setSort(s);
+                  pushUrl({ sort: s });
                   runSearch(buildFilters({ sort: s }));
                 }}
               >

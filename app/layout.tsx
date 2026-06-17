@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { ToastProvider } from "@/context/ToastContext";
 import ShellLayout from "@/components/layout/ShellLayout";
+import BetaBanner from "@/components/layout/BetaBanner";
 import { fetchCategories } from "@/lib/api";
 
 const sora = Sora({
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <CartProvider>
           <ToastProvider>
+            <BetaBanner />
             <ShellLayout categories={categories}>
               {children}
             </ShellLayout>

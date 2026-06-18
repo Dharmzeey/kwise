@@ -1,36 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { fetchProduct, fetchRelatedProducts, fetchCategories, fetchProducts } from "@/lib/api";
+import { fetchProduct, fetchRelatedProducts, fetchCategories } from "@/lib/api";
 import type { ProductListItem } from "@/lib/types";
 import ProductDetailClient from "./ProductDetailClient";
 import ProductCard from "@/components/shop/ProductCard";
 import Icon from "@/components/ui/Icon";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 interface Props {
   params: Promise<{ id: string }>;
-}
-
-/** Paginate through all products and return every slug for static generation. */
-async function fetchAllProductSlugs(): Promise<{ id: string }[]> {
-  const slugs: { id: string }[] = [];
-  let page = 1;
-  while (true) {
-    const data = await fetchProducts({ page }).catch(() => null);
-    if (!data) break;
-    for (const p of data.results) {
-      slugs.push({ id: p.id });
-    }
-    if (!data.next) break;
-    page++;
-  }
-  return slugs;
-}
-
-export async function generateStaticParams() {
-  return fetchAllProductSlugs();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { swapApi } from "@/lib/swap/api";
 import SwapApp from "@/components/swap/SwapApp";
 
-export const revalidate = 7200; // 2 hours — matches Django cache TTL
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "iPhone Swap Estimator",

@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { fetchCategories, fetchProducts } from "@/lib/api";
 import type { ProductListItem } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 const BASE = "https://kwiseworld.com";
 
 async function fetchAllProducts(): Promise<ProductListItem[]> {

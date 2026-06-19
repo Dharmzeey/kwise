@@ -8,6 +8,32 @@ import Btn from "@/components/ui/Btn";
 import ProductThumb from "@/components/ui/ProductThumb";
 import StatusPill from "@/components/ui/StatusPill";
 
+const WA_NUMBER = "2349048807490";
+const SITE_BASE = "https://kwiseworld.com";
+
+function buildWhatsAppUrl(
+  items: ReturnType<typeof useCart>["items"],
+  total: number
+): string {
+  const lines = items.map((l, i) => {
+    const label = l.product.is_one_time ? " ⚡ One-Time offer" : "";
+    const qty = l.product.is_one_time ? "" : ` x${l.qty}`;
+    return (
+      `${i + 1}. *${l.product.name}*${label}\n` +
+      `   ${formatNaira(l.product.price * l.qty)}${qty}\n` +
+      `   ${SITE_BASE}/product/${l.id}`
+    );
+  });
+
+  const message =
+    `Hi Kwise World! 👋 I'm interested in ordering the following item(s):\n\n` +
+    lines.join("\n\n") +
+    `\n\n*Total: ${formatNaira(total)}*\n\n` +
+    `Please confirm availability so I can proceed. Thank you!`;
+
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
 export default function CartPageClient() {
   const { items, updateQty, removeItem, subtotal } = useCart();
 
@@ -125,6 +151,15 @@ export default function CartPageClient() {
             <Btn kind="primary" size="lg" href="/checkout" iconAfter="arrowRight">
               Checkout
             </Btn>
+            <a
+              href={buildWhatsAppUrl(items, total)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-whatsapp btn-lg"
+            >
+              <Icon name="whatsapp" size={18} />
+              Order via WhatsApp
+            </a>
             <div className="sum-pay">
               <Icon name="shieldCheck" size={15} /> Secure checkout · transfer, card or USSD
             </div>

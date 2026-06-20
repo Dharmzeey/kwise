@@ -82,6 +82,8 @@ export default function CategoryPageClient({
   const [count, setCount] = useState(initialProducts.count);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(!!initialProducts.next);
+  const [gridHidden, setGridHidden] = useState(false);
+  const [filterVersion, setFilterVersion] = useState(0);
   const [isPending, startTransition] = useTransition();
 
   // For "all" slug, aggregate brands from every category
@@ -131,16 +133,17 @@ export default function CategoryPageClient({
 
   function runSearch(filters: ProductFilters) {
     setPage(1);
-    startTransition(async () => {
-      const res = await fetchProducts(filters).catch(() => ({
-        results: [],
-        count: 0,
-        next: null,
-        previous: null,
-      }));
-      setProducts(res.results);
-      setCount(res.count);
-      setHasMore(!!res.next);
+    setGridHidden(true);
+    const fadeOut = new Promise<void>((r) => setTimeout(r, 190));
+    const req = fetchProducts(filters).catch(() => ({ results: [], count: 0, next: null, previous: null }));
+    Promise.all([fadeOut, req]).then(([, res]) => {
+      startTransition(() => {
+        setProducts(res.results);
+        setCount(res.count);
+        setHasMore(!!res.next);
+        setFilterVersion((v) => v + 1);
+        setGridHidden(false);
+      });
     });
   }
 
@@ -263,9 +266,11 @@ export default function CategoryPageClient({
                 <p>Try adjusting your filters.</p>
               </div>
             ) : (
-              <div className="prod-grid">
-                {products.map((p) => (
-                  <ProductCard key={p.id} product={p} />
+              <div className={`prod-grid${gridHidden ? " grid-out" : ""}`}>
+                {products.map((p, i) => (
+                  <div key={`${p.id}-${filterVersion}`} style={{ animationDelay: `${Math.min(i, 7) * 10}ms` }}>
+                    <ProductCard product={p} />
+                  </div>
                 ))}
               </div>
             )}

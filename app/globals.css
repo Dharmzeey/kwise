@@ -445,6 +445,9 @@ img, svg { display: block; }
 .sort select:focus { border-color: var(--blue); }
 .cat-layout { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: start; }
 .cat-results { min-width: 0; }
+@keyframes cardIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+.prod-grid > * { animation: cardIn 0.07s ease both; }
+.prod-grid.grid-out { opacity: 0; transform: scale(0.97); transition: opacity 0.16s ease, transform 0.16s ease; pointer-events: none; }
 .filters { background: #fff; border: 1.5px solid var(--line); border-radius: var(--radius); padding: 24px; position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px; min-width: 0; width: 100%; }
 .filter-group { display: flex; flex-direction: column; }
 .filter-group h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2); margin-bottom: 10px; }

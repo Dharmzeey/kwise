@@ -20,6 +20,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [megaLocked, setMegaLocked] = useState(false);
   const [q, setQ] = useState("");
 
   useEffect(() => {
@@ -29,6 +30,20 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
 
   // Close mobile menu on navigation
   useEffect(() => { setMenuOpen(false); }, [pathname]);
+
+  // Close mega on outside click when locked
+  useEffect(() => {
+    if (!megaLocked) return;
+    function handleClick(e: MouseEvent) {
+      const nav = document.querySelector(".mainnav");
+      if (nav && !nav.contains(e.target as Node)) {
+        setMegaOpen(false);
+        setMegaLocked(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [megaLocked]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -60,11 +75,15 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
             <span className="logo-text">Kwise<span> World</span></span>
           </Link>
 
-          <nav className="mainnav" onMouseLeave={() => setMegaOpen(false)}>
+          <nav className="mainnav" onMouseLeave={() => { if (!megaLocked) setMegaOpen(false); }}>
             <button
               className="navlink"
               onMouseEnter={() => setMegaOpen(true)}
-              onClick={() => setMegaOpen((v) => !v)}
+              onClick={() => {
+                const next = !megaOpen;
+                setMegaOpen(next);
+                setMegaLocked(next);
+              }}
             >
               Shop <Icon name="chevronDown" size={14} />
             </button>
@@ -80,7 +99,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
               <div className="mega" onMouseEnter={() => setMegaOpen(true)}>
                 {categories.map((c) => (
                   <div className="mega-col" key={c.slug}>
-                    <Link className="mega-head" href={`/category/${c.slug}`} onClick={() => setMegaOpen(false)}>
+                    <Link className="mega-head" href={`/category/${c.slug}`} onClick={() => { setMegaOpen(false); setMegaLocked(false); }}>
                       <Icon name={c.icon} size={18} /> {c.name}
                     </Link>
                     <div className="mega-links">
@@ -88,7 +107,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
                         <Link
                           key={b.slug}
                           href={`/category/${c.slug}?brand=${b.slug}`}
-                          onClick={() => setMegaOpen(false)}
+                          onClick={() => { setMegaOpen(false); setMegaLocked(false); }}
                         >
                           {b.name}
                         </Link>
@@ -100,7 +119,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
                   <Icon name="bolt" size={20} stroke={0} />
                   <strong>One-Time Offers</strong>
                   <p>Single-unit deals. Once it&apos;s gone, it&apos;s gone.</p>
-                  <Link href="/offers" onClick={() => setMegaOpen(false)}>
+                  <Link href="/offers" onClick={() => { setMegaOpen(false); setMegaLocked(false); }}>
                     See deals <Icon name="arrowRight" size={15} />
                   </Link>
                 </div>
@@ -108,7 +127,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
                   <Icon name="refresh" size={20} />
                   <strong>Swap your iPhone</strong>
                   <p>Trade in your current device and get the upgrade you want.</p>
-                  <Link href="/swap" onClick={() => setMegaOpen(false)}>
+                  <Link href="/swap" onClick={() => { setMegaOpen(false); setMegaLocked(false); }}>
                     Start swap <Icon name="arrowRight" size={15} />
                   </Link>
                 </div>

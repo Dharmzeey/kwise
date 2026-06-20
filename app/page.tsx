@@ -12,6 +12,20 @@ export const metadata: Metadata = {
   title: "Kwise World — Trusted Gadgets, Delivered",
   description:
     "Shop brand-new and UK-used phones, laptops, and accessories — every unit tested before it ships. Fast delivery across Nigeria.",
+  alternates: { canonical: "https://kwiseworld.com" },
+  openGraph: {
+    title: "Kwise World — Trusted Gadgets, Delivered",
+    description: "Shop brand-new and UK-used phones, laptops, and accessories — every unit tested before it ships. Fast delivery across Nigeria.",
+    url: "https://kwiseworld.com",
+    type: "website",
+    images: [{ url: "https://kwiseworld.com/og.png", width: 1200, height: 630, alt: "Kwise World" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kwise World — Trusted Gadgets, Delivered",
+    description: "Shop brand-new and UK-used phones, laptops, and accessories — every unit tested before it ships.",
+    images: ["https://kwiseworld.com/og.png"],
+  },
 };
 
 const organizationJsonLd = {

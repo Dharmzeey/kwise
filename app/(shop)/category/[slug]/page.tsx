@@ -38,6 +38,13 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       description,
       url: canonicalUrl,
       type: "website",
+      images: [{ url: "https://kwiseworld.com/og.png", width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://kwiseworld.com/og.png"],
     },
   };
 

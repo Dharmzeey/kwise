@@ -5,8 +5,21 @@ import TrustBand from "@/components/home/TrustBand";
 
 export const metadata: Metadata = {
   title: "About Kwise World — Our Story",
-  description:
-    "Kwise World is a Nigerian gadget store built on integrity. Every phone, laptop, and accessory is tested before it ships.",
+  description: "Kwise World is a Nigerian gadget store built on integrity. Every phone, laptop, and accessory is tested before it ships.",
+  alternates: { canonical: "https://kwiseworld.com/about" },
+  openGraph: {
+    title: "About Kwise World — Our Story",
+    description: "Kwise World is a Nigerian gadget store built on integrity. Every phone, laptop, and accessory is tested before it ships.",
+    url: "https://kwiseworld.com/about",
+    type: "website",
+    images: [{ url: "https://kwiseworld.com/og.png", width: 1200, height: 630, alt: "About Kwise World" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Kwise World — Our Story",
+    description: "Kwise World is a Nigerian gadget store built on integrity. Every phone, laptop, and accessory is tested before it ships.",
+    images: ["https://kwiseworld.com/og.png"],
+  },
 };
 
 const VALUES = [

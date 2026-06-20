@@ -5,7 +5,7 @@ import SwapApp from "@/components/swap/SwapApp";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "iPhone Swap Estimator",
+  title: "iPhone Swap Estimator — Kwise World",
   description:
     "Get an instant estimate for your iPhone swap in Nigerian Naira. " +
     "Powered by Kwise World — Nigeria's trusted gadget store. Inspection branch in Ibadan.",
@@ -16,7 +16,20 @@ export const metadata: Metadata = {
     "iPhone price Nigeria",
     "phone swap estimator",
   ],
-  alternates: { canonical: "/swap" },
+  alternates: { canonical: "https://kwiseworld.com/swap" },
+  openGraph: {
+    title: "iPhone Swap Estimator — Kwise World",
+    description: "Get an instant trade-in estimate for your iPhone in Nigerian Naira. Pay only the difference for your upgrade.",
+    url: "https://kwiseworld.com/swap",
+    type: "website",
+    images: [{ url: "https://kwiseworld.com/og.png", width: 1200, height: 630, alt: "Kwise World iPhone Swap Estimator" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "iPhone Swap Estimator — Kwise World",
+    description: "Get an instant trade-in estimate for your iPhone in Nigerian Naira. Pay only the difference for your upgrade.",
+    images: ["https://kwiseworld.com/og.png"],
+  },
 };
 
 const serviceJsonLd = {

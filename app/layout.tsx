@@ -40,6 +40,21 @@ export const metadata: Metadata = {
     title: "Kwise World — Gadgets you can trust",
     description: "Phones, laptops & accessories. Tested & verified. Fast delivery across Nigeria.",
     locale: "en_NG",
+    url: "https://kwiseworld.com",
+    images: [
+      {
+        url: "https://kwiseworld.com/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Kwise World — Trusted Gadgets",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kwise World — Gadgets you can trust",
+    description: "Phones, laptops & accessories. Tested & verified. Fast delivery across Nigeria.",
+    images: ["https://kwiseworld.com/og.png"],
   },
   icons: { icon: "/favicon.ico", shortcut: "/favicon.ico" },
   robots: { index: true, follow: true },

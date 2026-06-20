@@ -4,8 +4,21 @@ import OffersClient from "./OffersClient";
 
 export const metadata: Metadata = {
   title: "One-Time Offers — Kwise World",
-  description:
-    "Limited-stock deals on phones, laptops, and accessories. Once gone, gone for good.",
+  description: "Limited-stock deals on phones, laptops, and accessories. Once gone, gone for good.",
+  alternates: { canonical: "https://kwiseworld.com/offers" },
+  openGraph: {
+    title: "One-Time Offers — Kwise World",
+    description: "Limited-stock deals on phones, laptops, and accessories. Once gone, gone for good.",
+    url: "https://kwiseworld.com/offers",
+    type: "website",
+    images: [{ url: "https://kwiseworld.com/og.png", width: 1200, height: 630, alt: "Kwise World One-Time Offers" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "One-Time Offers — Kwise World",
+    description: "Limited-stock deals on phones, laptops, and accessories. Once gone, gone for good.",
+    images: ["https://kwiseworld.com/og.png"],
+  },
 };
 
 export default async function OffersPage() {

@@ -100,7 +100,7 @@ async function request<T>(
     if (token) headers["Authorization"] = `Bearer ${token}`;
   }
 
-  let res = await fetch(`${BASE}${path}`, { cache: "no-store", ...options, headers });
+  let res = await fetch(`${BASE}${path}`, { ...options, headers });
 
   // Auto-refresh: if 401 and we might have a refresh token, try once
   if (res.status === 401 && auth) {
@@ -108,7 +108,7 @@ async function request<T>(
     if (refreshed) {
       const newToken = tokenStore.getAccess();
       if (newToken) headers["Authorization"] = `Bearer ${newToken}`;
-      res = await fetch(`${BASE}${path}`, { cache: "no-store", ...options, headers });
+      res = await fetch(`${BASE}${path}`, { ...options, headers });
     }
   }
 

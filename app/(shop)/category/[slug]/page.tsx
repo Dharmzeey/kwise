@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { fetchCategories, fetchProducts } from "@/lib/api";
+
+import { REVALIDATE_PAGES } from "@/lib/revalidate";
+export const revalidate = REVALIDATE_PAGES;
 import type { ProductStatus, SortOption } from "@/lib/types";
 import CategoryPageClient from "./CategoryPageClient";
 

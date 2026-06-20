@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { fetchProducts } from "@/lib/api";
 import OffersClient from "./OffersClient";
 
+import { REVALIDATE_PAGES } from "@/lib/revalidate";
+export const revalidate = REVALIDATE_PAGES;
+
 export const metadata: Metadata = {
   title: "One-Time Offers — Kwise World",
   description: "Limited-stock deals on phones, laptops, and accessories. Once gone, gone for good.",

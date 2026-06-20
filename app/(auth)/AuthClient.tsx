@@ -82,7 +82,7 @@ export default function AuthClient({ mode }: Props) {
                   required
                   value={form.first_name}
                   onChange={(e) => setForm({ ...form, first_name: e.target.value })}
-                  placeholder="Ada"
+                  placeholder="Ola"
                 />
               </label>
               <label>
@@ -91,7 +91,7 @@ export default function AuthClient({ mode }: Props) {
                   required
                   value={form.last_name}
                   onChange={(e) => setForm({ ...form, last_name: e.target.value })}
-                  placeholder="Obi"
+                  placeholder="Ade"
                 />
               </label>
             </div>
@@ -104,7 +104,7 @@ export default function AuthClient({ mode }: Props) {
               required
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="ada@example.com"
+              placeholder="email@example.com"
             />
           </label>
 

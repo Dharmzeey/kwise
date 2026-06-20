@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { fetchCategories, fetchProducts } from "@/lib/api";
 import type { ProductListItem } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
+import { REVALIDATE_SITEMAP } from "@/lib/revalidate";
+export const revalidate = REVALIDATE_SITEMAP;
 
 const BASE = "https://kwiseworld.com";
 

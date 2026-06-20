@@ -7,7 +7,8 @@ import ProductDetailClient from "./ProductDetailClient";
 import ProductCard from "@/components/shop/ProductCard";
 import Icon from "@/components/ui/Icon";
 
-export const dynamic = "force-dynamic";
+import { REVALIDATE_PRODUCT } from "@/lib/revalidate";
+export const revalidate = REVALIDATE_PRODUCT;
 
 interface Props {
   params: Promise<{ id: string }>;

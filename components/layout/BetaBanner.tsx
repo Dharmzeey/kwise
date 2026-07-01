@@ -5,7 +5,7 @@ export default function BetaBanner() {
       <span>
         We&apos;re live &amp; fully functional —{" "}
         <strong>no payments will be charged</strong> during this phase.
-        Full launch: <strong>July 1st, 2026</strong>.
+        Full launch: <strong>August 15th, 2026</strong>.
       </span>
     </div>
   );

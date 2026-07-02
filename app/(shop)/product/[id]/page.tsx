@@ -7,8 +7,7 @@ import ProductDetailClient from "./ProductDetailClient";
 import ProductCard from "@/components/shop/ProductCard";
 import Icon from "@/components/ui/Icon";
 
-import { REVALIDATE_PRODUCT } from "@/lib/revalidate";
-export const revalidate = REVALIDATE_PRODUCT;
+export const revalidate = 300; // 5 min
 
 interface Props {
   params: Promise<{ id: string }>;

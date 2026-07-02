@@ -2,8 +2,7 @@ import type { MetadataRoute } from "next";
 import { fetchCategories, fetchProducts } from "@/lib/api";
 import type { ProductListItem } from "@/lib/types";
 
-import { REVALIDATE_SITEMAP } from "@/lib/revalidate";
-export const revalidate = REVALIDATE_SITEMAP;
+export const revalidate = 600; // 10 min
 
 const BASE = "https://kwiseworld.com";
 

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { swapApi } from "@/lib/swap/api";
 import SwapApp from "@/components/swap/SwapApp";
 
-import { REVALIDATE_SWAP } from "@/lib/revalidate";
-export const revalidate = REVALIDATE_SWAP;
+export const revalidate = 600; // 10 min
 
 export const metadata: Metadata = {
   title: "iPhone Swap Estimator — Kwise World",

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { fetchCategories, fetchProducts, fetchFeaturedReviews } from "@/lib/api";
 
-import { REVALIDATE_PAGES } from "@/lib/revalidate";
-export const revalidate = REVALIDATE_PAGES;
+export const revalidate = 300; // 5 min — edit lib/revalidate.ts as reference
 import HeroEditorial from "@/components/home/HeroEditorial";
 import CategoryTiles from "@/components/home/CategoryTiles";
 import BrandStrip from "@/components/home/BrandStrip";

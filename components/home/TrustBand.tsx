@@ -3,7 +3,7 @@ import Icon from "@/components/ui/Icon";
 const ITEMS = [
   { icon: "shieldCheck", title: "Tested & verified",    desc: "Every device checked before it ships." },
   { icon: "truck",       title: "Nationwide delivery",  desc: "Based in Ibadan, we ship to all 36 states." },
-  { icon: "refresh",     title: "7-day returns",        desc: "Not as described? Send it back." },
+  { icon: "refresh",     title: "14-day returns",        desc: "Not as described? Send it back." },
   { icon: "whatsapp",    title: "Real human support",   desc: "Chat with us before and after you buy." },
 ];
 

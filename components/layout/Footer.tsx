@@ -22,8 +22,8 @@ export default function Footer({ categories }: FooterProps) {
             Integrity — we mean what we say. Gadgets you can trust, prices that respect you.
           </p>
           <div className="footer-trust">
-            <span><Icon name="shieldCheck" size={16} /> Tested &amp; verified</span>
-            <span><Icon name="truck" size={16} /> Nationwide delivery</span>
+            <span>Tested &amp; verified</span>
+            <span>Nationwide delivery</span>
           </div>
         </div>
 

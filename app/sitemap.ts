@@ -26,26 +26,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE}/`,
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${BASE}/category/all`,
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE}/swap`,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE}/offers`,
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
+    { url: `${BASE}/`,             changeFrequency: "daily",  priority: 1.0 },
+    { url: `${BASE}/category/all`, changeFrequency: "daily",  priority: 0.9 },
+    { url: `${BASE}/offers`,       changeFrequency: "daily",  priority: 0.8 },
+    { url: `${BASE}/swap`,         changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/about`,        changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const categoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({

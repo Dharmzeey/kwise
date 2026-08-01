@@ -15,6 +15,7 @@ Kwise World is Nigeria's trusted online gadget store. We sell tested & verified 
 
 ## About / Contact
 - https://kwiseworld.com/ — Homepage with featured picks and trust signals
+- https://kwiseworld.com/about — Why Kwise World: non-refurbished Canadian-spec devices, transparent grading, warranty, and honest sourcing
 `;
 
 export function GET() {

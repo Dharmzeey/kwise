@@ -59,6 +59,33 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico", shortcut: "/favicon.ico" },
   robots: { index: true, follow: true },
   alternates: { canonical: "https://kwiseworld.com" },
+  verification: {
+    other: {
+      "msvalidate.01": "97F771670C6A5A0D973C08363EDDC8D1",
+    }
+  }
+};
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Kwise World",
+  url: "https://kwiseworld.com",
+  logo: "https://kwiseworld.com/logo.png",
+  description:
+    "Trusted brand-new and UK-used phones, laptops, and accessories, tested before shipping, with delivery across Nigeria.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "92B Lagelu Plaza, Iwo Road",
+    addressLocality: "Ibadan",
+    addressCountry: "NG",
+  },
+  telephone: "+2349048807490",
+  sameAs: [
+    "https://www.instagram.com/kwise.world",
+    "https://www.tiktok.com/@kwiseworld",
+    "https://www.threads.net/@kwise.world",
+  ],
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -66,6 +93,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className={`${sora.variable} ${manrope.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+      </head>
       <body>
         <CartProvider>
           <ToastProvider>

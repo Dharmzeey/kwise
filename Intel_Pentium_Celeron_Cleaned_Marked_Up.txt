@@ -1,0 +1,99 @@
+Intel Pentium/ Celeron
+
+1. Lenovo ThinkPad yoga 11e, convertible, Touchscreen, 128gb SSD, 4gb RAM, 11.6 screen size, #155k (Has Laptop pen)
+2. Lenovo 300e, convertible, Touchscreen, 128gb & 64gb SSD, 4gb RAM, 11.6 screen size, #150k
+3. Dell Latitude 3190 x360, Convertible, Nontouch, 128gb SSD, 4gb RAM, 11.6 Screen size, #120k
+4. Dell Latitude 3190, Nontouch, 64gb SSD, 4gb RAM, 11.6 screen size, #95k
+5. Acer Travelmate B118, Nontouch, 64gb SSD, 4gb RAM, 11.6 screen size, #95k
+6. Acer Travelmate spin B3, Nontouch, 64gb SSD, 4gb RAM, 11.6 screen size, #95k
+7. HP 250 G4, 500gb HDD, 4gb RAM, 15.6 screen size, #105k
+8. Asus E201N, 64gb SSD, 4gb RAM, 11.6 screeen size, #95k
+9. Asus Laptop E410M, 128gb SSD, 4gb RAM, 14.0 screen size, #130k
+10. HP 250 G7 Notebook, 128gb SSD, 4gb RAM, 15.6 screen size, #155k
+11. HP 240 G7 Notebook, 128gb SSD, 4gb RAM, 14.0 screen size, #160k
+12. Asus E402M, 32gb SSD and 128gb SSD, 2gb RAM, 14.0 screen size, #120k
+
+AMD LAPTOP
+
+1. HP Laptop 15, 128gb SSD, 4gb RAM, 15.6 screen size, #150k
+2. HP 245 G8 Notebook, 128gb SSD, 4gb RAM, 14.0 screen size, #160k
+3. HP 255 G7, 128gb SSD, 4gb RAM, 15.6 screen size, #155k
+
+
+CORE I3 UPDATED
+
+1. Dell Vostro 15-3568, 7th/6th Gen, 128gb SSD, 4gb RAM, 15.6 screen size, #140k
+2. Dell Latitude 3380, 6th generation, Nontouch, 128gb SSD, 4gb RAM (PC4), 13.0 screen size, #140k
+3. Acer Aspire E5-475, 6th generation, 128gb SSD, 4gb RAM, 14.0 screen size, #120k
+4. HP ProBook 450 G2, 500gb HDD, 8gb RAM, 15.6 screen size, #125k
+5. HP Pavilion Notebook, 5th generation, 1TB HDD, 8gb RAM, 15.6 screen size, #150k
+6. HP 250 G5, 5th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #130k
+7. Lenovo B50-80/B50-70, 4th/5th Gen, 640gb HDD, 8gb ram, 15.6 screen size, #100k
+8. Lenovo B50-50, 5th Generation, 500gb/750gb HDD, 8gb RAM, 15.6 screen size, #120k
+9. HP EliteBook 840 g1, 4th generation, Touchscreen, No KBL, 128gb SSD, 8gb RAM, 14.0 screen size, #180k
+10. HP EliteBook 820 G1, 4th generation, keyboard light, 128gb SSD, 8gb RAM, 12.5 screen size, #160k
+11. Dell Latitude 3340, 4th generation, 128gb/180gb SSD, 8gb RAM, 13.3 screen size, #140k
+12. Dell Latitude 3550, 4th generation, Keyboard Light, 500gb HDD, 8gb RAM, 15.6 screen size, #140k
+
+
+CORE I5 UPDATED
+
+1. Dell Latitude 3420, 11th generation, Touchscreen, keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #360k
+2. Dell Latitude 3410, 10th generation, Keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #290k
+3. HP 250 G7, 10th generation, No KBL, 256gb SSD, 8gb RAM, 15.6 screen size, #250k
+4. Dell Latitude 5300 2-in-1, convertible, Touchscreen, 8th generation, keyboard light, 256gb SSD, 8gb RAM, 13.0 screen size, #310k
+5. HP EliteBook 830 G6, 8th generation, Nontouch, keyboard light, 256gb SSD, 8gb RAM, 13.0 screen size, #300k
+6. Dell Latitude 7490, 8th Generation, Intel Core i5, Keyboard light, 256gb SSD, 8gb RAM, 14.0 Screen size, #290k
+7. Dell Latitude 7290, 8th generation, keyboard light, 256gb SSD, 8gb RAM, 12.5 screen size, #240k
+8. Dell Latitude 5490, 8th generation, No KBL, 256gb SSD, 8gb RAM, 14.0 screen size, #220k
+9. HP EliteBook 840 G5/G6, 8th generation, Nontouch, keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #300k
+10. HP EliteBook 1030 G2, 7th generation, convertible, Touchscreen, 256gb SSD, 8gb RAM, 13.0 screen size, #385k
+11. Dell Latitude 5480, 7th generation, keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #220k
+12. Dell Latitude 7280, 7th generation, keyboard light, 256gb SSD, 8gb RAM, 12.5 screen size, #230k
+13. HP EliteBook 840 G4, 7th generation, Nontouch, keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #260k
+14. HP EliteBook 840 G4, 7th generation, Touchscreen, keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #280k
+15. HP EliteBook 840 G3, Touchscreen, 6th generation, Keyboard Light, 256gb SSD, 8gb RAM, 14.0 screen size, #270k
+16. HP EliteBook 840 G3, Nontouch, 6th generation, Keyboard Light, 180gb SSD and 500gb HDD, 8gb RAM, 14.0 screen size, #250k
+(256gb SSD, 8gb RAM, #250k)
+17. HP 250 G4, 6th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #140k
+18. Dell Latitude 3570, 6th generation, keyboard light, 500gb HDD, 8gb RAM, 15.6 screen size, #160k
+19. Acer Travelmate P258, 6th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #140k
+20. Dell Latitude E5450, 5th generation, Keyboard Light, 500gb HDD, 8gb RAM, 14.0 screen size, #160k
+21. Dell Latitude E5450, 5th generation, No KBL, 500gb HDD, 8gb RAM, 14.0 screen size, #145k
+22. HP EliteBook 840 G2, 5th generation, Keyboard light, 500gb HDD, 8gb RAM, 14.0 screen size, #195k *(175k base — see note below)*
+23. HP 250 G4, 5th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #140k
+24. Dell Latitude 3550, 5th generation, Keyboard Light, 1TB HDD, 8gb RAM, 15.6 screen size, #160k
+(500gb HDD, 8gb RAM, #150k)
+25. Dell Latitude 3550, 5th generation, No KBL, 500gb HDD, 8gb RAM, 15.6 screen size, #140k
+26. Dell Latitude 3450, 5th generation, 500gb HDD, 8gb RAM, 14.0 screen size, #150k
+27. Lenovo B50-50, 5th generation, 640/500gb HDD, 8gb RAM, 15.6 screen size, #135k
+28. Dell Latitude E7250, 5th generation, keyboard light, 128gb SSD, 8gb RAM, 12.5 screen size, #155k
+29. Acer Aspire E5-573, 5th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #130k
+30. HP EliteBook Revolve 810 G2, Nontouch, 4th generation, keyboard light, 256gb SSD, 8gb RAM, 12.5 screen size, #150k
+31. HP EliteBook 840 G1, 4th generation, Touchscreen, keyboard light, 500gb HDD, 8gb RAM, 14.0 screen size, #210k
+32. HP EliteBook Folio 9480m, 4th Generation, keyboard light, 500gb HDD, 8gb RAM, 14.0 screen size, #180k
+33. Dell Latitude E7440, 4th generation, keyboard light, 128gb SSD, 8gb RAM, 14.0 screen size, #155k
+34. Dell Latitude E7240, 4th generation, keyboard light, 256gb SSD, 8gb RAM, 12.5 screen size, #165k
+(128gb SSD, 8gb RAM, #150k)
+35. Dell Latitude 3340, 4th generation, 500gb HDD or 128gb SSD, 8gb RAM, 13.3 screen, #155k
+36. HP EliteBook Folio 9470m, keyboard light, 500gb HDD or 128gb SSD, 8gb RAM, 14.0 screen size, #175k
+37. HP Pavilion 15 Notebook, 4th Generation, 500gb HDD/ 640gb HDD, 8gb RAM, 15.6 screen size, #140k
+38. HP 15 Notebook, 4th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #140k
+39. HP Notebook 15, 4th generation, 640gb HDD, 8gb RAM, 15.6 screen size, #140k
+40. HP EliteBook 850 G1, 4th generation, keyboard light, 500gb HDD, 8gb RAM, 15.6 screen size, #170k
+41. HP ProBook 640 G1, 4th generation, 500gb/640gb HDD or 128gb SSD, 8gb RAM, 14.0 screen size, #160k
+42. Acer Travelmate P257, 4th generation, 500gb HDD, 8gb RAM, 15.6 screen size, #130k
+43. Acer Travelmate p253, 500gb HDD, 8gb RAM, 15.6 screen size, #100k
+
+
+AVAILABLE LAPTOPS
+
+CORE i7 UPDATED
+
+1. HP EliteBook 840 G5, 8th generation, Nontouch, Keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #370k
+2. HP EliteBook 840 G3, 6th generation, Nontouch, keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #270k
+3. Dell Latitude 7470, 6th generation, Keyboard light, 256gb SSD, 8gb RAM, 14.0 screen size, #255k
+4. HP EliteBook 840 G2, 5th generation, Keyboard Light, 500gb, 8gb RAM, 14.0 screen size, #215k
+5. HP EliteBook 820 G2, 5th generation, keyboard light, 128gb SSD, 8gb RAM, 12.5 screen size, #190k
+6. Dell Latitude 7450, 5th generation, 2gb Nvidia dedicated graphics, 256gb SSD, 8gb RAM, 14.0 screen size, #230k
+7. HP EliteBook 840 G1, 4th generation, Keyboard light, 500gb HDD, 8gb RAM, 14.0 screen size, #210k

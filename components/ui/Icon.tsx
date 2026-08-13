@@ -39,6 +39,8 @@ import {
   ChevronLeft,
   ArrowRight,
   ArrowLeft,
+  ArrowDown,
+  CheckCircle,
   Heart,
   Check,
   Minus,
@@ -82,6 +84,10 @@ const ICON_MAP: Record<string, LucideIcon> = {
   chevronRight:ChevronRight,
   arrowRight:  ArrowRight,
   arrowLeft:   ArrowLeft,
+  "arrow-down": ArrowDown,
+  arrowDown:   ArrowDown,
+  "check-circle": CheckCircle,
+  checkCircle: CheckCircle,
 
   // Actions
   heart:       Heart,

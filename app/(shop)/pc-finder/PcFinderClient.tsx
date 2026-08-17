@@ -361,7 +361,9 @@ export default function PcFinderClient({ laptops }: { laptops: Laptop[] }) {
           <div className="pc-finder-match-bar">
             <span className="pc-finder-match-count">
               <Icon name="check-circle" size={13} />
-              {results.length > 0 ? `${results.length} matches found` : "No matches — widening search…"}
+              {results.length > 0
+                ? `${Math.min(results.length, 5)} best matches${results.length > 5 ? ` (${results.length} total)` : ""}`
+                : "No matches — widening search…"}
             </span>
             <a href="#pf-results" className="pc-finder-see-results">
               See results <Icon name="arrow-down" size={12} />
@@ -387,14 +389,16 @@ export default function PcFinderClient({ laptops }: { laptops: Laptop[] }) {
                 {({ light: "Light use", school: "School & study", office: "Work & office", power: "Heavy / creative" } as const)[answers.useCase]}
               </h2>
             </div>
-            <span className="pc-finder-count">{results.length} shown</span>
+            <span className="pc-finder-count">
+              Top 5{results.length > 5 ? ` of ${results.length} matches` : ""}
+            </span>
           </div>
           <p className="pc-finder-note">
-            Ranked by how well they fit your answers. All specs shown are as listed — check with us before buying.
+            Showing the 5 best matches for your answers. All specs shown are as listed — check with us before buying.
           </p>
 
           <div className="pc-finder-grid">
-            {results.map((laptop, i) => (
+            {results.slice(0, 5).map((laptop, i) => (
               <LaptopCard
                 key={laptop.id}
                 laptop={laptop}

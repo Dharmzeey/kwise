@@ -207,8 +207,11 @@ img, svg { display: block; }
   .pc-finder-hero { padding: 40px 0 36px; }
   .pc-finder-layout { gap: 16px; padding: 20px 0 44px; }
   .pc-finder-form, .pc-finder-results { padding: 20px; }
-  .pc-finder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .pc-finder-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
   .pf-card-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+@media (max-width: 600px) {
+  .pc-finder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 }
 @media (max-width: 440px) {
   .pc-finder-use-cases { grid-template-columns: 1fr; }

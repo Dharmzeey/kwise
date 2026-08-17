@@ -148,9 +148,9 @@ export default function CartPageClient() {
               <span>Total</span>
               <strong>{formatNaira(total)}</strong>
             </div>
-            <Btn kind="primary" size="lg" href="/checkout" iconAfter="arrowRight">
+            {/* <Btn kind="primary" size="lg" href="/checkout" iconAfter="arrowRight">
               Checkout
-            </Btn>
+            </Btn> */}
             <a
               href={buildWhatsAppUrl(items, total)}
               target="_blank"

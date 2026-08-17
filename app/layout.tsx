@@ -102,7 +102,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <CartProvider>
           <ToastProvider>
-            <BetaBanner />
             <ShellLayout categories={categories}>
               {children}
             </ShellLayout>

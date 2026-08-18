@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { fetchCategories, fetchProducts, fetchFeaturedReviews } from "@/lib/api";
 
 export const revalidate = 300; // 5 min — edit lib/revalidate.ts as reference
-import HeroEditorial from "@/components/home/HeroEditorial";
+import HomeTop from "@/components/home/HomeTop";
 import CategoryTiles from "@/components/home/CategoryTiles";
+import ProductRail from "@/components/home/ProductRail";
 import BrandStrip from "@/components/home/BrandStrip";
 import ReviewsStrip from "@/components/home/ReviewsStrip";
-import ProductCard from "@/components/shop/ProductCard";
+import ContentHub from "@/components/home/ContentHub";
 import Btn from "@/components/ui/Btn";
 import Icon from "@/components/ui/Icon";
 
@@ -57,8 +58,20 @@ export default async function HomePage() {
   ]);
 
   const heroProducts = featuredPage.results.slice(0, 6);
-  const featured = featuredPage.results.slice(0, 4);
-  const offers = offersPage.results.slice(0, 4);
+  const featured = featuredPage.results.slice(0, 12);
+  const offers = offersPage.results.slice(0, 12);
+
+  // One product rail per category (slot.ng-style horizontal rows).
+  const categoryRails = (
+    await Promise.all(
+      categories.map(async (c) => {
+        const page = await fetchProducts({ category: c.slug, page: 1 }).catch(
+          () => ({ results: [], count: 0, next: null, previous: null })
+        );
+        return { category: c, products: page.results.slice(0, 12) };
+      })
+    )
+  ).filter((r) => r.products.length > 0);
 
   return (
     <>
@@ -66,47 +79,50 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
-      <HeroEditorial products={heroProducts} />
+
+      <HomeTop categories={categories} products={heroProducts} />
       <CategoryTiles categories={categories} />
 
-      {/* Featured products row */}
-      {featured.length > 0 && (
-        <section className="section">
-          <div className="container">
-            <div className="sec-head">
-              <h2>Featured picks</h2>
-              <Btn kind="ghost" href="/category/all" iconAfter="arrowRight">See all</Btn>
-            </div>
-            <div className="prod-grid">
-              {featured.map((p) => (
-                <ProductCard key={p.id} product={p} hideAdd />
-              ))}
-            </div>
-          </div>
-        </section>
+      {/* One-time offers rail */}
+      {offers.length > 0 && (
+        <ProductRail
+          title="One-Time Offers"
+          eyebrow="Limited units — once they're gone, they're gone"
+          eyebrowIcon="bolt"
+          accent="orange"
+          href="/offers"
+          products={offers}
+          soft
+        />
       )}
 
-      {/* One-time offers spotlight */}
-      {offers.length > 0 && (
-        <section className="section offers-section">
-          <div className="container">
-            <div className="sec-head">
-              <div>
-                <h2><Icon name="bolt" size={22} stroke={0} className="offers-bolt" /> One-Time Offers</h2>
-                <p className="sec-sub">Limited units — once they&apos;re gone, they&apos;re gone.</p>
-              </div>
-              <Btn kind="orange" href="/offers" iconAfter="arrowRight">View all offers</Btn>
-            </div>
-            <div className="prod-grid">
-              {offers.map((p) => (
-                <ProductCard key={p.id} product={p} hideAdd />
-              ))}
-            </div>
-          </div>
-        </section>
+      {/* Featured rail */}
+      {featured.length > 0 && (
+        <ProductRail
+          title="Featured picks"
+          eyebrow="Hand-picked by our team"
+          eyebrowIcon="star"
+          href="/category/all"
+          products={featured}
+        />
       )}
+
+      {/* One rail per category, alternating soft backgrounds */}
+      {categoryRails.map((rail, i) => (
+        <ProductRail
+          key={rail.category.slug}
+          title={rail.category.name}
+          eyebrow={rail.category.blurb || undefined}
+          href={`/category/${rail.category.slug}`}
+          products={rail.products}
+          soft={i % 2 === 0}
+        />
+      ))}
 
       <ReviewsStrip reviews={reviews} />
+
+      {/* Content hub — reviews, comparisons, buying guides */}
+      <ContentHub />
 
       {/* Swap feature strip */}
       <section className="swap-strip-section">

@@ -291,3 +291,129 @@ export interface ProductFilters {
   max_price?: number;
   page?: number;
 }
+
+// ── Content section ───────────────────────────────────────────────────────────
+
+export interface ContentAuthor {
+  id: number;
+  name: string;
+  slug: string;
+  bio: string;
+  credentials: string;
+  avatar: string | null;
+}
+
+export interface UseCaseTag {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+}
+
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+  order: number;
+}
+
+export type DeviceFormFactor = "phone" | "laptop";
+
+export interface Device {
+  id: number;
+  brand: string;
+  model_name: string;
+  slug: string;
+  form_factor: DeviceFormFactor;
+  release_year: number;
+  chipset: string;
+  ram_options: string[];
+  storage_options: string[];
+  display_specs: Record<string, string>;
+  camera_specs: Record<string, string>;
+  battery_capacity_mah: number | null;
+  battery_wh: number | null;
+  price_band_ngn: string;
+  price_band_cad: string;
+  conditions_available: string[];
+  use_case_tags: UseCaseTag[];
+  pros: string[];
+  cons: string[];
+  verdict_summary: string;
+  meta_description: string;
+  hero_image: string | null;
+  is_in_stock: boolean;
+  faqs: FAQItem[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DeviceListItem
+  extends Pick<Device, "id" | "brand" | "model_name" | "slug" | "form_factor" | "release_year" | "price_band_ngn" | "price_band_cad" | "is_in_stock" | "hero_image" | "verdict_summary" | "use_case_tags" | "created_at" | "updated_at"> {}
+
+export interface Comparison {
+  id: number;
+  title: string;
+  slug: string;
+  device_a: Device;
+  device_b: Device;
+  intro: string;
+  winner_by_category: Record<string, "a" | "b" | "tie">;
+  overall_recommendation: string;
+  author: ContentAuthor | null;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+  meta_description: string;
+  faqs: FAQItem[];
+}
+
+export interface ComparisonListItem
+  extends Pick<Comparison, "id" | "title" | "slug" | "author" | "published_at" | "created_at" | "updated_at" | "meta_description"> {
+  device_a: DeviceListItem;
+  device_b: DeviceListItem;
+}
+
+export interface BuyingGuideEntry {
+  id: number;
+  rank: number;
+  device: Device;
+  blurb: string;
+}
+
+export interface BuyingGuide {
+  id: number;
+  title: string;
+  slug: string;
+  use_case_tag: UseCaseTag;
+  intro: string;
+  body: string;
+  entries: BuyingGuideEntry[];
+  author: ContentAuthor | null;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+  meta_description: string;
+  faqs: FAQItem[];
+}
+
+export interface BuyingGuideListItem
+  extends Pick<BuyingGuide, "id" | "title" | "slug" | "use_case_tag" | "intro" | "author" | "published_at" | "created_at" | "updated_at" | "meta_description"> {}
+
+export interface SpecDiffRow {
+  label: string;
+  a_value: string;
+  b_value: string;
+}
+
+export interface SpecDiff {
+  device_a: Device;
+  device_b: Device;
+  diff: SpecDiffRow[];
+}
+
+export interface SitemapEntry {
+  type: "device" | "comparison" | "guide";
+  slug: string;
+  updated_at: string;
+}

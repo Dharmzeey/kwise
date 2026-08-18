@@ -11,9 +11,11 @@ import type { ProductListItem } from "@/lib/types";
 
 interface Props {
   products: ProductListItem[];
+  /** When true, render without the outer <section>/.container so it can sit inside a grid cell. */
+  bare?: boolean;
 }
 
-export default function HeroEditorial({ products }: Props) {
+export default function HeroEditorial({ products, bare = false }: Props) {
   const router = useRouter();
   const [idx, setIdx] = useState(0);
   const len = products.length;
@@ -28,9 +30,8 @@ export default function HeroEditorial({ products }: Props) {
   const f1 = len > 1 ? products[(idx + 1) % len] : null;
   const f2 = len > 2 ? products[(idx + 2) % len] : null;
 
-  return (
-    <section className="hero hero-editorial">
-      <div className="container hero-in">
+  const inner = (
+    <div className="hero-in">
         <div className="hero-copy">
           <h1>Gadgets you can <em>actually</em> trust.</h1>
           <p>
@@ -120,6 +121,15 @@ export default function HeroEditorial({ products }: Props) {
           </div>
         )}
       </div>
+  );
+
+  if (bare) {
+    return <div className="hero hero-editorial hero-bare">{inner}</div>;
+  }
+
+  return (
+    <section className="hero hero-editorial">
+      <div className="container">{inner}</div>
     </section>
   );
 }

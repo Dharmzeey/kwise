@@ -415,3 +415,69 @@ export async function updateAdminBrand(id: number, payload: Partial<{ name: stri
 export async function deleteAdminBrand(id: number): Promise<void> {
   return request<void>(`/api/admin/brands/${id}/`, { method: "DELETE" }, true);
 }
+
+// ── Content section ───────────────────────────────────────────────────────────
+
+import type {
+  BuyingGuide,
+  BuyingGuideListItem,
+  Comparison,
+  ComparisonListItem,
+  Device,
+  DeviceListItem,
+  SitemapEntry,
+  SpecDiff,
+} from "./types";
+
+export async function fetchDevices(params?: { use_case?: string; brand?: string }): Promise<DeviceListItem[]> {
+  const qs = new URLSearchParams(params as Record<string, string>).toString();
+  const res = await fetch(`${BASE}/api/content/devices/${qs ? `?${qs}` : ""}`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new ApiError(res.status, "Failed to fetch devices");
+  const data = await res.json();
+  return data.results ?? data;
+}
+
+export async function fetchDevice(slug: string): Promise<Device> {
+  const res = await fetch(`${BASE}/api/content/devices/${slug}/`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new ApiError(res.status, `Device not found: ${slug}`);
+  return res.json();
+}
+
+export async function fetchComparisons(): Promise<ComparisonListItem[]> {
+  const res = await fetch(`${BASE}/api/content/comparisons/`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new ApiError(res.status, "Failed to fetch comparisons");
+  const data = await res.json();
+  return data.results ?? data;
+}
+
+export async function fetchComparison(slug: string): Promise<Comparison> {
+  const res = await fetch(`${BASE}/api/content/comparisons/${slug}/`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new ApiError(res.status, `Comparison not found: ${slug}`);
+  return res.json();
+}
+
+export async function fetchGuides(params?: { use_case?: string }): Promise<BuyingGuideListItem[]> {
+  const qs = new URLSearchParams(params as Record<string, string>).toString();
+  const res = await fetch(`${BASE}/api/content/guides/${qs ? `?${qs}` : ""}`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new ApiError(res.status, "Failed to fetch guides");
+  const data = await res.json();
+  return data.results ?? data;
+}
+
+export async function fetchGuide(slug: string): Promise<BuyingGuide> {
+  const res = await fetch(`${BASE}/api/content/guides/${slug}/`, { next: { revalidate: 60 } });
+  if (!res.ok) throw new ApiError(res.status, `Guide not found: ${slug}`);
+  return res.json();
+}
+
+export async function fetchSpecDiff(a: string, b: string): Promise<SpecDiff> {
+  const res = await fetch(`${BASE}/api/content/compare/?a=${a}&b=${b}`);
+  if (!res.ok) throw new ApiError(res.status, "Failed to fetch spec diff");
+  return res.json();
+}
+
+export async function fetchContentSitemapData(): Promise<SitemapEntry[]> {
+  const res = await fetch(`${BASE}/api/content/sitemap-data/`, { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  return res.json();
+}

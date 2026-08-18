@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { fetchCategories, fetchProducts } from "@/lib/api";
+import { fetchCategories, fetchProducts, fetchContentSitemapData } from "@/lib/api";
 import type { ProductListItem } from "@/lib/types";
 
 export const revalidate = 600; // 10 min
@@ -20,9 +20,10 @@ async function fetchAllProducts(): Promise<ProductListItem[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [categories, products] = await Promise.all([
+  const [categories, products, contentEntries] = await Promise.all([
     fetchCategories().catch(() => []),
     fetchAllProducts(),
+    fetchContentSitemapData().catch(() => []),
   ]);
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -46,5 +47,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  const contentPages: MetadataRoute.Sitemap = contentEntries.map((e) => {
+    const prefix = e.type === "device" ? "phones" : e.type === "comparison" ? "compare" : "guides";
+    return {
+      url: `${BASE}/${prefix}/${e.slug}`,
+      lastModified: new Date(e.updated_at),
+      changeFrequency: "weekly" as const,
+      priority: 0.75,
+    };
+  });
+
+  return [...staticPages, ...categoryPages, ...productPages, ...contentPages];
 }

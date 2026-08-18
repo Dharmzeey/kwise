@@ -19,8 +19,7 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
   const [mounted, setMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [megaOpen, setMegaOpen] = useState(false);
-  const [megaLocked, setMegaLocked] = useState(false);
+  const [guidesOpen, setGuidesOpen] = useState(false);
   const [q, setQ] = useState("");
 
   useEffect(() => {
@@ -28,22 +27,8 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
     setIsLoggedIn(document.cookie.includes("kw_access="));
   }, []);
 
-  // Close mobile menu on navigation
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
-
-  // Close mega on outside click when locked
-  useEffect(() => {
-    if (!megaLocked) return;
-    function handleClick(e: MouseEvent) {
-      const nav = document.querySelector(".mainnav");
-      if (nav && !nav.contains(e.target as Node)) {
-        setMegaOpen(false);
-        setMegaLocked(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [megaLocked]);
+  // Close mobile menu and open dropdowns on navigation
+  useEffect(() => { setMenuOpen(false); setGuidesOpen(false); }, [pathname]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -75,18 +60,8 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
             <span className="logo-text">Kwise<span> World</span></span>
           </Link>
 
-          <nav className="mainnav" onMouseLeave={() => { if (!megaLocked) setMegaOpen(false); }}>
-            <button
-              className="navlink"
-              onMouseEnter={() => setMegaOpen(true)}
-              onClick={() => {
-                const next = !megaOpen;
-                setMegaOpen(next);
-                setMegaLocked(next);
-              }}
-            >
-              Shop <Icon name="chevronDown" size={14} />
-            </button>
+          <nav className="mainnav">
+            <Link className="navlink" href="/category/all">Shop</Link>
             <Link className="navlink navlink-ot" href="/offers">
               <Icon name="bolt" size={13} stroke={0} /> One-Time Offers
             </Link>
@@ -94,46 +69,38 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
               <Icon name="refresh" size={13} /> Swap
             </Link>
             <Link className="navlink" href="/pc-finder">PC Finder</Link>
-            <Link className="navlink" href="/about">About</Link>
 
-            {megaOpen && (
-              <div className="mega" onMouseEnter={() => setMegaOpen(true)}>
-                {categories.map((c) => (
-                  <div className="mega-col" key={c.slug}>
-                    <Link className="mega-head" href={`/category/${c.slug}`} onClick={() => { setMegaOpen(false); setMegaLocked(false); }}>
-                      <Icon name={c.icon} size={18} /> {c.name}
-                    </Link>
-                    <div className="mega-links">
-                      {c.brands.map((b) => (
-                        <Link
-                          key={b.slug}
-                          href={`/category/${c.slug}?brand=${b.slug}`}
-                          onClick={() => { setMegaOpen(false); setMegaLocked(false); }}
-                        >
-                          {b.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-                <div className="mega-promo">
-                  <Icon name="bolt" size={20} stroke={0} />
-                  <strong>One-Time Offers</strong>
-                  <p>Single-unit deals. Once it&apos;s gone, it&apos;s gone.</p>
-                  <Link href="/offers" onClick={() => { setMegaOpen(false); setMegaLocked(false); }}>
-                    See deals <Icon name="arrowRight" size={15} />
+            <div
+              className="navdd"
+              onMouseEnter={() => setGuidesOpen(true)}
+              onMouseLeave={() => setGuidesOpen(false)}
+            >
+              <button
+                className="navlink"
+                aria-expanded={guidesOpen}
+                onClick={() => setGuidesOpen((v) => !v)}
+              >
+                Guides <Icon name="chevronDown" size={14} />
+              </button>
+              {guidesOpen && (
+                <div className="navdd-menu">
+                  <Link href="/phones" onClick={() => setGuidesOpen(false)}>
+                    <Icon name="star" size={17} />
+                    <span><strong>Phone Reviews</strong><em>Specs, verdicts &amp; prices</em></span>
+                  </Link>
+                  <Link href="/compare" onClick={() => setGuidesOpen(false)}>
+                    <Icon name="sliders" size={17} />
+                    <span><strong>Compare Devices</strong><em>Side-by-side specs</em></span>
+                  </Link>
+                  <Link href="/guides" onClick={() => setGuidesOpen(false)}>
+                    <Icon name="grid" size={17} />
+                    <span><strong>Buying Guides</strong><em>Best picks by use case</em></span>
                   </Link>
                 </div>
-                <div className="mega-promo mega-promo-swap">
-                  <Icon name="refresh" size={20} />
-                  <strong>Swap your iPhone</strong>
-                  <p>Trade in your current device and get the upgrade you want.</p>
-                  <Link href="/swap" onClick={() => { setMegaOpen(false); setMegaLocked(false); }}>
-                    Start swap <Icon name="arrowRight" size={15} />
-                  </Link>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
+
+            <Link className="navlink" href="/about">About</Link>
           </nav>
 
           <form className="searchbar" onSubmit={handleSearch}>
@@ -173,18 +140,14 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search…" />
           </form>
           <div className="mm-links">
+            <div className="mm-sec-label">Shop by department</div>
             {categories.map((c) => (
-              <div key={c.slug} className="mm-group">
-                <Link className="mm-link mm-cat" href={`/category/${c.slug}`}>
-                  <Icon name={c.icon} size={18} />{c.name}
-                </Link>
-                <div className="mm-sub">
-                  {c.brands.map((b) => (
-                    <Link key={b.slug} href={`/category/${c.slug}?brand=${b.slug}`}>{b.name}</Link>
-                  ))}
-                </div>
-              </div>
+              <Link key={c.slug} className="mm-link" href={`/category/${c.slug}`}>
+                <Icon name={c.icon} size={18} />{c.name}
+              </Link>
             ))}
+
+            <div className="mm-sec-label">Discover</div>
             <Link className="mm-link mm-ot" href="/offers">
               <Icon name="bolt" size={18} stroke={0} />One-Time Offers
             </Link>
@@ -194,7 +157,22 @@ export default function Header({ categories, onOpenCart }: HeaderProps) {
             <Link className="mm-link" href="/pc-finder">
               <Icon name="laptop" size={18} />Find a PC
             </Link>
-            <Link className="mm-link" href="/about">About</Link>
+
+            <div className="mm-sec-label">Guides &amp; Reviews</div>
+            <Link className="mm-link" href="/phones">
+              <Icon name="star" size={18} />Phone Reviews
+            </Link>
+            <Link className="mm-link" href="/compare">
+              <Icon name="sliders" size={18} />Compare Devices
+            </Link>
+            <Link className="mm-link" href="/guides">
+              <Icon name="grid" size={18} />Buying Guides
+            </Link>
+
+            <div className="mm-sec-label">More</div>
+            <Link className="mm-link" href="/about">
+              <Icon name="info" size={18} />About
+            </Link>
             <Link className="mm-link" href={isLoggedIn ? "/profile" : "/login"}>
               <Icon name="user" size={18} />{isLoggedIn ? "My Account" : "Login / Sign up"}
             </Link>

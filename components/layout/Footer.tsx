@@ -37,6 +37,14 @@ export default function Footer({ categories }: FooterProps) {
         </div>
 
         <div className="footer-col">
+          <h4>Guides &amp; Reviews</h4>
+          <Link href="/phones">Phone Reviews</Link>
+          <Link href="/compare">Compare Devices</Link>
+          <Link href="/guides">Buying Guides</Link>
+          <Link href="/pc-finder">PC Finder</Link>
+        </div>
+
+        <div className="footer-col">
           <h4>Company</h4>
           <Link href="/about">About us</Link>
           {/* <Link href="/login">My account</Link> */}

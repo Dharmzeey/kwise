@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import type { Laptop } from "./laptops";
 
@@ -135,39 +136,25 @@ function score(l: Laptop, a: Answers): number {
   return s;
 }
 
+// The description leads with each laptop's own unique highlight, so no two cards
+// read the same. When the user selected a must-have that this laptop satisfies,
+// we append a short confirmation — but only if the highlight doesn't already say it.
 function matchReason(l: Laptop, a: Answers): string {
-  const parts: string[] = [];
-  const tier = PROC_TIER[l.processor];
-  const proc = PROC_LABEL[l.processor];
-  const genStr = l.gen > 0 ? ` ${l.gen}th Gen` : "";
+  const parts: string[] = [l.highlight];
+  const h = l.highlight.toLowerCase();
 
-  if (a.useCase === "light") {
-    if (tier <= 2) parts.push(`${proc} — right-sized for browsing & everyday tasks`);
-    else if (tier === 3) parts.push(`Core i3${genStr} — smooth for daily use`);
-    else parts.push(`${proc}${genStr} — powerful, handles light tasks effortlessly`);
-  } else if (a.useCase === "school") {
-    if (tier === 3) parts.push(`Core i3${genStr} — smooth for assignments & Zoom`);
-    else if (tier >= 4) parts.push(`${proc}${genStr} — more than enough for school`);
-    else if (tier === 2) parts.push("AMD — decent for most school tasks");
-    else parts.push("handles basic school needs");
-  } else if (a.useCase === "office") {
-    if (tier === 4) parts.push(`Core i5${genStr} — Excel, Zoom & multitasking ready`);
-    else if (tier === 5) parts.push(`Core i7${genStr} — handles any office workload`);
-    else parts.push(`${proc} — may feel slow with multiple apps open`);
-  } else {
-    if (tier === 5) parts.push(`Core i7${genStr} — built for demanding workloads`);
-    else if (tier === 4 && l.gen >= 8) parts.push(`Core i5${genStr} — capable for coding & creative work`);
-    else parts.push(`${proc}${genStr} — may struggle with heavy workloads`);
+  if (a.mustHaves.includes("touch") && l.touch && !h.includes("touch")) {
+    parts.push("touchscreen as you asked");
+  } else if (
+    a.mustHaves.includes("convertible") && l.convertible &&
+    !/(convertible|2-in-1|fold|tablet|spin)/.test(h)
+  ) {
+    parts.push("folds to a tablet as you asked");
+  } else if (a.mustHaves.includes("kbl") && l.kbl && !h.includes("backlit")) {
+    parts.push("backlit keyboard as you asked");
   }
 
-  if (l.gpu && a.useCase === "power") parts.push("dedicated Nvidia GPU — graphics-ready");
-  else if (l.storageType === "ssd") parts.push(`${l.storage}GB SSD — fast boot, snappy apps`);
-  else if (l.ram >= 8) parts.push("8GB RAM — solid for multitasking");
-  if (a.mustHaves.includes("touch") && l.touch) parts.push("touchscreen included");
-  if (a.mustHaves.includes("kbl") && l.kbl) parts.push("backlit keyboard");
-  if (a.mustHaves.includes("convertible") && l.convertible) parts.push("folds to tablet mode");
-
-  return parts.slice(0, 2).join(" · ");
+  return parts.join(" · ");
 }
 
 /* ── Chip helper ────────────────────────────────────────────────────────────── */
@@ -228,7 +215,7 @@ function LaptopCard({ laptop, reason, topPick, ceiling }: {
       <div className="pf-card-specs">
         <span>{laptop.ram}GB RAM</span>
         <span>{laptop.storage}GB {laptop.storageType.toUpperCase()}</span>
-        <span>{laptop.screen}"</span>
+        <span>{laptop.screen}&quot;</span>
       </div>
 
       <div className="pf-card-footer">
@@ -412,7 +399,7 @@ export default function PcFinderClient({ laptops }: { laptops: Laptop[] }) {
           <div className="pf-browse-all">
             <p>Want to see everything, or have a specific model in mind?</p>
             <div className="pf-browse-actions">
-              <a href="/category/laptops" className="btn btn-secondary">Browse all laptops</a>
+              <Link href="/category/laptops" className="btn btn-secondary">Browse all laptops</Link>
               <a href="https://wa.me/2349048807490" target="_blank" rel="noopener noreferrer"
                 className="pc-finder-wa">
                 <Icon name="whatsapp" size={15} /> Chat with us

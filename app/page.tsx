@@ -87,8 +87,6 @@ export default async function HomePage() {
       {offers.length > 0 && (
         <ProductRail
           title="One-Time Offers"
-          eyebrow="Limited units — once they're gone, they're gone"
-          eyebrowIcon="bolt"
           accent="orange"
           href="/offers"
           products={offers}
@@ -100,8 +98,6 @@ export default async function HomePage() {
       {featured.length > 0 && (
         <ProductRail
           title="Featured picks"
-          eyebrow="Hand-picked by our team"
-          eyebrowIcon="star"
           href="/category/all"
           products={featured}
         />
@@ -112,7 +108,6 @@ export default async function HomePage() {
         <ProductRail
           key={rail.category.slug}
           title={rail.category.name}
-          eyebrow={rail.category.blurb || undefined}
           href={`/category/${rail.category.slug}`}
           products={rail.products}
           soft={i % 2 === 0}
@@ -129,8 +124,7 @@ export default async function HomePage() {
         <div className="container">
           <div className="swap-strip">
             <div className="swap-strip-copy">
-              <span className="eyebrow"><Icon name="refresh" size={14} /> Swap Deal Estimator </span>
-              <h2>Find out what your iPhone is worth for a swap, in seconds.</h2>
+             <h2>Find out what your iPhone is worth for a swap, in seconds.</h2>
               <p>Tell us what you have, pick what you want — we quote a fair trade-in value and you top up the gap.</p>
               <Btn kind="primary" href="/swap" iconAfter="arrowRight">Get my swap price</Btn>
             </div>

@@ -32,16 +32,9 @@ export default function ContentHub() {
   return (
     <section className="section content-hub-section">
       <div className="container">
-        <div className="sec-head">
-          <div>
-            <span className="eyebrow"><Icon name="info" size={14} /> Research before you buy</span>
-            <h2>Not sure what to get? Start here.</h2>
-          </div>
-          <p className="sec-sub content-hub-sub">
-            Independent reviews, side-by-side comparisons, and buying guides — so you buy the right device the first time.
-          </p>
+        <div>
+          <h2>Not sure what to get? Start here.</h2>
         </div>
-
         <div className="content-hub-grid">
           {CARDS.map((c) => (
             <Link key={c.href} href={c.href} className={`content-hub-card content-hub-card-${c.tint}`}>

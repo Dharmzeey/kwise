@@ -513,10 +513,9 @@ img, svg { display: block; }
 .sec-sub { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
 
 .brandstrip { background: var(--surface); padding: 28px 0; }
-.brandstrip-in { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-.brandstrip-in > span { font-size: 13px; color: var(--ink-3); font-weight: 500; white-space: nowrap; }
-.brand-logos { display: flex; flex-wrap: wrap; gap: 16px; }
-.brand-logo { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink-2); background: #fff; border: 1.5px solid var(--line); border-radius: 9px; padding: 8px 18px; }
+.brandstrip-in { text-align: center; }
+.brandstrip-in > span { display: block; font-size: 13px; color: var(--ink-3); font-weight: 500; margin-bottom: 16px; }
+.brand-logo { display: inline-block; margin: 6px 8px; font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink-2); background: #fff; border: 1.5px solid var(--line); border-radius: 9px; padding: 8px 18px; }
 
 /* ===================== ONE-TIME BAND ===================== */
 .ot-band { background: var(--ink); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1.8fr; }
@@ -2092,7 +2091,8 @@ img, svg { display: block; }
 .mm-links > .mm-sec-label:first-child { margin-top: 4px; padding-top: 0; border-top: 0; }
 
 /* ── Home content hub ──────────────────────────────────────────────────────── */
-.content-hub-sub { max-width: 380px; text-align: right; }
+.content-hub-section .sec-head { align-items: end; gap: 24px; }
+.content-hub-sub { max-width: 380px; text-align: right; line-height: 1.5; }
 .content-hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .content-hub-card {
   display: flex; flex-direction: column; gap: 9px; padding: 22px;

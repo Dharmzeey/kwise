@@ -9,6 +9,7 @@ import {
   deleteProductImage,
   updateProductSpecs,
   fetchCategories,
+  fetchAdminProducts,
 } from "@/lib/api";
 import type { AdminProduct, ProductWritePayload, Category, ProductTint, ProductStatus } from "@/lib/types";
 
@@ -25,6 +26,12 @@ export default function ProductForm({ initial }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [catId, setCatId] = useState<number>(initial?.category ?? 0);
   const [brandId, setBrandId] = useState<number>(initial?.brand ?? 0);
+
+  // "Base on an existing product" — lets a one-time offer (a specific, flawed
+  // unit of a phone we already sell) reuse that phone's specs/description
+  // instead of being typed in from scratch.
+  const [sourceProducts, setSourceProducts] = useState<AdminProduct[]>([]);
+  const [baseSlug, setBaseSlug] = useState("");
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -44,6 +51,7 @@ export default function ProductForm({ initial }: Props) {
     price: initial?.price ?? 0,
     old_price: initial?.old_price ?? ("" as number | ""),
     status: initial?.status ?? "Brand New",
+    is_visible: initial?.is_visible ?? true,
     is_featured: initial?.is_featured ?? false,
     badge: initial?.badge ?? "",
     is_one_time: initial?.is_one_time ?? false,
@@ -54,7 +62,12 @@ export default function ProductForm({ initial }: Props) {
 
   useEffect(() => {
     fetchCategories().then(setCategories).catch(console.error);
-  }, []);
+    if (!initial) {
+      fetchAdminProducts()
+        .then((all) => setSourceProducts(all.filter((p) => !p.is_one_time)))
+        .catch(console.error);
+    }
+  }, [initial]);
 
   const brandsForCat = categories.find((c) => c.id === catId)?.brands ?? [];
 
@@ -80,6 +93,34 @@ export default function ProductForm({ initial }: Props) {
     finally { setRemovingImage(false); }
   }
 
+  function handleBaseSelect(slug: string) {
+    setBaseSlug(slug);
+    const src = sourceProducts.find((p) => p.slug === slug);
+    if (!src) return;
+
+    setCatId(src.category);
+    setBrandId(src.brand);
+    setSpecs(src.specs.length ? src.specs.map(({ key, value }) => ({ key, value })) : [{ key: "", value: "" }]);
+    setColorsStr((src.colors ?? []).join(", "));
+    setForm((prev) => ({
+      ...prev,
+      name: src.name,
+      thumb: src.thumb,
+      tint: src.tint,
+      price: 0,
+      old_price: src.price,
+      status: src.status,
+      is_one_time: true,
+      stock: 1,
+      description: src.description,
+      one_time_note: "",
+    }));
+    // Never carry over the source image — a one-time offer is a specific
+    // physical unit, so it needs real photos of its own condition/defect.
+    setImagePreview(null);
+    setImageFile(null);
+  }
+
   function addSpecRow() { setSpecs((p) => [...p, { key: "", value: "" }]); }
   function removeSpecRow(i: number) { setSpecs((p) => p.filter((_, idx) => idx !== i)); }
   function setSpec(i: number, field: "key" | "value", val: string) {
@@ -89,6 +130,7 @@ export default function ProductForm({ initial }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!catId || !brandId) { setError("Please select a category and brand."); return; }
+    if (!form.price) { setError("Please set a price."); return; }
     setError(""); setSaving(true);
     try {
       const payload: ProductWritePayload = {
@@ -100,6 +142,7 @@ export default function ProductForm({ initial }: Props) {
         price: form.price,
         old_price: form.old_price === "" ? null : Number(form.old_price),
         status: form.status as ProductWritePayload["status"],
+        is_visible: form.is_visible,
         is_featured: form.is_featured,
         badge: form.badge,
         is_one_time: form.is_one_time,
@@ -127,6 +170,25 @@ export default function ProductForm({ initial }: Props) {
   return (
     <form className="adm-form" onSubmit={handleSubmit}>
       {error && <div className="adm-form-error">{error}</div>}
+
+      {/* One-time offer quick start */}
+      {!initial && sourceProducts.length > 0 && (
+        <div className="adm-form-section">
+          <h3>One-time offer?</h3>
+          <label>Base this on an existing product <span className="adm-hint">optional</span>
+            <select value={baseSlug} onChange={(e) => handleBaseSelect(e.target.value)}>
+              <option value="">Start from scratch</option>
+              {sourceProducts.map((p) => <option key={p.slug} value={p.slug}>{p.name}</option>)}
+            </select>
+          </label>
+          {baseSlug && (
+            <p className="adm-hint">
+              Copied name, specs, description &amp; category. Now set the discounted price,
+              describe this unit&apos;s condition in the one-time note below, and upload real photos of it.
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Image */}
       <div className="adm-form-section">
@@ -221,6 +283,10 @@ export default function ProductForm({ initial }: Props) {
         </div>
         <div className="adm-checks">
           <label className="adm-check">
+            <input type="checkbox" checked={form.is_visible} onChange={(e) => set("is_visible", e.target.checked)} />
+            Visible on site
+          </label>
+          <label className="adm-check">
             <input type="checkbox" checked={form.is_featured} onChange={(e) => set("is_featured", e.target.checked)} />
             Featured product
           </label>
@@ -231,7 +297,9 @@ export default function ProductForm({ initial }: Props) {
         </div>
         <label>Description *<textarea required rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} /></label>
         {form.is_one_time && (
-          <label>One-time note<textarea rows={2} value={form.one_time_note} onChange={(e) => set("one_time_note", e.target.value)} /></label>
+          <label>One-time note *<span className="adm-hint">why it's discounted — e.g. &quot;Face ID not working&quot;, &quot;small crack on back glass&quot;</span>
+            <textarea required rows={2} value={form.one_time_note} onChange={(e) => set("one_time_note", e.target.value)} />
+          </label>
         )}
       </div>
 

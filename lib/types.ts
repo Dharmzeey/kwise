@@ -195,6 +195,7 @@ export interface AdminProduct {
   status: ProductStatus;
   rating: number;
   review_count: number;
+  is_visible: boolean;
   is_featured: boolean;
   badge: string;
   is_one_time: boolean;
@@ -235,6 +236,7 @@ export interface ProductWritePayload {
   price: number;
   old_price?: number | null;
   status: ProductStatus;
+  is_visible?: boolean;
   is_featured?: boolean;
   badge?: string;
   is_one_time?: boolean;

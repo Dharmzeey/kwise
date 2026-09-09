@@ -922,6 +922,8 @@ img, svg { display: block; }
 .adm-status-brand-new { background: var(--blue-tint); color: var(--blue); }
 .adm-status-uk-used { background: #edf9ff; color: #0a6fa5; }
 .adm-status-nigeria-used { background: var(--orange-tint); color: #b84600; }
+.adm-status-live { background: #e8f7ee; color: #1a8a4a; }
+.adm-status-hidden { background: #f1f1f1; color: var(--ink-3); }
 .adm-status-select { padding: 5px 10px; border: 1.5px solid var(--line); border-radius: 8px; font-size: 13px; background: #fff; outline: none; cursor: pointer; }
 .adm-status-select:focus { border-color: var(--blue); }
 

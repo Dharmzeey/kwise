@@ -50,6 +50,7 @@ export default function AdminProductsPage() {
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Status</th>
+                <th>Live</th>
                 <th></th>
               </tr>
             </thead>
@@ -75,6 +76,7 @@ export default function AdminProductsPage() {
                   <td>{formatNaira(p.price)}</td>
                   <td>{p.stock}</td>
                   <td><span className={`adm-status adm-status-${p.status.toLowerCase().replace(/\s/g, "-")}`}>{p.status}</span></td>
+                  <td><span className={`adm-status ${p.is_visible ? "adm-status-live" : "adm-status-hidden"}`}>{p.is_visible ? "Live" : "Hidden"}</span></td>
                   <td>
                     <div className="adm-row-actions">
                       <Link href={`/admin/products/${p.slug}/edit`} className="btn btn-outline btn-sm">Edit</Link>

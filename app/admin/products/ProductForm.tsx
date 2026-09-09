@@ -58,6 +58,7 @@ export default function ProductForm({ initial }: Props) {
     stock: initial?.stock ?? 25,
     description: initial?.description ?? "",
     one_time_note: initial?.one_time_note ?? "",
+    video_url: initial?.video_url ?? "",
   });
 
   useEffect(() => {
@@ -149,6 +150,7 @@ export default function ProductForm({ initial }: Props) {
         stock: form.stock,
         description: form.description,
         one_time_note: form.one_time_note,
+        video_url: form.video_url,
         colors: colorsStr.split(",").map((s) => s.trim()).filter(Boolean),
       };
 
@@ -297,9 +299,14 @@ export default function ProductForm({ initial }: Props) {
         </div>
         <label>Description *<textarea required rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} /></label>
         {form.is_one_time && (
-          <label>One-time note *<span className="adm-hint">why it's discounted — e.g. &quot;Face ID not working&quot;, &quot;small crack on back glass&quot;</span>
-            <textarea required rows={2} value={form.one_time_note} onChange={(e) => set("one_time_note", e.target.value)} />
-          </label>
+          <>
+            <label>One-time note *<span className="adm-hint">why it's discounted — e.g. &quot;Face ID not working&quot;, &quot;small crack on back glass&quot;</span>
+              <textarea required rows={2} value={form.one_time_note} onChange={(e) => set("one_time_note", e.target.value)} />
+            </label>
+            <label>Video link <span className="adm-hint">optional — a post on X, Instagram, TikTok etc. showing this exact unit</span>
+              <input type="url" value={form.video_url} onChange={(e) => set("video_url", e.target.value)} placeholder="https://x.com/kwiseworld/status/..." />
+            </label>
+          </>
         )}
       </div>
 

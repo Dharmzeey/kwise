@@ -55,6 +55,7 @@ import {
   Info,
   LayoutGrid,
   BarChart2,
+  PlayCircle,
   type LucideIcon,
 } from "lucide-react";
 
@@ -105,6 +106,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   shield:      ShieldCheck,
   bolt:        Zap,
   tag:         Tag,
+  play:        PlayCircle,
   pin:         MapPin,
   mail:        Mail,
 

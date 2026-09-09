@@ -81,6 +81,16 @@ export default function ProductDetailClient({ product }: Props) {
                   Single unit — {soldOut ? "now sold out." : "only 1 available."}
                 </strong>
                 {product.one_time_note && <p>{product.one_time_note}</p>}
+                {product.video_url && (
+                  <a
+                    className="pdp-video-link"
+                    href={product.video_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="play" size={16} stroke={0} /> Watch a video of this item
+                  </a>
+                )}
               </div>
             </div>
           )}

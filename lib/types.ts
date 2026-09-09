@@ -70,6 +70,7 @@ export interface ProductListItem {
 export interface ProductDetail extends ProductListItem {
   description: string;
   one_time_note: string;
+  video_url: string;
   specs: ProductSpec[];
   reviews: Review[];
   created_at: string;
@@ -203,6 +204,7 @@ export interface AdminProduct {
   sold_out: boolean;
   description: string;
   one_time_note: string;
+  video_url: string;
   colors: string[];
   specs: ProductSpec[];
   created_at: string;
@@ -243,6 +245,7 @@ export interface ProductWritePayload {
   stock?: number;
   description: string;
   one_time_note?: string;
+  video_url?: string;
   colors?: string[];
 }
 
